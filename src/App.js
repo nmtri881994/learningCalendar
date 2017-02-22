@@ -1,16 +1,26 @@
-/**
- * Created by XuanVinh on 2/20/2017.
- */
-import React from 'react';
+import React, { Component } from 'react';
+import {Provider} from 'react-redux';
+import {Router, Route, IndexRoute} from 'react-router';
+import store, {history} from './store'
 
-class App extends React.Component {
-    render() {
-        return (
-            <div>
-                Hello World!!!
-            </div>
-        );
-    }
+import MainComponent from './component/mainComponent'
+import ShowAllClassesContainer from './container/showAllClassesContainer'
+import FacebookLogin from './component/facebookLogin'
+
+class App extends Component {
+  render() {
+      return (
+          <Provider store={store}>
+              <Router history={history}>
+                  <Route path="/" component={MainComponent}>
+                      <IndexRoute component={ShowAllClassesContainer} />
+                      <Route path="/facebook" component={FacebookLogin}/>
+                  </Route>
+              </Router>
+          </Provider>
+      );
+  }
 }
 
 export default App;
+
