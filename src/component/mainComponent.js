@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
+import Header from "./header"
+import Footer from './footer'
 
 class MainComponent extends Component{
     render(){
         return(
             <div>
-                <b>Header here</b><br/>
+                <Header/>
                 { React.cloneElement(this.props.children, this.props) }
-                <b>Footer here</b>
+                <Footer/>
             </div>
         );
     }
