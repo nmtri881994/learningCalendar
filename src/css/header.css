@@ -1,0 +1,13 @@
+#header{
+    color: red;
+    background-color: blue;
+    height: 40px;
+    line-height: 40px;
+    width: 100%;
+
+}
+#header-content{
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}

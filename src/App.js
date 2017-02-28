@@ -7,6 +7,10 @@ import MainComponent from './component/mainComponent'
 import ShowAllClassesContainer from './container/showAllClassesContainer'
 import FacebookLogin from './component/facebookLogin'
 
+//Import Css
+require("style-loader!css-loader!./css/header.css");
+require("style-loader!css-loader!./css/body.css");
+
 class App extends Component {
   render() {
       return (
