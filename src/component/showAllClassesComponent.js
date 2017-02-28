@@ -26,7 +26,6 @@ class ShowAllClassesComponent extends Component{
         return(
             <div>
                 <button type="button" onClick={this.showClasses}>Nhan vao day</button>
-                <b>aaaaaaaaaaa</b>
                 <div style={{width: "80%", textAlign: "center"}}>
                     <table id="myTable" className="display" cellSpacing="0">
                         <thead>
