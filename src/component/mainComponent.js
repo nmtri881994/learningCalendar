@@ -3,17 +3,20 @@ import Header from "./header"
 import Footer from './footer'
 import NavSideBar from './navSideBar'
 
-class MainComponent extends Component{
-    render(){
-        return(
+class MainComponent extends Component {
+    render() {
+        return (
             <div>
                 <Header/>
-                <div>
+                <div className="wrapper">
                     <NavSideBar/>
-                    <div id="mainContent">
-                        { React.cloneElement(this.props.children, this.props) }
-                        <Footer/>
-                    </div>
+                    <main>
+                        <div id="main-content">
+                            { React.cloneElement(this.props.children, this.props) }
+                        </div>
+
+                    </main>
+                    <Footer/>
                 </div>
             </div>
         );

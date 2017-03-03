@@ -6,6 +6,7 @@ import store, {history} from './store'
 import MainComponent from './component/mainComponent'
 import ShowAllClassesContainer from './container/showAllClassesContainer'
 import FacebookLogin from './component/facebookLogin'
+import TestTextComponent from './component/testTextComponent'
 
 //Import Css
 require("style-loader!css-loader!./css/header.css");
@@ -20,7 +21,7 @@ class App extends Component {
           <Provider store={store}>
               <Router history={history}>
                   <Route path="/" component={MainComponent}>
-                      <IndexRoute component={ShowAllClassesContainer} />
+                      <IndexRoute component={TestTextComponent} />
                       <Route path="/facebook" component={FacebookLogin}/>
                   </Route>
               </Router>
