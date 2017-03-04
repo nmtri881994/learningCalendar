@@ -1,0 +1,19 @@
+#footer{
+    box-sizing: border-box;
+    padding-left: 280px;
+    clear: both;
+    float: left;
+    width: 100%;
+    display: block;
+}
+
+.footer-body{
+    color: #707070;
+    font-size: 12px;
+    line-height: 1.66666666666667;
+    margin: 20px 0;
+    padding: 0 10px 21px;
+    min-height: 44px;
+    text-align: center;
+    display: block;
+}

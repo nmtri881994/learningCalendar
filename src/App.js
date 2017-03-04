@@ -12,7 +12,7 @@ import TestTextComponent from './component/testTextComponent'
 require("style-loader!css-loader!./css/header.css");
 require("style-loader!css-loader!./css/body.css");
 require("style-loader!css-loader!./css/navSideBar.css");
-require("style-loader!css-loader!./css/mainContent.css");
+require("style-loader!css-loader!./css/pagePanel.css");
 require("style-loader!css-loader!./css/footer.css");
 
 class App extends Component {

@@ -1,0 +1,40 @@
+.header{
+    clear: both;
+    float: left;
+    width: 100%;
+    background: #205081;
+    border-bottom: 1px solid #2e3D54;
+    box-sizing: border-box;
+    color: #fff;
+    padding: 0 10px;
+}
+
+.header-primary-items{
+}
+
+.header-secondary-items{
+}
+
+.header-logo{
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+.header-nav{
+    margin: 0;
+    padding: 0;
+    float: left;
+    list-style: none;
+}
+
+.header-nav>li{
+    float: left;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.header-user-avatar{
+    float: right;
+}

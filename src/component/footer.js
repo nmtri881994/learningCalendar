@@ -4,11 +4,13 @@
 import React, {Component} from 'react';
 class Footer extends Component{
     render(){
-        return(<div id="footer">
-            <span id="footer-content">
-                dsda
-            </span>
-        </div>);
+        return(
+            <footer id="footer">
+                <section className="footer-body">
+                    This is footer
+                </section>
+            </footer>
+        );
     }
 }
 

@@ -6,6 +6,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
     <title>React App</title>
 </head>
 
@@ -38,6 +40,14 @@
 </script>
 <div id = "root"></div>
 <script src = "bundle.js"></script>
+<script>
+    $('.slide-bar-wrapper').height($(document).height()-$('.header').height()-1);
+    $(document).ready(function () {
+        $(window).resize(function () {
+            $('.slide-bar-wrapper').height($(document).height()-$('.header').height()-1);
+        });
+    })
+</script>
 </body>
 
 </html>

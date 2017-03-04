@@ -1,0 +1,27 @@
+.page-panel{
+    min-height: 400px;
+    margin-top: 0;
+    padding-left: 280px;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+    clear: both;
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+.page-panel-inner{
+    min-height: 400px;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 0;
+}
+
+.page-panel-content{
+    box-sizing: border-box;
+    display: table-cell;
+    padding: 20px;
+    vertical-align: top;
+}
