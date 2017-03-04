@@ -1,0 +1,89 @@
+.weekday{
+    float: left;
+    margin: 5px 1px;
+    width: 120px;
+    text-align: center;
+    color: white;
+}
+
+.weekday-title{
+    font-weight: 500;
+    background-color: #95a5a6;
+}
+
+.lesson{
+    margin: 1px 0;
+    height: 80px;
+}
+
+.lesson-morning{
+    background-color: #3498db;
+}
+
+.lesson-afternoon{
+    background-color: #2ecc71;
+}
+
+.lesson-2{
+    margin: 1px 0;
+    background-color: white;
+    height: 157px;
+}
+
+.lesson-2-morning{
+    color: #3498db;
+    border: 2px solid #3498db;
+}
+
+.lesson-2-afternoon{
+    color: #3498db;
+    border: 2px solid #2ecc71;
+}
+
+.lesson-3{
+    margin: 1px 0;
+    background-color: white;
+    height: 237.5px;
+}
+
+.lesson-3-morning{
+    color: #3498db;
+    border: 2px solid #3498db;
+}
+
+.lesson-3-afternoon{
+    color: #3498db;
+    border: 2px solid #2ecc71;
+}
+
+.lesson-4{
+    margin: 1px 0;
+    background-color: white;
+    height: 319px;
+}
+
+.lesson-4-morning{
+    color: #3498db;
+    border: 2px solid #3498db;
+}
+
+.lesson-4-afternoon{
+    color: #3498db;
+    border: 2px solid #2ecc71;
+}
+
+.lesson-5{
+    margin: 1px 0;
+    background-color: white;
+    height: 399.5px;
+}
+
+.lesson-5-morning{
+    color: #3498db;
+    border: 2px solid #3498db;
+}
+
+.lesson-5-afternoon{
+    color: #3498db;
+    border: 2px solid #2ecc71;
+}

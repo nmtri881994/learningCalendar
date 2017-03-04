@@ -14,6 +14,7 @@ require("style-loader!css-loader!./css/body.css");
 require("style-loader!css-loader!./css/navSideBar.css");
 require("style-loader!css-loader!./css/pagePanel.css");
 require("style-loader!css-loader!./css/footer.css");
+require("style-loader!css-loader!./css/calendar.css");
 
 class App extends Component {
   render() {
