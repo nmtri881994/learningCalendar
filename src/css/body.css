@@ -28,3 +28,7 @@ li {
     display: list-item !important;
     text-align: -webkit-match-parent !important;
 }
+
+.login-form{
+    text-align: center;
+}
