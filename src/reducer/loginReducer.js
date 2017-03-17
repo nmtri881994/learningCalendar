@@ -3,7 +3,7 @@
  */
 import {LOGIN} from '../constant'
 
-export const userLogined = (state = null, action) => {
+export const userLogined = (state = [], action) => {
     switch (action.type){
         case LOGIN:
             localStorage.setItem('token', action.token);

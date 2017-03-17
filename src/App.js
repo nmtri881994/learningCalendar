@@ -3,13 +3,9 @@ import {Provider} from 'react-redux';
 import {Router, Route, IndexRoute} from 'react-router';
 import store, {history} from './store'
 
-import MainComponent from './component/mainComponent'
 import MainContainer from './container/mainContainer'
-import ShowAllClassesContainer from './container/showAllClassesContainer'
-import FacebookLogin from './component/facebookLogin'
-import TestTextComponent from './component/testTextComponent'
-import Calendar from './component/calendar/calendar'
 import Login from './component/login'
+import HomePage from './component/homePage'
 
 //Import CSS
 require("style-loader!css-loader!./css/header.css");
@@ -29,10 +25,11 @@ class App extends Component {
       return (
           <Provider store={store}>
               <Router history={history}>
-                  <Route path="/" component={Login}>
-                      <IndexRoute component={Calendar} />
+                  <Route path="/" component={HomePage}>
+                      <IndexRoute component={Login}> </IndexRoute>
+                      <Route path="main" component={MainContainer}/>
+
                   </Route>
-                  <Route path="/main" component={MainContainer}/>
               </Router>
           </Provider>
       );

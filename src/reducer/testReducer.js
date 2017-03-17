@@ -3,7 +3,7 @@
  */
 import {TEST} from '../constant'
 
-export const testContent = (state = "", action) => {
+export const testContent = (state = [], action) => {
     switch (action.type){
         case TEST:
             return action.testContent;
