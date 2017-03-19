@@ -4,7 +4,9 @@
 import axios from "axios";
 import {APP_URL} from '../configuration/appConfig'
 
-const BASE_URL = `${APP_URL}/api/login`;
+const BASE_URL = `${APP_URL}/api/authen/login`;
+
+const AUTHEN_URL = `${APP_URL}/api/`;
 
 //Import action
 import {showLoginMessage} from '../action/loginAction'
@@ -23,10 +25,37 @@ export const login = (account, cb) => {
 
         })
         .catch(function (error) {
-            // window.document.getElementById("login-message").innerHTML("Không tìm thấy tài khoản");
             console.log(error);
             if(error.response.status == 404){
                 showLoginMessage("Không tìm thấy tài khoản");
             }
         })
+}
+
+export const authenticateLogined = (role, cb, fcb) =>{
+    if(role == "sinh_vien"){
+        axios(AUTHEN_URL+"sinhvien-authen", {headers: { Authorization: localStorage.getItem('token')}})
+            .then(function (response) {
+                location.href = "/sinhvien"
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }else if (role == "giang_vien"){
+        axios(AUTHEN_URL+"giangvien-authen", {headers: { Authorization: localStorage.getItem('token')}})
+            .then(function (response) {
+                location.href = "/giangvien"
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }else if (role == "giao_vu"){
+        axios(AUTHEN_URL+"giaovu-authen", {headers: { Authorization: localStorage.getItem('token')}})
+            .then(function (response) {
+                location.href = "/giaovu"
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
 }

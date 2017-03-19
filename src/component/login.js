@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react'
 
-import {login} from '../action/loginAction'
+import {login, authenLogin} from '../action/loginAction'
 
 class Login extends Component {
     constructor(props) {
@@ -18,6 +18,10 @@ class Login extends Component {
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleRoleChange = this.handleRoleChange.bind(this);
+    }
+
+    componentWillMount(){
+        authenLogin(localStorage.getItem('role'));
     }
 
     handleUsernameChange(e) {

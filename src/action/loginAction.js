@@ -16,9 +16,13 @@ export const login = (account) => {
     })
 }
 
-export const showLoginMessage = (message) =>{
+export const showLoginMessage = (message) => {
     dispatch({
         type: SHOW_LOGIN_MESSAGE,
         message
     })
+}
+
+export const authenLogin = (role) => {
+    API.authenticateLogined(role);
 }
