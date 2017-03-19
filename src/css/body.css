@@ -32,3 +32,11 @@ li {
 .login-form{
     text-align: center;
 }
+
+.error-message{
+    color: red;
+}
+
+#login-message{
+    margin-top: 10px;
+}

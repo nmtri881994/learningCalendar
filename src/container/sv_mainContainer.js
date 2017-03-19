@@ -4,10 +4,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import MainComponent from '../component/mainComponent'
+import SV_MainComponent from '../component/sv_mainComponent'
 
 const mapStatetoProps = (state, ownProps) => {
-    console.log("container", state.userLogined);
     return {
         userLogined: state.userLogined
     };
@@ -18,9 +17,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }
 }
 
-const MainContainer = connect(
+const SV_MainContainer = connect(
     mapStatetoProps,
     mapDispatchToProps
-)(MainComponent)
+)(SV_MainComponent)
 
-export default MainContainer;
+export default SV_MainContainer;

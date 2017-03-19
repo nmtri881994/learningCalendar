@@ -10,12 +10,14 @@ class Login extends Component {
         super(props);
         this.state = {
             tenDangNhap: "",
-            matKhau: ""
+            matKhau: "",
+            role: "giao_vu"
         }
 
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleRoleChange = this.handleRoleChange.bind(this);
     }
 
     handleUsernameChange(e) {
@@ -31,11 +33,18 @@ class Login extends Component {
         });
     }
 
+    handleRoleChange(e){
+        this.setState({
+            role: e.target.value
+        });
+    }
+
+
     handleSubmit(){
         var account = {
             tenDangNhap: this.state.tenDangNhap,
             matKhau: this.state.matKhau,
-            urlPath: ""
+            role: this.state.role
         }
         login(account);
     }
@@ -49,21 +58,34 @@ class Login extends Component {
                         <h1>Đăng nhập</h1>
                     </div>
 
-                    <div className="login-form">
+                    <form className="login-form">
                         <div className="control-group">
-                            <input type="text" className="login-field" value={this.state.tenDangNhap}
+                            <input type="text" className="login-field" required value={this.state.tenDangNhap}
                                    placeholder="Mã đăng nhập"
                                    id="login-name" onChange={this.handleUsernameChange}/>
                         </div>
 
                         <div className="control-group">
-                            <input type="password" className="login-field" value={this.state.matKhau}
+                            <input type="password" className="login-field" required value={this.state.matKhau}
                                    placeholder="Mật khẩu"
                                    id="login-pass" onChange={this.handlePasswordChange}/>
                         </div>
 
+                        <div className="control-group">
+                            <div id="role-choose-div">
+                                <select id="role-choose-select-box" value={this.state.role} onChange={this.handleRoleChange}>
+                                    <option className="role-option" value="giao_vu">Giáo vụ</option>
+                                    <option className="role-option" value="giang_vien">Giảng viên</option>
+                                    <option className="role-option" value="sinh_vien">Sinh viên</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <a className="btn btn-primary btn-large btn-block" href="#" onClick={this.handleSubmit}>Đăng nhập</a>
-                    </div>
+                        <div id="login-message" ref="loginMessage" className="error-message">
+                            {this.props.loginMessage}
+                        </div>
+                    </form>
                 </div>
             </div>);
     }

@@ -2,12 +2,9 @@ import React, {Component} from 'react'
 import Header from "./header"
 import NavSideBar from './navSideBar'
 import Footer from './footer'
-import {test} from '../action/testAction'
 
-class MainComponent extends Component {
+class SV_MainComponent extends Component {
     render() {
-        test();
-        console.log("component ",this.props.userLogined)
         return (
             <div id="page">
                 <div className="wrapper">
@@ -29,4 +26,4 @@ class MainComponent extends Component {
     }
 }
 
-export default MainComponent;
+export default SV_MainComponent;

@@ -3,10 +3,9 @@
  */
 import {TEST} from '../constant'
 
-import {dispatch} from '../store'
+import {dispatch} from '../index'
 
 export const test = () => {
-    alert(1);
     dispatch({
         type: TEST,
         testContent: "123"
