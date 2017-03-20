@@ -3,7 +3,7 @@
  */
 import {LOGIN, SHOW_LOGIN_MESSAGE} from '../constant'
 
-import * as API from '../apiUtility/LoginApi'
+import * as API from '../apiUtility/loginApi'
 import {dispatch} from '../index'
 
 export const login = (account) => {
@@ -23,6 +23,16 @@ export const showLoginMessage = (message) => {
     })
 }
 
-export const authenLogin = (role) => {
-    API.authenticateLogined(role);
+export const authenLogin1 = (role) => {
+    API.authenticateLogined1(role);
+}
+
+export const authenLogin2 = (role) => {
+    API.authenticateLogined2(role);
+}
+
+export const logout = () => {
+    localStorage.removeItem("role");
+    localStorage.removeItem("token");
+    location.href = "/";
 }

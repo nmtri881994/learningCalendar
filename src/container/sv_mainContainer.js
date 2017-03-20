@@ -8,7 +8,7 @@ import SV_MainComponent from '../component/sv_mainComponent'
 
 const mapStatetoProps = (state, ownProps) => {
     return {
-        userLogined: state.userLogined
+        currentUserName: state.currentUserName
     };
 };
 

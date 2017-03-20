@@ -3,10 +3,9 @@
     float: left;
     width: 100%;
     background: #205081;
-    border-bottom: 1px solid #2e3D54;
     box-sizing: border-box;
     color: #fff;
-    padding: 0 10px;
+    padding-left: 10px;
 }
 
 .header-primary-items{
@@ -21,6 +20,11 @@
     float: left;
 }
 
+.logo{
+    height: 40px;
+    display: block;
+}
+
 .header-nav{
     margin: 0;
     padding: 0;
@@ -30,11 +34,27 @@
 
 .header-nav>li{
     float: left;
-    padding: 0;
     margin: 0;
     list-style: none;
 }
 
-.header-user-avatar{
+.header-user{
     float: right;
+    padding: 13px 10px;
+    display: block;
+    line-height: 1;
+}
+
+.quit-button:hover{
+    background-color: #2196F3;
+}
+
+.header-nav-item{
+    padding: 13px 10px;
+    display: block;
+    line-height: 1;
+}
+
+.header-nav-item:hover{
+    background-color: #2196F3;
 }

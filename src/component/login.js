@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react'
 
-import {login, authenLogin} from '../action/loginAction'
+import {login, authenLogin1} from '../action/loginAction'
 
 class Login extends Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class Login extends Component {
     }
 
     componentWillMount(){
-        authenLogin(localStorage.getItem('role'));
+        authenLogin1(localStorage.getItem('role'));
     }
 
     handleUsernameChange(e) {

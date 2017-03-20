@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
+    <script src="http://malsup.github.io/min/jquery.blockUI.min.js"></script>
 
 
     <title>React App</title>
@@ -18,29 +19,34 @@
     $(document).ready(function(){
         $('#myTable').DataTable();
     });
-</script>
-<script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '1424378497574694',
-            xfbml      : true,
-            version    : 'v2.8'
-        });
-        FB.AppEvents.logPageView();
-        FB.getLoginStatus(function(response){
-            console.log(response);
-        })
-    };
 
-//    facebook
-//    (function(d, s, id){
-//        var js, fjs = d.getElementsByTagName(s)[0];
-//        if (d.getElementById(id)) {return;}
-//        js = d.createElement(s); js.id = id;
-//        js.src = "//connect.facebook.net/en_US/sdk.js";
-//        fjs.parentNode.insertBefore(js, fjs);
-//    }(document, 'script', 'facebook-jssdk'));
+    var loading= { message: '<img src="assets/loading.gif" width="120"/>',css: {
+        border:     'none',
+        backgroundColor:'transparent'
+    },baseZ: 9999 }
 </script>
+<!--<script>-->
+    <!--window.fbAsyncInit = function() {-->
+        <!--FB.init({-->
+            <!--appId      : '1424378497574694',-->
+            <!--xfbml      : true,-->
+            <!--version    : 'v2.8'-->
+        <!--});-->
+        <!--FB.AppEvents.logPageView();-->
+        <!--FB.getLoginStatus(function(response){-->
+            <!--console.log(response);-->
+        <!--})-->
+    <!--};-->
+
+    <!--facebook-->
+    <!--(function(d, s, id){-->
+        <!--var js, fjs = d.getElementsByTagName(s)[0];-->
+        <!--if (d.getElementById(id)) {return;}-->
+        <!--js = d.createElement(s); js.id = id;-->
+        <!--js.src = "//connect.facebook.net/en_US/sdk.js";-->
+        <!--fjs.parentNode.insertBefore(js, fjs);-->
+    <!--}(document, 'script', 'facebook-jssdk'));-->
+<!--</script>-->
 <div id = "root"></div>
 <script src = "bundle.js"></script>
 <script>

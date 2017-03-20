@@ -8,6 +8,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 //Import reducers
 import {userLogined, loginMessage} from './reducer/loginReducer'
 import {testContent} from './reducer/testReducer'
+import {currentUserName} from './reducer/userReducer'
 
 //Import components
 import HomePage from './component/homePage'
@@ -29,12 +30,14 @@ require("style-loader!css-loader!./css/loginForm.css");
 
 //Import JS
 // require("style-loader!./js/googleForm");
+// require("./../assets/loading");
 
 const store = createStore(
     combineReducers({
         userLogined,
         loginMessage,
         testContent,
+        currentUserName,
         routing: routerReducer
     }),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

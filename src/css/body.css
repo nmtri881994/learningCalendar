@@ -40,3 +40,7 @@ li {
 #login-message{
     margin-top: 10px;
 }
+
+.cursor{
+    cursor: pointer;
+}

@@ -3,12 +3,20 @@ import Header from "./header"
 import NavSideBar from './navSideBar'
 import Footer from './footer'
 
+//Import actions
+import {authenLogin2} from '../action/loginAction'
+
 class SV_MainComponent extends Component {
+
+    componentWillMount(){
+        authenLogin2(localStorage.getItem('role'));
+    }
+
     render() {
         return (
             <div id="page">
                 <div className="wrapper">
-                    <Header/>
+                    <Header currentUserName={this.props.currentUserName}/>
                     <div id="content">
                         <NavSideBar/>
                         <div className="page-panel">
