@@ -9,6 +9,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import {userLogined, loginMessage} from './reducer/loginReducer'
 import {testContent} from './reducer/testReducer'
 import {currentUserName} from './reducer/userReducer'
+import {studentWeekCalendar} from './reducer/studentReducer'
 
 //Import components
 import HomePage from './component/homePage'
@@ -39,6 +40,7 @@ const store = createStore(
         loginMessage,
         testContent,
         currentUserName,
+        studentWeekCalendar,
         routing: routerReducer
     }),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

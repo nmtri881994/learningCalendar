@@ -8,6 +8,7 @@ import SV_WeekCalendar from '../component/student/sv_weekCalendar'
 
 const mapStatetoProps = (state, ownProps) => {
     return {
+        weekCalendar: state.studentWeekCalendar
     };
 };
 
