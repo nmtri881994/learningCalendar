@@ -29,10 +29,15 @@ export const login = (account, cb) => {
             if (error.response.status == 404) {
                 showLoginMessage("Không tìm thấy tài khoản");
             }
+            if (error.response.status == 403) {
+                showLoginMessage("Chọn sai vai trò");
+            }
         })
+    $.unblockUI();
 }
 
 export const authenticateLogined1 = (role, cb, fcb) => {
+    $.blockUI(loading);
     if (role == "sinh_vien") {
         axios(AUTHEN_URL + "sinhvien-authen", {headers: {Authorization: localStorage.getItem('token')}})
             .then(function (response) {
@@ -64,9 +69,11 @@ export const authenticateLogined1 = (role, cb, fcb) => {
                 console.log(error);
             })
     }
+    $.unblockUI();
 }
 
 export const authenticateLogined2 = (role, cb, fcb) => {
+    $.blockUI(loading);
     if (role == "sinh_vien") {
         axios(AUTHEN_URL + "sinhvien-authen", {headers: {Authorization: localStorage.getItem('token')}})
             .then(function (response) {
@@ -103,4 +110,5 @@ export const authenticateLogined2 = (role, cb, fcb) => {
     } else if (!role) {
         location.href = "/"
     }
+    $.unblockUI();
 }

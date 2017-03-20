@@ -28,7 +28,7 @@ class Header extends Component {
                     <div className="header-inner">
                         <div className="header-primary-items">
                             <div className="header-logo">
-                                <img className="logo" src={require('../image/logo.png')} />
+                                <img className="logo" src={"/"+require('../image/logo.png')} />
                             </div>
                             <ul className="header-nav">
                                 <li className="header-nav-item">Menu 1</li>

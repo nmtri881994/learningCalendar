@@ -1,25 +1,24 @@
 /**
- * Created by XuanVinh on 3/17/2017.
+ * Created by XuanVinh on 3/20/2017.
  */
 import React from 'react'
 import {connect} from 'react-redux'
 
-import SV_MainComponent from '../component/student/sv_main'
+import SV_WeekCalendar from '../component/student/sv_weekCalendar'
 
 const mapStatetoProps = (state, ownProps) => {
     return {
-        currentUserName: state.currentUserName
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-    }
+    };
 }
 
-const SV_MainContainer = connect(
+const SV_WeekCalendarContainer = connect(
     mapStatetoProps,
     mapDispatchToProps
-)(SV_MainComponent)
+)(SV_WeekCalendar)
 
-export default SV_MainContainer;
+export default SV_WeekCalendarContainer;

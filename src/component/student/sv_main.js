@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import Header from "./header"
-import NavSideBar from './navSideBar'
-import Footer from './footer'
+import Header from "../header"
+import SV_NavSideBar from './sv_navSideBar'
+import Footer from '../footer'
 
 //Import actions
-import {authenLogin2} from '../action/loginAction'
+import {authenLogin2} from '../../action/loginAction'
 
 class SV_MainComponent extends Component {
 
@@ -18,7 +18,7 @@ class SV_MainComponent extends Component {
                 <div className="wrapper">
                     <Header currentUserName={this.props.currentUserName}/>
                     <div id="content">
-                        <NavSideBar/>
+                        <SV_NavSideBar/>
                         <div className="page-panel">
                             <div className="page-panel-inner">
                                 <div className="page-panel-content">

@@ -17,6 +17,7 @@ import HomePage from './component/homePage'
 //Import container
 import SV_MainContainer from './container/sv_mainContainer'
 import LoginContainer from './container/loginContainer'
+import SV_WeekCalendarContainer from './container/sv_weekCalendarContainer'
 
 //Import CSS
 require("style-loader!css-loader!./css/header.css");
@@ -51,7 +52,9 @@ ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
             <Route path="/" component={LoginContainer}/>
-            <Route path="sinhvien" component={SV_MainContainer}/>
+            <Route path="sinhvien" component={SV_MainContainer}>
+                <Route path="thoi-khoa-bieu-tuan" component={SV_WeekCalendarContainer} />
+            </Route>
             <Route path="giangvien" component={SV_MainContainer}/>
             <Route path="giaovu" component={SV_MainContainer}/>
         </Router>
