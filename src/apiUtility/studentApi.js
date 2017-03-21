@@ -17,3 +17,27 @@ export const getCalendarByWeek = (date, cb) =>{
         })
     $.unblockUI();
 }
+
+export const getLearningYear = (date, cb) =>{
+    $.blockUI(loading);
+    axios(BASE_URL+"/learning-year/"+date, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    $.unblockUI();
+}
+
+export const getWeekNumber = (date, cb) =>{
+    $.blockUI(loading);
+    axios(BASE_URL+"/week-number/"+date, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    $.unblockUI();
+}

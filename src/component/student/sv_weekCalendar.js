@@ -2,14 +2,14 @@ import React, {Component} from 'react'
 import moment from 'moment'
 
 //Import actions
-import {getCurrentWeekCalendar} from '../../action/studentAction'
+import {getCurrentWeekCalendar, getLearningYear, getWeekNumber} from '../../action/studentAction'
 
 //Import components
 import Weekday from '../calendar/weekday'
 
 class SV_WeekCalendar extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             lopHocThu2s: [],
@@ -18,58 +18,68 @@ class SV_WeekCalendar extends Component {
             lopHocThu5s: [],
             lopHocThu6s: [],
             lopHocThu7s: [],
-            lopHocCNs: []
+            lopHocCNs: [],
+            year: null,
+            weekNumber: 0
         }
     }
 
-    componentWillMount(){
-        getCurrentWeekCalendar(moment().format("YYYY-MM-DD"));
+    componentWillMount() {
+        var currentDate = moment().format("YYYY-MM-DD");
+        getCurrentWeekCalendar(currentDate);
+        getLearningYear(currentDate);
+        getWeekNumber(currentDate);
     }
 
-    getTietNumbersFromTiets(tiets){
-        var tietNumbers = [];
-        for(var m =0; m < tiets.length; m++) {
-            switch (tiets[m].tkb_tiet.ten){
-                case "Tiết 1":
-                    tietNumbers.push(1);
-                    break;
-                case "Tiết 2":
-                    tietNumbers.push(2);
-                    break;
-                case "Tiết 3":
-                    tietNumbers.push(3);
-                    break;
-                case "Tiết 4":
-                    tietNumbers.push(4);
-                    break;
-                case "Tiết 5":
-                    tietNumbers.push(5);
-                    break;
-                case "Tiết 6":
-                    tietNumbers.push(6);
-                    break;
-                case "Tiết 7":
-                    tietNumbers.push(7);
-                    break;
-                case "Tiết 8":
-                    tietNumbers.push(8);
-                    break;
-                case "Tiết 9":
-                    tietNumbers.push(9);
-                    break;
-                case "Tiết 10":
-                    tietNumbers.push(10);
-                    break;
-                default:
-                    console.log(tiets[m].tkb_tiet.ten);
-            }
+    getTietByTenTiet(tenTiet) {
+        switch (tenTiet) {
+            case "Tiết 1":
+                return 1;
+            case "Tiết 2":
+                return 2;
+            case "Tiết 3":
+                return 3;
+            case "Tiết 4":
+                return 4;
+            case "Tiết 5":
+                return 5;
+            case "Tiết 6":
+                return 6;
+            case "Tiết 7":
+                return 7;
+            case "Tiết 8":
+                return 8;
+            case "Tiết 9":
+                return 9;
+            case "Tiết 10":
+                return 10;
+            default:
+                console.log(lichHocTheoNgay.tkb_tietDauTien.ten);
+                return 0;
+        }
+    }
+
+    getLopHoc(lichHocTheoNgay, name) {
+        var type = "";
+        if (lichHocTheoNgay.giangDuong.dayNha.ten == "Dãy nhà lý thuyết") {
+            type = "Lý thuyết";
+        }
+        if (lichHocTheoNgay.giangDuong.dayNha.ten == "Dãy nhà thực hành") {
+            type = "Thực hành";
         }
 
-        return tietNumbers;
+        var tietDauTien = this.getTietByTenTiet(lichHocTheoNgay.tkb_tietDauTien.ten);
+        var tietCuoiCung = this.getTietByTenTiet(lichHocTheoNgay.tkb_tietCuoiCung.ten);
+
+        return {
+            name: name,
+            startLesson: tietDauTien,
+            endLesson: tietCuoiCung,
+            type: type
+        };
     }
 
-    componentWillReceiveProps(nextProps){
-
+    componentWillReceiveProps(nextProps) {
         var lopHocThu2s = [];
         var lopHocThu3s = [];
         var lopHocThu4s = [];
@@ -80,153 +90,34 @@ class SV_WeekCalendar extends Component {
 
         var weekCalendar = nextProps.weekCalendar;
 
-        if(weekCalendar != null){
-            for(var i = 0; i< weekCalendar.length; i++){
+        console.log(weekCalendar);
+
+        if (weekCalendar != null) {
+            for (var i = 0; i < weekCalendar.length; i++) {
                 var name = weekCalendar[i].monHoc.ten;
                 var lichHocTheoNgays = weekCalendar[i].tkb_lichHocTheoNgays;
-                for(var j = 0; j< lichHocTheoNgays.length; j++){
-                    var tiets = [];
-                    var tietNumbers = [];
-                    switch(lichHocTheoNgays[j].tkb_thu.ten){
+                for (var j = 0; j < lichHocTheoNgays.length; j++) {
+                    switch (lichHocTheoNgays[j].tkb_thu.ten) {
                         case "Thứ 2":
-                            tiets = lichHocTheoNgays[j].tkb_lichHocTheoNgay_tiets;
-                            tietNumbers = this.getTietNumbersFromTiets(tiets);
-
-                            var type;
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà lý thuyết"){
-                                type="Lý thuyết";
-                            }
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà thực hành"){
-                                type="Thực hành";
-                            }
-
-                            lopHocThu2s.push({
-                                name: name,
-                                startLesson: Math.min(...tietNumbers),
-                                endLesson: Math.max(...tietNumbers),
-                                type: type
-                            });
-
+                            lopHocThu2s.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         case "Thứ 3":
-                            tiets = lichHocTheoNgays[j].tkb_lichHocTheoNgay_tiets;
-                            tietNumbers = this.getTietNumbersFromTiets(tiets);
-
-                            var type;
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà lý thuyết"){
-                                type="Lý thuyết";
-                            }
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà thực hành"){
-                                type="Thực hành";
-                            }
-
-                            lopHocThu3s.push({
-                                name: name,
-                                startLesson: Math.min(...tietNumbers),
-                                endLesson: Math.max(...tietNumbers),
-                                type: type
-                            });
-
+                            lopHocThu3s.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         case "Thứ 4":
-                            tiets = lichHocTheoNgays[j].tkb_lichHocTheoNgay_tiets;
-                            tietNumbers = this.getTietNumbersFromTiets(tiets);
-
-                            var type;
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà lý thuyết"){
-                                type="Lý thuyết";
-                            }
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà thực hành"){
-                                type="Thực hành";
-                            }
-
-                            lopHocThu4s.push({
-                                name: name,
-                                startLesson: Math.min(...tietNumbers),
-                                endLesson: Math.max(...tietNumbers),
-                                type: type
-                            });
-
+                            lopHocThu4s.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         case "Thứ 5":
-                            tiets = lichHocTheoNgays[j].tkb_lichHocTheoNgay_tiets;
-                            tietNumbers = this.getTietNumbersFromTiets(tiets);
-
-                            var type;
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà lý thuyết"){
-                                type="Lý thuyết";
-                            }
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà thực hành"){
-                                type="Thực hành";
-                            }
-
-                            lopHocThu5s.push({
-                                name: name,
-                                startLesson: Math.min(...tietNumbers),
-                                endLesson: Math.max(...tietNumbers),
-                                type: type
-                            });
-
+                            lopHocThu5s.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         case "Thứ 6":
-                            tiets = lichHocTheoNgays[j].tkb_lichHocTheoNgay_tiets;
-                            tietNumbers = this.getTietNumbersFromTiets(tiets);
-
-                            var type;
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà lý thuyết"){
-                                type="Lý thuyết";
-                            }
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà thực hành"){
-                                type="Thực hành";
-                            }
-
-                            lopHocThu6s.push({
-                                name: name,
-                                startLesson: Math.min(...tietNumbers),
-                                endLesson: Math.max(...tietNumbers),
-                                type: type
-                            });
-
+                            lopHocThu6s.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         case "Thứ 7":
-                            tiets = lichHocTheoNgays[j].tkb_lichHocTheoNgay_tiets;
-                            tietNumbers = this.getTietNumbersFromTiets(tiets);
-
-                            var type;
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà lý thuyết"){
-                                type="Lý thuyết";
-                            }
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà thực hành"){
-                                type="Thực hành";
-                            }
-
-                            lopHocThu7s.push({
-                                name: name,
-                                startLesson: Math.min(...tietNumbers),
-                                endLesson: Math.max(...tietNumbers),
-                                type: type
-                            });
-
+                            lopHocThu7s.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         case "Chủ nhật":
-                            tiets = lichHocTheoNgays[j].tkb_lichHocTheoNgay_tiets;
-                            tietNumbers = this.getTietNumbersFromTiets(tiets);
-
-                            var type;
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà lý thuyết"){
-                                type="Lý thuyết";
-                            }
-                            if(lichHocTheoNgays[j].giangDuong.dayNha.ten == "Dãy nhà thực hành"){
-                                type="Thực hành";
-                            }
-
-                            lopHocCNs.push({
-                                name: name,
-                                startLesson: Math.min(...tietNumbers),
-                                endLesson: Math.max(...tietNumbers),
-                                type: type
-                            });
-
+                            lopHocCNss.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         default:
                             console.log(lichHocTheoNgays[j].tkb_thu.ten);
@@ -242,22 +133,29 @@ class SV_WeekCalendar extends Component {
             lopHocThu5s: lopHocThu5s,
             lopHocThu6s: lopHocThu6s,
             lopHocThu7s: lopHocThu7s,
-            lopHocCNs: lopHocCNs
+            lopHocCNs: lopHocCNs,
+            year: nextProps.year,
+            weekNumber: nextProps.weekNumber
         });
 
     }
 
     render() {
         return (
-            <div className="calendar">
-                <Weekday name="Thứ 2" lopHocs= {this.state.lopHocThu2s}/>
-                <Weekday name="Thứ 3" lopHocs= {this.state.lopHocThu3s}/>
-                <Weekday name="Thứ 4" lopHocs= {this.state.lopHocThu4s}/>
-                <Weekday name="Thứ 5" lopHocs= {this.state.lopHocThu5s}/>
-                <Weekday name="Thứ 6" lopHocs= {this.state.lopHocThu6s}/>
-                <Weekday name="Thứ 7" lopHocs= {this.state.lopHocThu7s}/>
-                <Weekday name="Chủ nhật" lopHocs= {this.state.lopHocCNs}/>
+            <div>
+                {this.state.year!=null?this.state.year.name:""} <br/>
+                {this.state.weekNumber}
+                <div className="calendar">
+                    <Weekday name="Thứ 2" lopHocs={this.state.lopHocThu2s}/>
+                    <Weekday name="Thứ 3" lopHocs={this.state.lopHocThu3s}/>
+                    <Weekday name="Thứ 4" lopHocs={this.state.lopHocThu4s}/>
+                    <Weekday name="Thứ 5" lopHocs={this.state.lopHocThu5s}/>
+                    <Weekday name="Thứ 6" lopHocs={this.state.lopHocThu6s}/>
+                    <Weekday name="Thứ 7" lopHocs={this.state.lopHocThu7s}/>
+                    <Weekday name="Chủ nhật" lopHocs={this.state.lopHocCNs}/>
+                </div>
             </div>
+
         );
     }
 }
