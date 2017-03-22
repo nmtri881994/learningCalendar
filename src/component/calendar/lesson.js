@@ -33,6 +33,13 @@ class Lesson extends Component{
             css = "lesson-"+numberOfLesson+" " + css + "-"+ numberOfLesson;
         }
 
+        if(type == "Thực hành"){
+            css += " thuc-hanh";
+        }
+        if(type == "Lý thuyết"){
+            css += " ly-thuyet";
+        }
+
         return (
             <div className={css}>
                 {subjectName} <br/>

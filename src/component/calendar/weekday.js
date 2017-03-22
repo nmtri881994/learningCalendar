@@ -69,7 +69,8 @@ class Weekday extends Component {
         return (
             <div className="weekday">
                 <div className="weekday-title">
-                    {this.props.name}
+                    {this.props.name}<br/>
+                    {this.props.date}
                 </div>
                 <div className="weekday-lessons">
                     {

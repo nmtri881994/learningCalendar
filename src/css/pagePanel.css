@@ -13,6 +13,7 @@
 
 .page-panel-inner{
     min-height: 400px;
+    min-width: 820px;
     display: table;
     width: 100%;
     table-layout: fixed;

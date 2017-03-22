@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import moment from 'moment'
 
 //Import actions
-import {getCurrentWeekCalendar, getLearningYear, getWeekNumber} from '../../action/studentAction'
+import {getCurrentWeekCalendar, getLearningYear, getWeekNumber, setCurrentDate} from '../../action/studentAction'
 
 //Import components
 import Weekday from '../calendar/weekday'
@@ -20,12 +20,35 @@ class SV_WeekCalendar extends Component {
             lopHocThu7s: [],
             lopHocCNs: [],
             year: null,
-            weekNumber: 0
+            weekNumber: 0,
+            currentDate: "",
+            week: []
         }
+        this.backOneWeek = this.backOneWeek.bind(this);
+        this.forthOneWeek = this.forthOneWeek.bind(this);
+    }
+
+    backOneWeek() {
+        var currentDate = moment(this.state.currentDate);
+        var backOneWeekDate = currentDate.add(-7, 'days').format("YYYY-MM-DD");
+        setCurrentDate(backOneWeekDate);
+        getCurrentWeekCalendar(backOneWeekDate);
+        getLearningYear(backOneWeekDate);
+        getWeekNumber(backOneWeekDate);
+    }
+
+    forthOneWeek(){
+        var currentDate = moment(this.state.currentDate);
+        var forthOneWeekDate = currentDate.add(7, 'days').format("YYYY-MM-DD");
+        setCurrentDate(forthOneWeekDate);
+        getCurrentWeekCalendar(forthOneWeekDate);
+        getLearningYear(forthOneWeekDate);
+        getWeekNumber(forthOneWeekDate);
     }
 
     componentWillMount() {
         var currentDate = moment().format("YYYY-MM-DD");
+        setCurrentDate(currentDate);
         getCurrentWeekCalendar(currentDate);
         getLearningYear(currentDate);
         getWeekNumber(currentDate);
@@ -80,6 +103,8 @@ class SV_WeekCalendar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
+        //Get lopHocs per day
         var lopHocThu2s = [];
         var lopHocThu3s = [];
         var lopHocThu4s = [];
@@ -87,10 +112,7 @@ class SV_WeekCalendar extends Component {
         var lopHocThu6s = [];
         var lopHocThu7s = [];
         var lopHocCNs = [];
-
         var weekCalendar = nextProps.weekCalendar;
-
-        console.log(weekCalendar);
 
         if (weekCalendar != null) {
             for (var i = 0; i < weekCalendar.length; i++) {
@@ -126,6 +148,16 @@ class SV_WeekCalendar extends Component {
             }
         }
 
+        //Get all day of current week
+        var currentdate = moment(nextProps.currentDay);
+        var numberOfDate = currentdate.day();
+
+        var week = [];
+        for (var i = 1; i <= 7; i++) {
+            week.push(currentdate.add(-numberOfDate + i, 'days').format("YYYY-MM-DD"));
+        }
+
+
         this.setState({
             lopHocThu2s: lopHocThu2s,
             lopHocThu3s: lopHocThu3s,
@@ -135,24 +167,30 @@ class SV_WeekCalendar extends Component {
             lopHocThu7s: lopHocThu7s,
             lopHocCNs: lopHocCNs,
             year: nextProps.year,
-            weekNumber: nextProps.weekNumber
+            weekNumber: nextProps.weekNumber,
+            currentDate: nextProps.currentDay,
+            week: week
         });
 
     }
 
     render() {
         return (
-            <div>
-                {this.state.year!=null?this.state.year.name:""} <br/>
-                {this.state.weekNumber}
+            <div className="calendar-panel">
+                <div>
+                    Năm học: {this.state.year != null ? this.state.year.name : ""} <br/>
+                    <i className="fa fa-backward cursor" aria-hidden="true" onClick={this.backOneWeek}/>
+                    <span className="week-name">Tuần: {this.state.weekNumber}</span>
+                    <i className="fa fa-forward cursor" aria-hidden="true" onClick={this.forthOneWeek}/>
+                </div>
                 <div className="calendar">
-                    <Weekday name="Thứ 2" lopHocs={this.state.lopHocThu2s}/>
-                    <Weekday name="Thứ 3" lopHocs={this.state.lopHocThu3s}/>
-                    <Weekday name="Thứ 4" lopHocs={this.state.lopHocThu4s}/>
-                    <Weekday name="Thứ 5" lopHocs={this.state.lopHocThu5s}/>
-                    <Weekday name="Thứ 6" lopHocs={this.state.lopHocThu6s}/>
-                    <Weekday name="Thứ 7" lopHocs={this.state.lopHocThu7s}/>
-                    <Weekday name="Chủ nhật" lopHocs={this.state.lopHocCNs}/>
+                    <Weekday name="Thứ 2" lopHocs={this.state.lopHocThu2s} date={this.state.week[0]}/>
+                    <Weekday name="Thứ 3" lopHocs={this.state.lopHocThu3s} date={this.state.week[1]}/>
+                    <Weekday name="Thứ 4" lopHocs={this.state.lopHocThu4s} date={this.state.week[2]}/>
+                    <Weekday name="Thứ 5" lopHocs={this.state.lopHocThu5s} date={this.state.week[3]}/>
+                    <Weekday name="Thứ 6" lopHocs={this.state.lopHocThu6s} date={this.state.week[4]}/>
+                    <Weekday name="Thứ 7" lopHocs={this.state.lopHocThu7s} date={this.state.week[5]}/>
+                    <Weekday name="Chủ nhật" lopHocs={this.state.lopHocCNs} date={this.state.week[6]}/>
                 </div>
             </div>
 
