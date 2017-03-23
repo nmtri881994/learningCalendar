@@ -13,7 +13,8 @@ var config = {
         hot: true,
         inline: true,
         port: 3000,
-        historyApiFallback: true
+        historyApiFallback: true,
+        host: '192.168.1.8'
     },
 
     module: {

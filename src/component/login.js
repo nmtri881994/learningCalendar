@@ -45,6 +45,8 @@ class Login extends Component {
 
 
     handleSubmit(){
+        alert(this.state.tenDangNhap);
+        alert(this.state.matKhau);
         var account = {
             tenDangNhap: this.state.tenDangNhap,
             matKhau: this.state.matKhau,
@@ -85,7 +87,7 @@ class Login extends Component {
                             </div>
                         </div>
 
-                        <a className="btn btn-primary btn-large btn-block" href="#" onClick={this.handleSubmit}>Đăng nhập</a>
+                        <a className="btn btn-primary btn-large btn-block" onClick={this.handleSubmit}>Đăng nhập</a>
                         <div id="login-message" ref="loginMessage" className="error-message">
                             {this.props.loginMessage}
                         </div>

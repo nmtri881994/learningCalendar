@@ -47,13 +47,15 @@
         <!--fjs.parentNode.insertBefore(js, fjs);-->
     <!--}(document, 'script', 'facebook-jssdk'));-->
 <!--</script>-->
+
 <div id = "root"></div>
 <script src = "/bundle.js"></script>
 <script>
-    $('.slide-bar-wrapper').height($(document).height()-$('.header').height()-1);
+//    $('.slide-bar-wrapper').height($(document).height()-$('.header').height()-1);
     $(document).ready(function () {
+        $('.slide-bar-wrapper').height($(window).height()-$('.header').height());
         $(window).resize(function () {
-            $('.slide-bar-wrapper').height($(document).height()-$('.header').height()-1);
+            $('.slide-bar-wrapper').height($(window).height()-$('.header').height());
         });
     })
 </script>

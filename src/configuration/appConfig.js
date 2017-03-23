@@ -1,4 +1,4 @@
-export const APP_URL = "http://localhost:8080";
+export const APP_URL = "http://192.168.1.8:8080";
 
 //time and date format for moment display || consider for using two format . please sync it
 export const  DATE_FORMAT = 'YYYY-MM-DD'
