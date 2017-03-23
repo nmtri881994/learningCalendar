@@ -1,125 +1,109 @@
-.weekday{
+.weekday {
     float: left;
     margin: 5px 1px;
-    width: 120px;
+    width: 150px;
     text-align: center;
     color: white;
 }
 
-.weekday-title{
+.weekday-title {
     font-weight: 500;
-    background-color: #95a5a6;
+    background-color: #1675b7;
 }
 
-.lesson-morning{
+.lesson-morning {
+    text-align: left;
+    color: black;
     margin: 1px 0;
     height: 80px;
-    background-color: #3498db;
+    background-color: #99B1Da;
+    overflow: hidden;
+    position: relative;
 }
 
-.lesson-afternoon{
+.lesson-afternoon {
+    text-align: left;
+    color: black;
     margin: 1px 0;
     height: 80px;
-    background-color: #009688;
+    background-color: #4DB6AC;
 }
 
-.lesson-1{
+.lesson-1 {
     margin: 1px 0;
     height: 80px;
 }
 
-.lesson-morning-1{
-    outline: 2px solid #3498db;
-    outline-offset: -2px;
-}
-
-.lesson-afternoon-1{
-    outline: 2px solid #009688;
-    outline-offset: -2px;
-}
-
-.lesson-2{
+.lesson-2 {
     margin: 1px 0;
     height: 161px;
 }
 
-.lesson-morning-2{
-    outline: 2px solid #3498db;
-    outline-offset: -2px;
-}
-
-.lesson-afternoon-2{
-    outline: 2px solid #009688;
-    outline-offset: -2px;
-}
-
-.lesson-3{
+.lesson-3 {
     margin: 1px 0;
     height: 242px;
 }
 
-.lesson-morning-3{
-    outline: 2px solid #3498db;
-    outline-offset: -2px;
-}
-
-.lesson-afternoon-3{
-    outline: 2px solid #009688;
-    outline-offset: -2px;
-}
-
-.lesson-4{
+.lesson-4 {
     margin: 1px 0;
     height: 323px;
 }
 
-.lesson-morning-4{
-    outline: 2px solid #3498db;
-    outline-offset: -2px;
-}
-
-.lesson-afternoon-4{
-    outline: 2px solid #009688;
-    outline-offset: -2px;
-}
-
-.lesson-5{
+.lesson-5 {
     margin: 1px 0;
     height: 404px;
 }
 
-.lesson-morning-5{
-    outline: 2px solid #3498db;
-    outline-offset: -2px;
-}
-
-.lesson-afternoon-5{
-    outline: 2px solid #009688;
-    outline-offset: -2px;
-}
-
-.calendar{
+.calendar {
+    font-family: "Comic Sans MS", cursive, sans-serif;
     display: inline-block;
 }
 
-.calendar-panel{
+.calendar-panel {
     text-align: center;
 }
 
-.week-name{
+.week-name {
     margin: 0 10px;
 }
 
-.ly-thuyet{
-    font-size: 12px;
+.ly-thuyet {
     font-weight: bold;
-    color: #3498db;
     background-color: white;
 }
 
-.thuc-hanh{
-    font-size: 12px;
+.thuc-hanh {
     font-weight: bold;
-    color: #F44336;
-    background-color: #B3E5FC;
+    background-color: #FFE082;
+}
+
+.class-content {
+}
+
+.subject-name {
+    font-size: 14px;
+    text-align: center;
+    margin: 0px 2px;
+
+}
+
+.subject-detail {
+    margin: 3px 5px;
+}
+
+.lesson-happening {
+    outline: 4px solid #FB8C00;
+    outline-offset: -4px;
+    animation: blinking 1s linear infinite;
+}
+
+@keyframes blinking {
+    from,
+    49.9% {
+        outline: 4px solid #FB8C00;
+    }
+    50%,
+    to {
+        outline: 4px solid #E65100;
+    }
 }

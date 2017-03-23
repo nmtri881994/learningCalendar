@@ -3,14 +3,14 @@
     box-sizing: border-box;
     min-width: 56px;
     position: absolute;
-    width: 280px;
+    width: 200px;
 }
 
 .slide-bar-wrapper {
     box-sizing: border-box;
     border-right: 1px solid #ccc;
     background-color: #f5f5f5;
-    width: 280px;
+    width: 200px;
     position: fixed;
     margin-top: 40px;
     top: 0;

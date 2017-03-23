@@ -9,7 +9,7 @@ body{
 }
 
 #page{
-    min-width: 1200px;
+    min-width: 1600px;
 }
 
 #content{
@@ -45,4 +45,7 @@ li {
     cursor: pointer;
 }
 
+.inline-block{
+    display: inline-block;
+}
 

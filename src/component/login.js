@@ -45,8 +45,6 @@ class Login extends Component {
 
 
     handleSubmit(){
-        alert(this.state.tenDangNhap);
-        alert(this.state.matKhau);
         var account = {
             tenDangNhap: this.state.tenDangNhap,
             matKhau: this.state.matKhau,

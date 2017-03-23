@@ -4,7 +4,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import SV_MainComponent from '../component/student/sv_main'
+import SV_Main from '../component/student/sv_main'
 
 const mapStatetoProps = (state, ownProps) => {
     return {
@@ -20,6 +20,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const SV_MainContainer = connect(
     mapStatetoProps,
     mapDispatchToProps
-)(SV_MainComponent)
+)(SV_Main)
 
 export default SV_MainContainer;
