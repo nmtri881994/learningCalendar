@@ -1,24 +1,29 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore, combineReducers } from 'redux'
-import { Provider } from 'react-redux'
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import {createStore, combineReducers} from 'redux'
+import {Provider} from 'react-redux'
+import {Router, Route, IndexRoute, browserHistory} from 'react-router'
+import {syncHistoryWithStore, routerReducer} from 'react-router-redux'
 
 //Import reducers
 import {userLogined, loginMessage} from './reducer/loginReducer'
 import {testContent} from './reducer/testReducer'
 import {currentUserName} from './reducer/userReducer'
-import {studentWeekCalendar, studentCurrentLearningYear, studentWeekNumber, studentCurrentDate} from './reducer/studentReducer'
-
+import {studentWeekCalendar} from './reducer/studentReducer'
+import {currentLearningYear, currentWeekNumber, currentDate} from './reducer/calendarReducer'
+import {teacherWeekCalendar} from './reducer/teacherReducer'
 //Import components
 import HomePage from './component/homePage'
 // import Login from './component/login'
 
 //Import container
-import SV_MainContainer from './container/sv_mainContainer'
 import LoginContainer from './container/loginContainer'
-import SV_WeekCalendarContainer from './container/sv_weekCalendarContainer'
+import Student_MainContainer from './container/student_mainContainer'
+import Student_WeekCalendarContainer from './container/student_weekCalendarContainer'
+
+
+import Teacher_MainContainer from './container/teacher_mainContainer'
+import Teacher_WeekCalendarContainer from './container/teacher_weekCalendarContainer'
 
 //Import CSS
 require("style-loader!css-loader!./css/header.css");
@@ -41,9 +46,10 @@ const store = createStore(
         testContent,
         currentUserName,
         studentWeekCalendar,
-        studentCurrentLearningYear,
-        studentWeekNumber,
-        studentCurrentDate,
+        currentLearningYear,
+        currentWeekNumber,
+        currentDate,
+        teacherWeekCalendar,
         routing: routerReducer
     }),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -57,11 +63,13 @@ ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
             <Route path="/" component={LoginContainer}/>
-            <Route path="sinhvien" component={SV_MainContainer}>
-                <Route path="thoi-khoa-bieu-tuan" component={SV_WeekCalendarContainer} />
+            <Route path="sinhvien" component={Student_MainContainer}>
+                <Route path="thoi-khoa-bieu-tuan" component={Student_WeekCalendarContainer}/>
             </Route>
-            <Route path="giangvien" component={SV_MainContainer}/>
-            <Route path="giaovu" component={SV_MainContainer}/>
+            <Route path="giangvien" component={Teacher_MainContainer}>
+                <Route path="thoi-khoa-bieu-tuan" component={Teacher_WeekCalendarContainer}/>
+            </Route>
+            <Route path="giaovu" component={Student_MainContainer}/>
         </Router>
     </Provider>,
     document.getElementById('root')

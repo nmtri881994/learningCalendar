@@ -33,7 +33,7 @@ class Lesson extends Component {
 
     }
 
-    checkLessonHappening(lopHoc) {
+    checkLessonHappening(lopHoc, date) {
         var startHour = 0;
         var endHour = 0;
         switch (lopHoc.startLesson){
@@ -105,20 +105,19 @@ class Lesson extends Component {
                 console.log(lopHoc.endLesson);
         }
         var currentHour = moment().format("H");
-        return startHour <= currentHour && currentHour <= endHour;
+        var currentDate = moment().format("YYYY-MM-DD");
+        return currentDate == date && startHour <= currentHour && currentHour <= endHour;
     }
 
     render() {
         var lopHoc = this.props.lopHoc;
         var subjectName = "";
         var giangDuong = "";
-        var giangVien = "";
         var numberOfLesson = 0;
         var type = "";
         if (lopHoc) {
             subjectName = lopHoc.name;
             giangDuong = lopHoc.giangDuong;
-            giangVien = lopHoc.giangVien;
             numberOfLesson = lopHoc.endLesson - lopHoc.startLesson + 1;
             type = lopHoc.type;
         }
@@ -131,13 +130,13 @@ class Lesson extends Component {
             css += "-afternoon"
         }
 
+
         if (this.props.haveClass) {
             css += " lesson-" + numberOfLesson;
-            if(this.checkLessonHappening(lopHoc)){
+
+            if(this.checkLessonHappening(lopHoc, this.props.date)){
                 css += " lesson-happening";
             }
-
-            console.log(this.checkLessonHappening(lopHoc));
         }
 
         if (type == "Thực hành") {
@@ -152,8 +151,7 @@ class Lesson extends Component {
                 {subjectName}
             </div>
             <div className="subject-detail">
-                Phòng học: {giangDuong} <br/>
-                Giảng viên: {giangVien}
+                Phòng học: {giangDuong}
             </div>
         </div>
         return (

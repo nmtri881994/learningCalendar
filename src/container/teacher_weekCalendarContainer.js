@@ -4,14 +4,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import SV_WeekCalendar from '../component/student/sv_weekCalendar'
+import Teacher_WeekCalendar from '../component/teacher/teacher_weekCalendar'
 
 const mapStatetoProps = (state, ownProps) => {
     return {
-        year: state.studentCurrentLearningYear,
-        weekCalendar: state.studentWeekCalendar,
-        weekNumber: state.studentWeekNumber,
-        currentDay: state.studentCurrentDate
+        year: state.currentLearningYear,
+        weekCalendar: state.teacherWeekCalendar,
+        weekNumber: state.currentWeekNumber,
+        currentDay: state.currentDate
     };
 };
 
@@ -23,6 +23,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const SV_WeekCalendarContainer = connect(
     mapStatetoProps,
     mapDispatchToProps
-)(SV_WeekCalendar)
+)(Teacher_WeekCalendar)
 
 export default SV_WeekCalendarContainer;

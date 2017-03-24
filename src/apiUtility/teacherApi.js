@@ -1,10 +1,10 @@
 /**
- * Created by XuanVinh on 3/20/2017.
+ * Created by Tri on 3/24/2017.
  */
 import axios from "axios";
 import {APP_URL} from '../configuration/appConfig'
 
-const BASE_URL = `${APP_URL}/api/sinhvien`;
+const BASE_URL = `${APP_URL}/api/giaovien`;
 
 export const getCalendarByWeek = (date, cb) =>{
     $.blockUI(loading);

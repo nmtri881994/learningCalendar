@@ -27,6 +27,8 @@
     margin: 1px 0;
     height: 80px;
     background-color: #4DB6AC;
+    overflow: hidden;
+    position: relative;
 }
 
 .lesson-1 {
@@ -78,13 +80,12 @@
 }
 
 .class-content {
+    margin: 4px;
 }
 
 .subject-name {
     font-size: 14px;
     text-align: center;
-    margin: 0px 2px;
-
 }
 
 .subject-detail {

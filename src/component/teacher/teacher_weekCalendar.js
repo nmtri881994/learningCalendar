@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import moment from 'moment'
 
 //Import actions
-import {getCurrentWeekCalendar, getLearningYear, getWeekNumber, setCurrentDate} from '../../action/studentAction'
-
+import {getCurrentWeekCalendar} from '../../action/teacherAction'
+import {getLearningYear, getWeekNumber, setCurrentDate} from '../../action/calendarAction'
 //Import components
 import Weekday from '../calendar/weekday'
 
@@ -37,7 +37,7 @@ class SV_WeekCalendar extends Component {
         getWeekNumber(backOneWeekDate);
     }
 
-    forthOneWeek(){
+    forthOneWeek() {
         var currentDate = moment(this.state.currentDate);
         var forthOneWeekDate = currentDate.add(7, 'days').format("YYYY-MM-DD");
         setCurrentDate(forthOneWeekDate);
@@ -119,30 +119,29 @@ class SV_WeekCalendar extends Component {
         if (weekCalendar != null) {
             for (var i = 0; i < weekCalendar.length; i++) {
                 var name = weekCalendar[i].monHoc.ten;
-                var giangVien = weekCalendar[i].giaoVien.hoDem +" "+weekCalendar[i].giaoVien.ten;
                 var lichHocTheoNgays = weekCalendar[i].tkb_lichHocTheoNgays;
                 for (var j = 0; j < lichHocTheoNgays.length; j++) {
                     switch (lichHocTheoNgays[j].tkb_thu.ten) {
                         case "Thứ 2":
-                            lopHocThu2s.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocThu2s.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         case "Thứ 3":
-                            lopHocThu3s.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocThu3s.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         case "Thứ 4":
-                            lopHocThu4s.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocThu4s.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         case "Thứ 5":
-                            lopHocThu5s.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocThu5s.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         case "Thứ 6":
-                            lopHocThu6s.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocThu6s.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         case "Thứ 7":
-                            lopHocThu7s.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocThu7s.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         case "Chủ nhật":
-                            lopHocCNss.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocCNss.push(this.getLopHoc(lichHocTheoNgays[j], name));
                             break;
                         default:
                             console.log(lichHocTheoNgays[j].tkb_thu.ten);
@@ -152,12 +151,16 @@ class SV_WeekCalendar extends Component {
         }
 
         //Get all day of current week
-        var currentdate = moment(nextProps.currentDay);
+        var currentdate = moment(nextProps.currentDay, "YYYY-MM-DD");
         var numberOfDate = currentdate.day();
-
         var week = [];
-        for (var i = 1; i <= 7; i++) {
-            week.push(currentdate.add(-numberOfDate + i, 'days').format("YYYY-MM-DD"));
+
+        var monDay = currentdate.add(-numberOfDate+1, 'days');
+        week.push(monDay.format("YYYY-MM-DD"));
+
+
+        for (var i = 2; i <= 7; i++) {
+            week.push(monDay.add(1, 'days').format("YYYY-MM-DD"));
         }
 
 
