@@ -13,8 +13,9 @@ import {studentWeekCalendar} from './reducer/studentReducer'
 import {currentLearningYear, currentWeekNumber, currentDate} from './reducer/calendarReducer'
 import {teacherWeekCalendar} from './reducer/teacherReducer'
 //Import components
-import HomePage from './component/homePage'
+// import HomePage from './component/homePage'
 // import Login from './component/login'
+import SystemChat from './component/systemChat'
 
 //Import container
 import LoginContainer from './container/loginContainer'
@@ -65,9 +66,11 @@ ReactDOM.render(
             <Route path="/" component={LoginContainer}/>
             <Route path="sinhvien" component={Student_MainContainer}>
                 <Route path="thoi-khoa-bieu-tuan" component={Student_WeekCalendarContainer}/>
+                <Route path="system-chat" component={SystemChat}/>
             </Route>
             <Route path="giangvien" component={Teacher_MainContainer}>
                 <Route path="thoi-khoa-bieu-tuan" component={Teacher_WeekCalendarContainer}/>
+                <Route path="system-chat" component={SystemChat}/>
             </Route>
             <Route path="giaovu" component={Student_MainContainer}/>
         </Router>
