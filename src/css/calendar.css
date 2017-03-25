@@ -108,3 +108,16 @@
         outline: 4px solid #E65100;
     }
 }
+
+.setting-icon{
+    font-size: 20px;
+}
+
+.lesson-actions-corner{
+    position: absolute;
+    bottom: 0;
+    width: 150px;
+    height: 30px;
+    background-color: red;
+    padding: 5px;
+}

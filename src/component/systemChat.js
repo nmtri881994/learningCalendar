@@ -4,8 +4,8 @@
 import React, {Component} from 'react'
 import {sendChat} from '../apiUtility/testApi'
 
-class SystemChat extends Component{
-    constructor(props){
+class SystemChat extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             chatLog: "",
@@ -16,25 +16,26 @@ class SystemChat extends Component{
         this.handlePost = this.handlePost.bind(this);
     }
 
-    handleInputChange(e){
+    componentDidMount(){
+        this.connection = new WebSocket('ws://localhost:8080/chats');
+        this.connection.onmessage = evt => {
+            console.log("received: ", evt.data);
+        }
+    }
+
+    handleInputChange(e) {
         this.setState({
             chatMess: e.target.value
         });
     }
 
-    handlePost(){
-        console.log("Trigger api");
-        console.log(this.state.chatMess);
-        sendChat(this.state.chatMess);
+    handlePost() {
+        this.connection.send(this.state.chatMess);
     }
 
-    render(){
-        var source = new EventSource('http://localhost:8080/api/test/chats');
+    render() {
         var chatLog = this.state.chatLog;
-        source.addEventListener('response', function(event){
-            console.log("Auto received: ",event.data);
-        });
-        return(
+        return (
             <div style={{width: "100%"}}>
                 This is system chat <br/>
                 <input onChange={this.handleInputChange} value={this.state.chatMess}/>

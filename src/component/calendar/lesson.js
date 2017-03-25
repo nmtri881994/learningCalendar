@@ -157,6 +157,10 @@ class Lesson extends Component {
         return (
             <div className={css}>
                 {subjectName ? classContent : ""}
+                {subjectName ? <div className="lesson-actions-corner">
+                        <i className="fa fa-cog setting-icon" aria-hidden="true" />
+                    </div> : ""}
+
             </div>
         );
     }
