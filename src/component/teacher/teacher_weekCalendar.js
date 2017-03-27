@@ -4,6 +4,9 @@ import moment from 'moment'
 //Import actions
 import {getCurrentWeekCalendar} from '../../action/teacherAction'
 import {getLearningYear, getWeekNumber, setCurrentDate} from '../../action/calendarAction'
+import {getLessonDetail} from '../../action/teacherAction'
+import {getAllLesson} from '../../action/lessonAction'
+
 //Import components
 import Weekday from '../calendar/weekday'
 import Teacher_editClass from './teacher_editClass'
@@ -24,19 +27,28 @@ class SV_WeekCalendar extends Component {
             weekNumber: 0,
             currentDate: "",
             week: [],
-            lessonId: -1,
-            openModal: false
+            editingLessonId: -1,
+            editingLessonDetail: null,
+            editingLessonName: "",
+            editingSubjectId: 0,
+            allLessons: null
         }
         this.backOneWeek = this.backOneWeek.bind(this);
         this.forthOneWeek = this.forthOneWeek.bind(this);
         this.triggerModal = this.triggerModal.bind(this);
     }
 
-    triggerModal(lessonId, openModal){
+    triggerModal(lessonId, lessonName, subjectId) {
+        alert(subjectId);
+        getLessonDetail(lessonId);
+        getAllLesson();
         this.setState({
-            lessonId: lessonId,
-            openModal: openModal
+            editingLessonId: lessonId,
+            editingLessonName: lessonName,
+            editingSubjectId: subjectId
         });
+        var modal = $("#myModal");
+        modal[0].style.display = "block";
     }
 
     backOneWeek() {
@@ -65,55 +77,12 @@ class SV_WeekCalendar extends Component {
         getWeekNumber(currentDate);
     }
 
-    getTietByTenTiet(tenTiet) {
-        switch (tenTiet) {
-            case "Tiết 1":
-                return 1;
-            case "Tiết 2":
-                return 2;
-            case "Tiết 3":
-                return 3;
-            case "Tiết 4":
-                return 4;
-            case "Tiết 5":
-                return 5;
-            case "Tiết 6":
-                return 6;
-            case "Tiết 7":
-                return 7;
-            case "Tiết 8":
-                return 8;
-            case "Tiết 9":
-                return 9;
-            case "Tiết 10":
-                return 10;
-            default:
-                console.log(lichHocTheoNgay.tkb_tietDauTien.ten);
-                return 0;
-        }
-    }
 
-    getLopHoc(lichHocTheoNgay, name, giangVien) {
-        var type = "";
-        if (lichHocTheoNgay.giangDuong.dayNha.ten == "Dãy nhà lý thuyết") {
-            type = "Lý thuyết";
-        }
-        if (lichHocTheoNgay.giangDuong.dayNha.ten == "Dãy nhà thực hành") {
-            type = "Thực hành";
-        }
-
-        var tietDauTien = this.getTietByTenTiet(lichHocTheoNgay.tkb_tietDauTien.ten);
-        var tietCuoiCung = this.getTietByTenTiet(lichHocTheoNgay.tkb_tietCuoiCung.ten);
-
-
+    getLopHoc(lichHocTheoNgay, subjectId, subjectName) {
         return {
-            id: lichHocTheoNgay.id,
-            name: name,
-            startLesson: tietDauTien,
-            endLesson: tietCuoiCung,
-            type: type,
-            giangDuong: lichHocTheoNgay.giangDuong.maGiangDuong,
-            giangVien: giangVien
+            subjectId: subjectId,
+            subjectName: subjectName,
+            lopHocDetail: lichHocTheoNgay
         };
     }
 
@@ -129,33 +98,36 @@ class SV_WeekCalendar extends Component {
         var lopHocCNs = [];
 
         var weekCalendar = nextProps.weekCalendar;
+        // console.log(weekCalendar);
 
         if (weekCalendar != null) {
             for (var i = 0; i < weekCalendar.length; i++) {
-                var name = weekCalendar[i].monHoc.ten;
+                var subjectName = weekCalendar[i].monHoc.ten;
+                var subjectId = weekCalendar[i].monHoc.id;
+                // console.log(subjectId);
                 var lichHocTheoNgays = weekCalendar[i].tkb_lichHocTheoNgays;
                 for (var j = 0; j < lichHocTheoNgays.length; j++) {
                     switch (lichHocTheoNgays[j].tkb_thu.ten) {
                         case "Thứ 2":
-                            lopHocThu2s.push(this.getLopHoc(lichHocTheoNgays[j], name));
+                            lopHocThu2s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName));
                             break;
                         case "Thứ 3":
-                            lopHocThu3s.push(this.getLopHoc(lichHocTheoNgays[j], name));
+                            lopHocThu3s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName));
                             break;
                         case "Thứ 4":
-                            lopHocThu4s.push(this.getLopHoc(lichHocTheoNgays[j], name));
+                            lopHocThu4s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName));
                             break;
                         case "Thứ 5":
-                            lopHocThu5s.push(this.getLopHoc(lichHocTheoNgays[j], name));
+                            lopHocThu5s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName));
                             break;
                         case "Thứ 6":
-                            lopHocThu6s.push(this.getLopHoc(lichHocTheoNgays[j], name));
+                            lopHocThu6s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName));
                             break;
                         case "Thứ 7":
-                            lopHocThu7s.push(this.getLopHoc(lichHocTheoNgays[j], name));
+                            lopHocThu7s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName));
                             break;
                         case "Chủ nhật":
-                            lopHocCNss.push(this.getLopHoc(lichHocTheoNgays[j], name));
+                            lopHocCNss.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName));
                             break;
                         default:
                             console.log(lichHocTheoNgays[j].tkb_thu.ten);
@@ -169,7 +141,7 @@ class SV_WeekCalendar extends Component {
         var numberOfDate = currentdate.day();
         var week = [];
 
-        var monDay = currentdate.add(-numberOfDate+1, 'days');
+        var monDay = currentdate.add(-numberOfDate + 1, 'days');
         week.push(monDay.format("YYYY-MM-DD"));
 
 
@@ -189,7 +161,9 @@ class SV_WeekCalendar extends Component {
             year: nextProps.year,
             weekNumber: nextProps.weekNumber,
             currentDate: nextProps.currentDay,
-            week: week
+            week: week,
+            editingLessonDetail: nextProps.teacherEditLessonDetail,
+            allLessons: nextProps.allLessons
         });
 
     }
@@ -204,15 +178,24 @@ class SV_WeekCalendar extends Component {
                     <i className="fa fa-forward cursor" aria-hidden="true" onClick={this.forthOneWeek}/>
                 </div>
                 <div className="calendar">
-                    <Weekday name="Thứ 2" triggerModal={this.triggerModal} openModal lopHocs={this.state.lopHocThu2s} date={this.state.week[0]}/>
-                    <Weekday name="Thứ 3" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu3s} date={this.state.week[1]}/>
-                    <Weekday name="Thứ 4" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu4s} date={this.state.week[2]}/>
-                    <Weekday name="Thứ 5" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu5s} date={this.state.week[3]}/>
-                    <Weekday name="Thứ 6" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu6s} date={this.state.week[4]}/>
-                    <Weekday name="Thứ 7" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu7s} date={this.state.week[5]}/>
-                    <Weekday name="Chủ nhật" triggerModal={this.triggerModal} lopHocs={this.state.lopHocCNs} date={this.state.week[6]}/>
+                    <Weekday name="Thứ 2" triggerModal={this.triggerModal} openModal lopHocs={this.state.lopHocThu2s}
+                             date={this.state.week[0]}/>
+                    <Weekday name="Thứ 3" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu3s}
+                             date={this.state.week[1]}/>
+                    <Weekday name="Thứ 4" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu4s}
+                             date={this.state.week[2]}/>
+                    <Weekday name="Thứ 5" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu5s}
+                             date={this.state.week[3]}/>
+                    <Weekday name="Thứ 6" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu6s}
+                             date={this.state.week[4]}/>
+                    <Weekday name="Thứ 7" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu7s}
+                             date={this.state.week[5]}/>
+                    <Weekday name="Chủ nhật" triggerModal={this.triggerModal} lopHocs={this.state.lopHocCNs}
+                             date={this.state.week[6]}/>
                 </div>
-                <Teacher_editClass lessonId={this.state.lessonId} openModal={this.state.openModal} />
+                <Teacher_editClass lessonId={this.state.editingLessonId} lessonName={this.state.editingLessonName}
+                                   lessonDetail={this.state.editingLessonDetail} allLessons={this.state.allLessons}
+                                   subjectId = {this.state.editingSubjectId}/>
             </div>
 
         );

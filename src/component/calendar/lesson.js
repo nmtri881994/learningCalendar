@@ -33,20 +33,25 @@ class Lesson extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lessionId: -1
+            lessonId: 0,
+            lessonName: "",
+            subjectId: 0
         }
 
         this.triggetModal = this.triggetModal.bind(this);
     }
 
-    triggetModal(){
-        this.props.triggerModal(this.state.lessionId, true);
+    triggetModal() {
+        this.props.triggerModal(this.state.lessonId, this.state.lessonName, this.state.subjectId);
     }
 
-    componentWillReceiveProps(nextProps){
-        if(nextProps.lopHoc){
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.lopHoc) {
+            // console.log(nextProps.lopHoc);
             this.setState({
-                lessonId: nextProps.lopHoc.id
+                lessonId: nextProps.lopHoc.lopHocDetail.id,
+                lessonName: nextProps.lopHoc.subjectName,
+                subjectId: nextProps.lopHoc.subjectId
             })
         }
 
@@ -55,7 +60,10 @@ class Lesson extends Component {
     checkLessonHappening(lopHoc, date) {
         var startHour = 0;
         var endHour = 0;
-        switch (lopHoc.startLesson){
+        var lopHocDetail = lopHoc.lopHocDetail;
+        var startLesson = this.getTietByTenTiet(lopHocDetail.tkb_tietDauTien.ten);
+        var endLesson = this.getTietByTenTiet(lopHocDetail.tkb_tietCuoiCung.ten);
+        switch (startLesson) {
             case 1:
                 startHour = LESSON_1_START;
                 break;
@@ -88,7 +96,7 @@ class Lesson extends Component {
             default:
                 console.log(lopHoc.startLesson);
         }
-        switch (lopHoc.endLesson){
+        switch (endLesson) {
             case 1:
                 endHour = LESSON_1_END;
                 break;
@@ -127,18 +135,56 @@ class Lesson extends Component {
         return currentDate == date && startHour <= currentHour && currentHour <= endHour;
     }
 
+    getTietByTenTiet(tenTiet) {
+        switch (tenTiet) {
+            case "Tiết 1":
+                return 1;
+            case "Tiết 2":
+                return 2;
+            case "Tiết 3":
+                return 3;
+            case "Tiết 4":
+                return 4;
+            case "Tiết 5":
+                return 5;
+            case "Tiết 6":
+                return 6;
+            case "Tiết 7":
+                return 7;
+            case "Tiết 8":
+                return 8;
+            case "Tiết 9":
+                return 9;
+            case "Tiết 10":
+                return 10;
+            default:
+                console.log(tenTiet);
+                return 0;
+        }
+    }
+
     render() {
-        var lopHoc = this.props.lopHoc;
+
+        var lopHocDetail;
         var subjectName = "";
         var giangDuong = "";
         var numberOfLesson = 0;
         var type = "";
-        if (lopHoc) {
-            subjectName = lopHoc.name;
-            giangDuong = lopHoc.giangDuong;
-            numberOfLesson = lopHoc.endLesson - lopHoc.startLesson + 1;
-            type = lopHoc.type;
+        var giaoVienNhan = "";
+
+        var lopHoc = this.props.lopHoc;
+        // console.log(lopHoc);
+        if(lopHoc){
+            lopHocDetail = lopHoc.lopHocDetail;
+            subjectName = this.props.lopHoc.subjectName;
+            giangDuong = lopHocDetail.giangDuong.ten;
+            var startLesson = this.getTietByTenTiet(lopHocDetail.tkb_tietDauTien.ten);
+            var endLesson = this.getTietByTenTiet(lopHocDetail.tkb_tietCuoiCung.ten);
+            numberOfLesson = endLesson - startLesson + 1;
+            type = lopHocDetail.giangDuong.dayNha.ten;
+            giaoVienNhan = lopHocDetail.giaoVienNhan;
         }
+
         var css = "lesson";
         var subjectNameCss = "";
 
@@ -150,18 +196,18 @@ class Lesson extends Component {
 
 
         if (this.props.haveClass) {
-            css = "registered "+css;
+            css = "registered " + css;
             css += " lesson-" + numberOfLesson;
 
-            if(this.checkLessonHappening(lopHoc, this.props.date)){
+            if (this.checkLessonHappening(lopHoc, this.props.date)) {
                 css += " lesson-happening";
             }
         }
 
-        if (type == "Thực hành") {
+        if (type == "Dãy nhà thực hành") {
             subjectNameCss += "subject-name" + " thuc-hanh";
         }
-        if (type == "Lý thuyết") {
+        if (type == "Dãy nhà lý thuyết") {
             subjectNameCss += "subject-name" + " ly-thuyet";
         }
 
@@ -171,14 +217,19 @@ class Lesson extends Component {
             </div>
             <div className="subject-detail">
                 Phòng học: {giangDuong}
+                {giaoVienNhan? <div className="note-content">
+                    {giaoVienNhan}
+                </div>: ""}
+
             </div>
+
         </div>
         return (
             <div className={css}>
                 {subjectName ? classContent : ""}
                 {subjectName ? <div className="lesson-actions-corner">
-                            <i className="fa fa-cog setting-icon cursor" aria-hidden="true" onClick={this.triggetModal}/>
-                    </div> : ""}
+                    <i className="fa fa-cog setting-icon cursor" aria-hidden="true" onClick={this.triggetModal}/>
+                </div> : ""}
             </div>
         );
     }

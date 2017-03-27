@@ -20,7 +20,7 @@
     margin-bottom: 10px;
 }
 
-input {
+.login-input {
     text-align: center;
     background-color: #ECF0F1;
     border: 2px solid transparent;
@@ -32,7 +32,7 @@ input {
     transition: border .5s;
 }
 
-input:focus {
+.login-input:focus {
     border: 2px solid #3498DB;
     box-shadow: none;
 }

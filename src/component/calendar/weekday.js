@@ -13,12 +13,42 @@ class Weekday extends Component {
         }
     }
 
+    getTietByTenTiet(tenTiet) {
+        switch (tenTiet) {
+            case "Tiết 1":
+                return 1;
+            case "Tiết 2":
+                return 2;
+            case "Tiết 3":
+                return 3;
+            case "Tiết 4":
+                return 4;
+            case "Tiết 5":
+                return 5;
+            case "Tiết 6":
+                return 6;
+            case "Tiết 7":
+                return 7;
+            case "Tiết 8":
+                return 8;
+            case "Tiết 9":
+                return 9;
+            case "Tiết 10":
+                return 10;
+            default:
+                console.log(tenTiet);
+                return 0;
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         var notFreeLessons = [];
         var freeLessons = [];
         for (var i = 0; i < nextProps.lopHocs.length; i++) {
-            var lopHoc = nextProps.lopHocs[i];
-            for (var j = lopHoc.startLesson; j <= lopHoc.endLesson; j++) {
+            var lopHocDetail = nextProps.lopHocs[i].lopHocDetail;
+            var startLesson = this.getTietByTenTiet(lopHocDetail.tkb_tietDauTien.ten);
+            var endLesson = this.getTietByTenTiet(lopHocDetail.tkb_tietCuoiCung.ten);
+            for (var j = startLesson; j <= endLesson; j++) {
                 notFreeLessons.push(j);
             }
         }
@@ -44,6 +74,7 @@ class Weekday extends Component {
         const fiveClass = 5;
 
         var lopHocs = this.props.lopHocs;
+        // console.log(lopHocs);
         var lessons = [];
         var freeLessons = this.state.freeLessons;
         for (var i = 1; i <= 10; i++) {
@@ -55,7 +86,9 @@ class Weekday extends Component {
                 }
             } else {
                 for (var j = 0; j < lopHocs.length; j++) {
-                    if (lopHocs[j].startLesson == i) {
+                    var lopHocDetail = lopHocs[j].lopHocDetail;
+                    var startLesson = this.getTietByTenTiet(lopHocDetail.tkb_tietDauTien.ten);
+                    if (startLesson == i) {
                         var lopHoc = lopHocs[j];
                         if (i < 6) {
                             lessons.push(<Lesson triggerModal={this.props.triggerModal} key={i} date={this.props.date} lopHoc={lopHoc} morning={trueVar} haveClass={trueVar}/>);

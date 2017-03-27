@@ -1,5 +1,5 @@
 .slide-bar {
-    z-index: 100;
+    z-index: 1;
     box-sizing: border-box;
     min-width: 56px;
     position: absolute;

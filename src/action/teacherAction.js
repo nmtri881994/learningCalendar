@@ -1,7 +1,7 @@
 /**
  * Created by Tri on 3/24/2017.
  */
-import {TEACHER_GET_WEEK_CALENDAR} from '../constant'
+import {TEACHER_GET_WEEK_CALENDAR, TEACHER_GET_LESSON_DETAIL} from '../constant'
 
 import * as API from '../apiUtility/teacherApi'
 import {dispatch} from '../index'
@@ -11,6 +11,15 @@ export const getCurrentWeekCalendar = (date) => {
         dispatch({
             type: TEACHER_GET_WEEK_CALENDAR,
             weekCalendar: calendar
+        })
+    })
+}
+
+export const getLessonDetail = (lessonId) => {
+    API.getLessonDetail(lessonId, (lessonDetail) => {
+        dispatch({
+            type: TEACHER_GET_LESSON_DETAIL,
+            lessonDetail: lessonDetail
         })
     })
 }

@@ -89,7 +89,7 @@
 }
 
 .subject-detail {
-    margin: 3px 5px;
+    margin: 5px 5px;
 }
 
 .lesson-happening {
@@ -127,3 +127,26 @@
 .registered{
 
 }
+
+.note-content{
+    margin: 0px -5px;
+    height: 50px;
+    overflow-y: auto;
+    background-color: #ddffff;
+    padding: 3px;
+    border-left: 4px solid #1675b7;
+    border-radius: 5px;
+}
+
+.edit-title{
+    font-weight: bold;
+}
+
+.edit-note-textArea{
+    font-size: 15px;
+    height: 100px;
+}
+
+.edit-date-input{
+}
+

@@ -64,13 +64,13 @@ class Login extends Component {
 
                     <form className="login-form">
                         <div className="control-group">
-                            <input type="text" className="login-field" required value={this.state.tenDangNhap}
+                            <input type="text" className="login-field login-input" required value={this.state.tenDangNhap}
                                    placeholder="Mã đăng nhập"
                                    id="login-name" onChange={this.handleUsernameChange}/>
                         </div>
 
                         <div className="control-group">
-                            <input type="password" className="login-field" required value={this.state.matKhau}
+                            <input type="password" className="login-field login-input" required value={this.state.matKhau}
                                    placeholder="Mật khẩu"
                                    id="login-pass" onChange={this.handlePasswordChange}/>
                         </div>
