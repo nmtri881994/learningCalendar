@@ -6,6 +6,7 @@ import {getCurrentWeekCalendar} from '../../action/teacherAction'
 import {getLearningYear, getWeekNumber, setCurrentDate} from '../../action/calendarAction'
 //Import components
 import Weekday from '../calendar/weekday'
+import Teacher_editClass from './teacher_editClass'
 
 class SV_WeekCalendar extends Component {
 
@@ -22,10 +23,20 @@ class SV_WeekCalendar extends Component {
             year: null,
             weekNumber: 0,
             currentDate: "",
-            week: []
+            week: [],
+            lessonId: -1,
+            openModal: false
         }
         this.backOneWeek = this.backOneWeek.bind(this);
         this.forthOneWeek = this.forthOneWeek.bind(this);
+        this.triggerModal = this.triggerModal.bind(this);
+    }
+
+    triggerModal(lessonId, openModal){
+        this.setState({
+            lessonId: lessonId,
+            openModal: openModal
+        });
     }
 
     backOneWeek() {
@@ -94,7 +105,9 @@ class SV_WeekCalendar extends Component {
         var tietDauTien = this.getTietByTenTiet(lichHocTheoNgay.tkb_tietDauTien.ten);
         var tietCuoiCung = this.getTietByTenTiet(lichHocTheoNgay.tkb_tietCuoiCung.ten);
 
+
         return {
+            id: lichHocTheoNgay.id,
             name: name,
             startLesson: tietDauTien,
             endLesson: tietCuoiCung,
@@ -114,6 +127,7 @@ class SV_WeekCalendar extends Component {
         var lopHocThu6s = [];
         var lopHocThu7s = [];
         var lopHocCNs = [];
+
         var weekCalendar = nextProps.weekCalendar;
 
         if (weekCalendar != null) {
@@ -190,14 +204,15 @@ class SV_WeekCalendar extends Component {
                     <i className="fa fa-forward cursor" aria-hidden="true" onClick={this.forthOneWeek}/>
                 </div>
                 <div className="calendar">
-                    <Weekday name="Thứ 2" lopHocs={this.state.lopHocThu2s} date={this.state.week[0]}/>
-                    <Weekday name="Thứ 3" lopHocs={this.state.lopHocThu3s} date={this.state.week[1]}/>
-                    <Weekday name="Thứ 4" lopHocs={this.state.lopHocThu4s} date={this.state.week[2]}/>
-                    <Weekday name="Thứ 5" lopHocs={this.state.lopHocThu5s} date={this.state.week[3]}/>
-                    <Weekday name="Thứ 6" lopHocs={this.state.lopHocThu6s} date={this.state.week[4]}/>
-                    <Weekday name="Thứ 7" lopHocs={this.state.lopHocThu7s} date={this.state.week[5]}/>
-                    <Weekday name="Chủ nhật" lopHocs={this.state.lopHocCNs} date={this.state.week[6]}/>
+                    <Weekday name="Thứ 2" triggerModal={this.triggerModal} openModal lopHocs={this.state.lopHocThu2s} date={this.state.week[0]}/>
+                    <Weekday name="Thứ 3" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu3s} date={this.state.week[1]}/>
+                    <Weekday name="Thứ 4" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu4s} date={this.state.week[2]}/>
+                    <Weekday name="Thứ 5" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu5s} date={this.state.week[3]}/>
+                    <Weekday name="Thứ 6" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu6s} date={this.state.week[4]}/>
+                    <Weekday name="Thứ 7" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu7s} date={this.state.week[5]}/>
+                    <Weekday name="Chủ nhật" triggerModal={this.triggerModal} lopHocs={this.state.lopHocCNs} date={this.state.week[6]}/>
                 </div>
+                <Teacher_editClass lessonId={this.state.lessonId} openModal={this.state.openModal} />
             </div>
 
         );

@@ -34,6 +34,7 @@ require("style-loader!css-loader!./css/pagePanel.css");
 require("style-loader!css-loader!./css/footer.css");
 require("style-loader!css-loader!./css/calendar.css");
 require("style-loader!css-loader!./css/loginForm.css");
+require("style-loader!css-loader!./css/modal.css");
 // require("style-loader!css-loader!./css/googleForm.css");
 
 //Import JS

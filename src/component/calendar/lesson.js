@@ -4,6 +4,8 @@
 import React, {Component} from 'react'
 import moment from 'moment'
 
+//import components
+
 import {
     LESSON_1_START,
     LESSON_1_END,
@@ -30,6 +32,23 @@ import {
 class Lesson extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            lessionId: -1
+        }
+
+        this.triggetModal = this.triggetModal.bind(this);
+    }
+
+    triggetModal(){
+        this.props.triggerModal(this.state.lessionId, true);
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.lopHoc){
+            this.setState({
+                lessonId: nextProps.lopHoc.id
+            })
+        }
 
     }
 
@@ -64,7 +83,6 @@ class Lesson extends Component {
             case 9:
                 startHour = LESSON_9_START;
                 break;
-            case 10:
                 startHour = LESSON_10_START;
                 break;
             default:
@@ -132,6 +150,7 @@ class Lesson extends Component {
 
 
         if (this.props.haveClass) {
+            css = "registered "+css;
             css += " lesson-" + numberOfLesson;
 
             if(this.checkLessonHappening(lopHoc, this.props.date)){
@@ -158,9 +177,8 @@ class Lesson extends Component {
             <div className={css}>
                 {subjectName ? classContent : ""}
                 {subjectName ? <div className="lesson-actions-corner">
-                        <i className="fa fa-cog setting-icon" aria-hidden="true" />
+                            <i className="fa fa-cog setting-icon cursor" aria-hidden="true" onClick={this.triggetModal}/>
                     </div> : ""}
-
             </div>
         );
     }

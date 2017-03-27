@@ -17,7 +17,7 @@
     margin: 1px 0;
     height: 80px;
     background-color: #99B1Da;
-    overflow: hidden;
+    overflow-y: auto;
     position: relative;
 }
 
@@ -27,7 +27,7 @@
     margin: 1px 0;
     height: 80px;
     background-color: #4DB6AC;
-    overflow: hidden;
+    overflow-y: auto;
     position: relative;
 }
 
@@ -111,13 +111,19 @@
 
 .setting-icon{
     font-size: 20px;
+    float: right;
 }
 
 .lesson-actions-corner{
     position: absolute;
     bottom: 0;
-    width: 150px;
-    height: 30px;
-    background-color: red;
+    width: 140px;
+    height: 20px;
     padding: 5px;
+    background:rgba(255,255,255,0.2);
+    visibility: hidden;
+}
+
+.registered{
+
 }

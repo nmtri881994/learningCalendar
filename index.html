@@ -1,84 +1,118 @@
 <!DOCTYPE html>
 <!--suppress ALL -->
-<html lang = "en">
+<html lang="en">
 
 <head>
-    <meta charset = "UTF-8">
+    <meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!--<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>-->
     <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />-->
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
     <script src="http://malsup.github.io/min/jquery.blockUI.min.js"></script>
-
 
     <title></title>
 </head>
 
 <body>
 <script>
-//    $(document).ready(function(){
-//        $('#myTable').DataTable();
-//    });
+    //    $(document).ready(function(){
+    //        $('#myTable').DataTable();
+    //    });
 
-    var loading= { message: '<img src="/assets/loading.gif" width="120"/>',css: {
-        border:     'none',
-        backgroundColor:'transparent'
-    },baseZ: 9999 }
+    var loading = {
+        message: '<img src="/assets/loading.gif" width="120"/>', css: {
+            border: 'none',
+            backgroundColor: 'transparent'
+        }, baseZ: 9999
+    }
 
-//    let ws;
-//    let stompClient;
-//
-//    $(document).ready(function () {
-//        ws = new WebSocket('ws://localhost:8080/chats');
-//        ws.onmessage = function (data) {
-//            console.log("received:",data.data);
-//            return false;
-//        }
-//        ws.onopen = function () {
-//            console.log("connected");
-//        }
-//
-//        ws.onclose = function (code) {
-//            console.log("closed", code);
-//        }
-//    })
+
+    $(document).ready(function () {
+        $(".lesson-morning").mouseenter(function () {
+            $(this).children(".lesson-actions-corner").css("visibility", "visible");
+        })
+
+        $(".lesson-morning").mouseleave(function () {
+            $(this).children(".lesson-actions-corner").css("visibility", "hidden");
+        })
+
+        $(".lesson-afternoon").mouseenter(function () {
+            $(this).children(".lesson-actions-corner").css("visibility", "visible");
+        })
+
+        $(".lesson-afternoon").mouseleave(function () {
+            $(this).children(".lesson-actions-corner").css("visibility", "hidden");
+        })
+    })
+
 
 </script>
-<!--<script>-->
-    <!--window.fbAsyncInit = function() {-->
-        <!--FB.init({-->
-            <!--appId      : '1424378497574694',-->
-            <!--xfbml      : true,-->
-            <!--version    : 'v2.8'-->
-        <!--});-->
-        <!--FB.AppEvents.logPageView();-->
-        <!--FB.getLoginStatus(function(response){-->
-            <!--console.log(response);-->
-        <!--})-->
-    <!--};-->
 
-    <!--facebook-->
-    <!--(function(d, s, id){-->
-        <!--var js, fjs = d.getElementsByTagName(s)[0];-->
-        <!--if (d.getElementById(id)) {return;}-->
-        <!--js = d.createElement(s); js.id = id;-->
-        <!--js.src = "//connect.facebook.net/en_US/sdk.js";-->
-        <!--fjs.parentNode.insertBefore(js, fjs);-->
-    <!--}(document, 'script', 'facebook-jssdk'));-->
+<!--<script>-->
+<!--window.fbAsyncInit = function() {-->
+<!--FB.init({-->
+<!--appId      : '1424378497574694',-->
+<!--xfbml      : true,-->
+<!--version    : 'v2.8'-->
+<!--});-->
+<!--FB.AppEvents.logPageView();-->
+<!--FB.getLoginStatus(function(response){-->
+<!--console.log(response);-->
+<!--})-->
+<!--};-->
+
+<!--facebook-->
+<!--(function(d, s, id){-->
+<!--var js, fjs = d.getElementsByTagName(s)[0];-->
+<!--if (d.getElementById(id)) {return;}-->
+<!--js = d.createElement(s); js.id = id;-->
+<!--js.src = "//connect.facebook.net/en_US/sdk.js";-->
+<!--fjs.parentNode.insertBefore(js, fjs);-->
+<!--}(document, 'script', 'facebook-jssdk'));-->
 <!--</script>-->
 
-<div id = "root"></div>
-<script src = "/bundle.js"></script>
+<div id="root"></div>
+<script src="/bundle.js"></script>
 <script>
-//    $('.slide-bar-wrapper').height($(document).height()-$('.header').height()-1);
+    //    $('.slide-bar-wrapper').height($(document).height()-$('.header').height()-1);
     $(document).ready(function () {
-        $('.slide-bar-wrapper').height($(window).height()-$('.header').height());
+        $('.slide-bar-wrapper').height($(window).height() - $('.header').height());
         $(window).resize(function () {
-            $('.slide-bar-wrapper').height($(window).height()-$('.header').height());
+            $('.slide-bar-wrapper').height($(window).height() - $('.header').height());
         });
     })
 </script>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
 </body>
 
 </html>
