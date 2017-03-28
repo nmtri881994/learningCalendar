@@ -24,3 +24,7 @@ export const getLessonDetail = (lessonId) => {
     })
 }
 
+export const editLesson = (lessonDetail, currentDate) =>{
+    API.editLesson(lessonDetail, currentDate);
+}
+

@@ -6,6 +6,7 @@ import {getCurrentWeekCalendar} from '../../action/teacherAction'
 import {getLearningYear, getWeekNumber, setCurrentDate} from '../../action/calendarAction'
 import {getLessonDetail} from '../../action/teacherAction'
 import {getAllLesson} from '../../action/lessonAction'
+import {getAllRoomsBySubject} from '../../action/subjectAction'
 
 //Import components
 import Weekday from '../calendar/weekday'
@@ -31,7 +32,8 @@ class SV_WeekCalendar extends Component {
             editingLessonDetail: null,
             editingLessonName: "",
             editingSubjectId: 0,
-            allLessons: null
+            allLessons: null,
+            editingSubjectRooms: []
         }
         this.backOneWeek = this.backOneWeek.bind(this);
         this.forthOneWeek = this.forthOneWeek.bind(this);
@@ -39,9 +41,10 @@ class SV_WeekCalendar extends Component {
     }
 
     triggerModal(lessonId, lessonName, subjectId) {
-        alert(subjectId);
+        // alert(subjectId);
         getLessonDetail(lessonId);
         getAllLesson();
+        getAllRoomsBySubject(subjectId);
         this.setState({
             editingLessonId: lessonId,
             editingLessonName: lessonName,
@@ -163,7 +166,8 @@ class SV_WeekCalendar extends Component {
             currentDate: nextProps.currentDay,
             week: week,
             editingLessonDetail: nextProps.teacherEditLessonDetail,
-            allLessons: nextProps.allLessons
+            allLessons: nextProps.allLessons,
+            editingSubjectRooms: nextProps.editingSubjectRooms
         });
 
     }
@@ -193,9 +197,10 @@ class SV_WeekCalendar extends Component {
                     <Weekday name="Chủ nhật" triggerModal={this.triggerModal} lopHocs={this.state.lopHocCNs}
                              date={this.state.week[6]}/>
                 </div>
-                <Teacher_editClass lessonId={this.state.editingLessonId} lessonName={this.state.editingLessonName}
+                <Teacher_editClass currentDate={this.state.currentDate} subjectRooms={this.state.editingSubjectRooms} lessonId={this.state.editingLessonId}
+                                   lessonName={this.state.editingLessonName}
                                    lessonDetail={this.state.editingLessonDetail} allLessons={this.state.allLessons}
-                                   subjectId = {this.state.editingSubjectId}/>
+                                   subjectId={this.state.editingSubjectId}/>
             </div>
 
         );

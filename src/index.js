@@ -13,6 +13,7 @@ import {studentWeekCalendar} from './reducer/studentReducer'
 import {currentLearningYear, currentWeekNumber, currentDate} from './reducer/calendarReducer'
 import {teacherWeekCalendar, teacherEditLessonDetail} from './reducer/teacherReducer'
 import {allLessons} from './reducer/lessonReducers'
+import {subjectRooms} from './reducer/subjectReducer'
 //Import components
 // import HomePage from './component/homePage'
 // import Login from './component/login'
@@ -55,6 +56,7 @@ const store = createStore(
         teacherWeekCalendar,
         teacherEditLessonDetail,
         allLessons,
+        subjectRooms,
         routing: routerReducer
     }),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

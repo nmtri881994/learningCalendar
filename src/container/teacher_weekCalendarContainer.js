@@ -13,7 +13,8 @@ const mapStatetoProps = (state, ownProps) => {
         weekNumber: state.currentWeekNumber,
         currentDay: state.currentDate,
         teacherEditLessonDetail: state.teacherEditLessonDetail,
-        allLessons: state.allLessons
+        allLessons: state.allLessons,
+        editingSubjectRooms: state.subjectRooms
     };
 };
 
