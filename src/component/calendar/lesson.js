@@ -167,22 +167,24 @@ class Lesson extends Component {
 
         var lopHocDetail;
         var subjectName = "";
-        var giangDuong = "";
+        var room = "";
         var numberOfLesson = 0;
         var type = "";
-        var giaoVienNhan = "";
+        var teacherMess = "";
+        var teacherName = "";
 
         var lopHoc = this.props.lopHoc;
         // console.log(lopHoc);
         if(lopHoc){
             lopHocDetail = lopHoc.lopHocDetail;
-            subjectName = this.props.lopHoc.subjectName;
-            giangDuong = lopHocDetail.giangDuong.ten;
+            subjectName = lopHoc.subjectName;
+            room = lopHocDetail.giangDuong.ten;
             var startLesson = this.getTietByTenTiet(lopHocDetail.tkb_tietDauTien.ten);
             var endLesson = this.getTietByTenTiet(lopHocDetail.tkb_tietCuoiCung.ten);
             numberOfLesson = endLesson - startLesson + 1;
             type = lopHocDetail.giangDuong.dayNha.ten;
-            giaoVienNhan = lopHocDetail.giaoVienNhan;
+            teacherMess = lopHocDetail.giaoVienNhan;
+            teacherName = lopHoc.teacherName;
         }
 
         var css = "lesson";
@@ -216,9 +218,10 @@ class Lesson extends Component {
                 {subjectName}
             </div>
             <div className="subject-detail">
-                Phòng học: {giangDuong}
-                {giaoVienNhan? <div className="note-content">
-                    {giaoVienNhan}
+                {room?"Phòng học: "+room:""}<br/>
+                {teacherName?"Giảng viên: "+teacherName: ""}
+                {teacherMess? <div className="note-content">
+                    {teacherMess}
                 </div>: ""}
 
             </div>

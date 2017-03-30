@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import moment from 'moment'
+import SockJS from 'sockjs-client'
+import Stomp from 'stompjs'
 
 //Import actions
 import {getCurrentWeekCalendar} from '../../action/teacherAction'
@@ -80,7 +82,6 @@ class SV_WeekCalendar extends Component {
         getWeekNumber(currentDate);
     }
 
-
     getLopHoc(lichHocTheoNgay, subjectId, subjectName) {
         return {
             subjectId: subjectId,
@@ -130,7 +131,7 @@ class SV_WeekCalendar extends Component {
                             lopHocThu7s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName));
                             break;
                         case "Chủ nhật":
-                            lopHocCNss.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName));
+                            lopHocCNs.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName));
                             break;
                         default:
                             console.log(lichHocTheoNgays[j].tkb_thu.ten);
@@ -182,7 +183,7 @@ class SV_WeekCalendar extends Component {
                     <i className="fa fa-forward cursor" aria-hidden="true" onClick={this.forthOneWeek}/>
                 </div>
                 <div className="calendar">
-                    <Weekday name="Thứ 2" triggerModal={this.triggerModal} openModal lopHocs={this.state.lopHocThu2s}
+                    <Weekday name="Thứ 2" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu2s}
                              date={this.state.week[0]}/>
                     <Weekday name="Thứ 3" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu3s}
                              date={this.state.week[1]}/>
@@ -197,7 +198,8 @@ class SV_WeekCalendar extends Component {
                     <Weekday name="Chủ nhật" triggerModal={this.triggerModal} lopHocs={this.state.lopHocCNs}
                              date={this.state.week[6]}/>
                 </div>
-                <Teacher_editClass currentDate={this.state.currentDate} subjectRooms={this.state.editingSubjectRooms} lessonId={this.state.editingLessonId}
+                <Teacher_editClass currentDate={this.state.currentDate} subjectRooms={this.state.editingSubjectRooms}
+                                   lessonId={this.state.editingLessonId}
                                    lessonName={this.state.editingLessonName}
                                    lessonDetail={this.state.editingLessonDetail} allLessons={this.state.allLessons}
                                    subjectId={this.state.editingSubjectId}/>

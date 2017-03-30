@@ -2,9 +2,6 @@
  * Created by Tri on 3/25/2017.
  */
 import React, {Component} from 'react'
-import SockJS from 'sockjs-client'
-import Stomp from 'stompjs'
-
 import {DATE_FORMAT_PICKER} from '../../configuration/appConfig'
 
 //import actions
@@ -42,8 +39,7 @@ class EditClass extends Component {
             allLessons: null,
             subjectRooms: [],
             dateChange: "",
-            currentDate: "",
-            stompClient: null
+            currentDate: ""
         }
 
         this.handleStartLessonChange = this.handleStartLessonChange.bind(this);
@@ -72,25 +68,13 @@ class EditClass extends Component {
         }
     }
 
-    componentWillMount() {
-        var socket = SockJS('http://localhost:8080/calendar'); // <3>
-        var stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
-            stompClient.subscribe("/socket/calendar", function (message) {
-            });
-        });
-
-        this.setState({
-            stompClient: stompClient
-        })
-    }
 
     close() {
         var modal = $("#myModal")[0];
         modal.style.display = "none";
     }
 
-    handleStartLessonChange(e) {
+    handleStartLessonChange(e){
         // console.log(e.target.value);
         var lessonDetail = this.state.lessonDetail;
         lessonDetail.tkb_tietDauTien.id = e.target.value;
@@ -100,7 +84,7 @@ class EditClass extends Component {
         // console.log(this.state);
     }
 
-    handleEndLessonChange(e) {
+    handleEndLessonChange(e){
         // console.log(e.target.value);
         var lessonDetail = this.state.lessonDetail;
         lessonDetail.tkb_tietCuoiCung.id = e.target.value;
@@ -110,7 +94,7 @@ class EditClass extends Component {
         // console.log(this.state);
     }
 
-    handleRoomChange(e) {
+    handleRoomChange(e){
         var lessonDetail = this.state.lessonDetail;
         lessonDetail.giangDuong.id = e.target.value;
         this.setState({
@@ -118,7 +102,7 @@ class EditClass extends Component {
         })
     }
 
-    handleTeacherMessageChange(e) {
+    handleTeacherMessageChange(e){
         var lessonDetail = this.state.lessonDetail;
         lessonDetail.giaoVienNhan = e.target.value;
         this.setState({
@@ -126,30 +110,15 @@ class EditClass extends Component {
         })
     }
 
-    handleSubmit() {
-        var lessonDetail = this.state.lessonDetail;
-        if (this.state.dateChange != "") {
+    handleSubmit(){
+        var lessonDetail= this.state.lessonDetail;
+        if(this.state.dateChange != ""){
             lessonDetail.ngay = this.state.dateChange;
         }
         this.setState({
             lessonDetail: lessonDetail
         })
-        this.state.stompClient.send("/socket/calendar", {}, "edited");
         editLesson(this.state.lessonDetail, this.state.currentDate);
-    }
-
-    componentDidMount() {
-        alert(1);
-        var socket = SockJS('http://localhost:8080/calendar'); // <3>
-        var stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
-            stompClient.subscribe("/socket/calendar", function (message) {
-            });
-        });
-
-        this.setState({
-            stompClient: stompClient
-        })
     }
 
     render() {
@@ -177,8 +146,7 @@ class EditClass extends Component {
                             <div className="edit-title">
                                 Từ tiết
                             </div>
-                            <select id="start-lesson-selecbox" className="halfLength"
-                                    value={lessonDetail.tkb_tietDauTien.id} onChange={this.handleStartLessonChange}>
+                            <select id="start-lesson-selecbox" className="halfLength" value={lessonDetail.tkb_tietDauTien.id} onChange={this.handleStartLessonChange}>
                                 {allLessons ?
                                     allLessons.map(lesson =>
                                         <option key={lesson.id} value={lesson.id}>{lesson.ten}</option>
@@ -190,8 +158,7 @@ class EditClass extends Component {
                             <div className="edit-title">
                                 Tới tiết
                             </div>
-                            <select id="end-lesson-selecbox" className="halfLength"
-                                    value={lessonDetail.tkb_tietCuoiCung.id} onChange={this.handleEndLessonChange}>
+                            <select id="end-lesson-selecbox" className="halfLength" value={lessonDetail.tkb_tietCuoiCung.id} onChange={this.handleEndLessonChange}>
                                 {allLessons ?
                                     allLessons.map(lesson =>
                                         <option key={lesson.id} value={lesson.id}>{lesson.ten}</option>
@@ -206,8 +173,7 @@ class EditClass extends Component {
                             <div className="edit-title">
                                 Phòng
                             </div>
-                            <select className="halfLength" value={lessonDetail.giangDuong.id}
-                                    onChange={this.handleRoomChange}>
+                            <select className="halfLength" value={lessonDetail.giangDuong.id} onChange={this.handleRoomChange}>
                                 {allLessons ?
                                     subjectRooms.map(room =>
                                         <option key={room.id} value={room.id}>{room.ten}</option>
@@ -223,8 +189,7 @@ class EditClass extends Component {
                                 Thay đổi lời nhắn với sinh viên
                             </div>
                             <textarea className="edit-note-textArea fullLength"
-                                      value={lessonDetail.giaoVienNhan ? lessonDetail.giaoVienNhan : ""}
-                                      onChange={this.handleTeacherMessageChange}/><br/>
+                                      value={lessonDetail.giaoVienNhan? lessonDetail.giaoVienNhan: ""} onChange={this.handleTeacherMessageChange}/><br/>
                             <div className="edit-title">
                                 Thay đổi ghi chú cá nhân
                             </div>

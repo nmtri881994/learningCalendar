@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
 import moment from 'moment'
+import SockJS from 'sockjs-client'
+import Stomp from 'stompjs'
 
 //Import actions
 import {getCurrentWeekCalendar} from '../../action/studentAction'
 import {getLearningYear, getWeekNumber, setCurrentDate} from '../../action/calendarAction'
 //Import components
 import Weekday from '../calendar/weekday'
+import Student_editClass from './student_editClass'
 
 class SV_WeekCalendar extends Component {
 
@@ -22,10 +25,20 @@ class SV_WeekCalendar extends Component {
             year: null,
             weekNumber: 0,
             currentDate: "",
-            week: []
+            week: [],
+            stompClient: null
         }
         this.backOneWeek = this.backOneWeek.bind(this);
         this.forthOneWeek = this.forthOneWeek.bind(this);
+        this.triggerModal = this.triggerModal.bind(this);
+        // this.refreshCalendar = this..bind(this);
+    }
+
+    triggerModal(lessonId, lessonName, subjectId) {
+        // alert(subjectId);
+        //to-do
+        var modal = $("#myModal");
+        modal[0].style.display = "block";
     }
 
     backOneWeek() {
@@ -46,6 +59,15 @@ class SV_WeekCalendar extends Component {
         getWeekNumber(forthOneWeekDate);
     }
 
+    refreshCalendar(){
+        var currentDate = this.state.currentDate;
+        console.log("current date: ",currentDate);
+        setCurrentDate(currentDate);
+        getCurrentWeekCalendar(currentDate);
+        getLearningYear(currentDate);
+        getWeekNumber(currentDate);
+    }
+
     componentWillMount() {
         var currentDate = moment().format("YYYY-MM-DD");
         setCurrentDate(currentDate);
@@ -54,53 +76,12 @@ class SV_WeekCalendar extends Component {
         getWeekNumber(currentDate);
     }
 
-    getTietByTenTiet(tenTiet) {
-        switch (tenTiet) {
-            case "Tiết 1":
-                return 1;
-            case "Tiết 2":
-                return 2;
-            case "Tiết 3":
-                return 3;
-            case "Tiết 4":
-                return 4;
-            case "Tiết 5":
-                return 5;
-            case "Tiết 6":
-                return 6;
-            case "Tiết 7":
-                return 7;
-            case "Tiết 8":
-                return 8;
-            case "Tiết 9":
-                return 9;
-            case "Tiết 10":
-                return 10;
-            default:
-                console.log(lichHocTheoNgay.tkb_tietDauTien.ten);
-                return 0;
-        }
-    }
-
-    getLopHoc(lichHocTheoNgay, name, giangVien) {
-        var type = "";
-        if (lichHocTheoNgay.giangDuong.dayNha.ten == "Dãy nhà lý thuyết") {
-            type = "Lý thuyết";
-        }
-        if (lichHocTheoNgay.giangDuong.dayNha.ten == "Dãy nhà thực hành") {
-            type = "Thực hành";
-        }
-
-        var tietDauTien = this.getTietByTenTiet(lichHocTheoNgay.tkb_tietDauTien.ten);
-        var tietCuoiCung = this.getTietByTenTiet(lichHocTheoNgay.tkb_tietCuoiCung.ten);
-
+    getLopHoc(lichHocTheoNgay, subjectId, subjectName, teacherName) {
         return {
-            name: name,
-            startLesson: tietDauTien,
-            endLesson: tietCuoiCung,
-            type: type,
-            giangDuong: lichHocTheoNgay.giangDuong.maGiangDuong,
-            giangVien: giangVien
+            subjectId: subjectId,
+            subjectName: subjectName,
+            lopHocDetail: lichHocTheoNgay,
+            teacherName: teacherName
         };
     }
 
@@ -115,34 +96,37 @@ class SV_WeekCalendar extends Component {
         var lopHocThu7s = [];
         var lopHocCNs = [];
         var weekCalendar = nextProps.weekCalendar;
+        // console.log(weekCalendar);
 
         if (weekCalendar != null) {
             for (var i = 0; i < weekCalendar.length; i++) {
-                var name = weekCalendar[i].monHoc.ten;
-                var giangVien = weekCalendar[i].giaoVien.hoDem + " " + weekCalendar[i].giaoVien.ten;
+                var subjectName = weekCalendar[i].monHoc.ten;
+                var subjectId = weekCalendar[i].monHoc.id;
+                // console.log(subjectId);
                 var lichHocTheoNgays = weekCalendar[i].tkb_lichHocTheoNgays;
+                var teacherName = weekCalendar[i].giaoVien.hoDem +" "+ weekCalendar[i].giaoVien.ten;
                 for (var j = 0; j < lichHocTheoNgays.length; j++) {
                     switch (lichHocTheoNgays[j].tkb_thu.ten) {
                         case "Thứ 2":
-                            lopHocThu2s.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocThu2s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName, teacherName));
                             break;
                         case "Thứ 3":
-                            lopHocThu3s.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocThu3s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName, teacherName));
                             break;
                         case "Thứ 4":
-                            lopHocThu4s.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocThu4s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName, teacherName));
                             break;
                         case "Thứ 5":
-                            lopHocThu5s.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocThu5s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName, teacherName));
                             break;
                         case "Thứ 6":
-                            lopHocThu6s.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocThu6s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName, teacherName));
                             break;
                         case "Thứ 7":
-                            lopHocThu7s.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocThu7s.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName, teacherName));
                             break;
                         case "Chủ nhật":
-                            lopHocCNss.push(this.getLopHoc(lichHocTheoNgays[j], name, giangVien));
+                            lopHocCNs.push(this.getLopHoc(lichHocTheoNgays[j], subjectId, subjectName, teacherName));
                             break;
                         default:
                             console.log(lichHocTheoNgays[j].tkb_thu.ten);
@@ -156,7 +140,7 @@ class SV_WeekCalendar extends Component {
         var numberOfDate = currentdate.day();
         var week = [];
 
-        var monDay = currentdate.add(-numberOfDate+1, 'days');
+        var monDay = currentdate.add(-numberOfDate + 1, 'days');
         week.push(monDay.format("YYYY-MM-DD"));
 
 
@@ -181,6 +165,20 @@ class SV_WeekCalendar extends Component {
 
     }
 
+    componentDidMount(){
+        var socket = SockJS('http://localhost:8080/calendar'); // <3>
+        var stompClient = Stomp.over(socket);
+        var refreshFunction = () => this.refreshCalendar();
+        stompClient.connect({}, function(frame) {
+            stompClient.subscribe("/socket/calendar", function (message) {
+                refreshFunction();
+            });
+        });
+        this.setState({
+            stompClient: stompClient
+        })
+    }
+
     render() {
         return (
             <div className="calendar-panel">
@@ -191,14 +189,26 @@ class SV_WeekCalendar extends Component {
                     <i className="fa fa-forward cursor" aria-hidden="true" onClick={this.forthOneWeek}/>
                 </div>
                 <div className="calendar">
-                    <Weekday name="Thứ 2" lopHocs={this.state.lopHocThu2s} date={this.state.week[0]}/>
-                    <Weekday name="Thứ 3" lopHocs={this.state.lopHocThu3s} date={this.state.week[1]}/>
-                    <Weekday name="Thứ 4" lopHocs={this.state.lopHocThu4s} date={this.state.week[2]}/>
-                    <Weekday name="Thứ 5" lopHocs={this.state.lopHocThu5s} date={this.state.week[3]}/>
-                    <Weekday name="Thứ 6" lopHocs={this.state.lopHocThu6s} date={this.state.week[4]}/>
-                    <Weekday name="Thứ 7" lopHocs={this.state.lopHocThu7s} date={this.state.week[5]}/>
-                    <Weekday name="Chủ nhật" lopHocs={this.state.lopHocCNs} date={this.state.week[6]}/>
+                    <Weekday name="Thứ 2" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu2s}
+                             date={this.state.week[0]}/>
+                    <Weekday name="Thứ 3" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu3s}
+                             date={this.state.week[1]}/>
+                    <Weekday name="Thứ 4" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu4s}
+                             date={this.state.week[2]}/>
+                    <Weekday name="Thứ 5" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu5s}
+                             date={this.state.week[3]}/>
+                    <Weekday name="Thứ 6" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu6s}
+                             date={this.state.week[4]}/>
+                    <Weekday name="Thứ 7" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu7s}
+                             date={this.state.week[5]}/>
+                    <Weekday name="Chủ nhật" triggerModal={this.triggerModal} lopHocs={this.state.lopHocCNs}
+                             date={this.state.week[6]}/>
                 </div>
+                <Student_editClass currentDate={this.state.currentDate} subjectRooms={this.state.editingSubjectRooms}
+                                   lessonId={this.state.editingLessonId}
+                                   lessonName={this.state.editingLessonName}
+                                   lessonDetail={this.state.editingLessonDetail} allLessons={this.state.allLessons}
+                                   subjectId={this.state.editingSubjectId}/>
             </div>
 
         );
