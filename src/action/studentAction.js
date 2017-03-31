@@ -15,3 +15,7 @@ export const getCurrentWeekCalendar = (date) => {
     })
 }
 
+export const editCalendarNote = (editStudentNote, currentDate) => {
+    API.editCalendarStudentNote(editStudentNote, currentDate);
+}
+

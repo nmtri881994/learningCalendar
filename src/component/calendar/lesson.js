@@ -4,6 +4,7 @@
 import React, {Component} from 'react'
 import moment from 'moment'
 
+import * as API from '../../apiUtility/studentApi'
 //import components
 
 import {
@@ -35,7 +36,8 @@ class Lesson extends Component {
         this.state = {
             lessonId: 0,
             lessonName: "",
-            subjectId: 0
+            subjectId: 0,
+            studentNote: ""
         }
 
         this.triggetModal = this.triggetModal.bind(this);
@@ -47,11 +49,20 @@ class Lesson extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.lopHoc) {
-            // console.log(nextProps.lopHoc);
+            if(nextProps.lopHoc.studentShowing){
+                API.getCalendarStudentNote(nextProps.lopHoc.lopHocDetail.id, (note)=>{
+                    this.setState({
+                        studentNote: note
+                    })
+                }, (error) => {
+                    console.log("error: ", error);
+                })
+            }
             this.setState({
                 lessonId: nextProps.lopHoc.lopHocDetail.id,
                 lessonName: nextProps.lopHoc.subjectName,
-                subjectId: nextProps.lopHoc.subjectId
+                subjectId: nextProps.lopHoc.subjectId,
+                studentShowing: nextProps.lopHoc.studentShowing
             })
         }
 
@@ -172,8 +183,8 @@ class Lesson extends Component {
         var type = "";
         var teacherMess = "";
         var teacherName = "";
-
         var lopHoc = this.props.lopHoc;
+        var studentShowing;
         // console.log(lopHoc);
         if(lopHoc){
             lopHocDetail = lopHoc.lopHocDetail;
@@ -185,6 +196,7 @@ class Lesson extends Component {
             type = lopHocDetail.giangDuong.dayNha.ten;
             teacherMess = lopHocDetail.giaoVienNhan;
             teacherName = lopHoc.teacherName;
+            studentShowing = lopHoc.studentShowing;
         }
 
         var css = "lesson";
@@ -219,11 +231,13 @@ class Lesson extends Component {
             </div>
             <div className="subject-detail">
                 {room?"Phòng học: "+room:""}<br/>
-                {teacherName?"Giảng viên: "+teacherName: ""}
+                {studentShowing?"Giảng viên: "+teacherName: ""}
                 {teacherMess? <div className="note-content">
                     {teacherMess}
                 </div>: ""}
-
+                {studentShowing?<div className="student-note-content">
+                        {this.state.studentNote}
+                    </div>: ""}
             </div>
 
         </div>

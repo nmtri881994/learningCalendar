@@ -4,8 +4,11 @@
 import React, {Component} from 'react'
 import {DATE_FORMAT_PICKER} from '../../configuration/appConfig'
 
+//Import APIS
+import * as API from '../../apiUtility/studentApi'
+
 //import actions
-import {editLesson} from '../../action/teacherAction'
+import {editCalendarNote} from '../../action/studentAction'
 
 class EditClass extends Component {
 
@@ -14,58 +17,33 @@ class EditClass extends Component {
         this.close = this.close.bind(this);
 
         this.state = {
-            lessonId: -1,
-            lessonDetail: {
-                giangDuong: {
-                    id: 0
-                },
-                giaoVienNhan: "",
-                id: 0,
-                ngay: "",
-                thiCuoiKy: false,
-                thiGiuaKy: false,
-                tkb_thu: null,
-                tkb_tietCuoiCung: {
-                    id: 0,
-                    ten: ""
-                },
-                tkb_tietDauTien: {
-                    id: 0,
-                    ten: ""
-                }
-            },
+            lessonId: 0,
             lessonName: "",
-            subjectId: 0,
-            allLessons: null,
-            subjectRooms: [],
-            dateChange: "",
+            studentNote: "",
             currentDate: ""
         }
 
-        this.handleStartLessonChange = this.handleStartLessonChange.bind(this);
-        this.handleEndLessonChange = this.handleEndLessonChange.bind(this);
-        this.handleRoomChange = this.handleRoomChange.bind(this);
-        this.handleTeacherMessageChange = this.handleTeacherMessageChange.bind(this);
+        this.handleStudentNoteChange = this.handleStudentNoteChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
 
     componentWillReceiveProps(nextProps) {
         // console.log(nextProps);
+        if(nextProps.lessonId != 0){
+            API.getCalendarStudentNote(nextProps.lessonId, (note)=>{
+                this.setState({
+                    studentNote: note
+                })
+            }, (error) => {
+                console.log("error: ", error);
+            })
+        }
         this.setState({
             lessonId: nextProps.lessonId,
             lessonName: nextProps.lessonName,
-            subjectId: nextProps.subjectId,
-            allLessons: nextProps.allLessons,
-            subjectRooms: nextProps.subjectRooms,
             currentDate: nextProps.currentDate
         })
-        if (nextProps.lessonDetail) {
-            this.setState({
-                lessonDetail: nextProps.lessonDetail,
-                dateChange: nextProps.lessonDetail.ngay
-            })
-        }
     }
 
 
@@ -74,57 +52,21 @@ class EditClass extends Component {
         modal.style.display = "none";
     }
 
-    handleStartLessonChange(e){
-        // console.log(e.target.value);
-        var lessonDetail = this.state.lessonDetail;
-        lessonDetail.tkb_tietDauTien.id = e.target.value;
+    handleStudentNoteChange(e){
         this.setState({
-            lessonDetail: lessonDetail
-        })
-        // console.log(this.state);
-    }
-
-    handleEndLessonChange(e){
-        // console.log(e.target.value);
-        var lessonDetail = this.state.lessonDetail;
-        lessonDetail.tkb_tietCuoiCung.id = e.target.value;
-        this.setState({
-            lessonDetail: lessonDetail
-        })
-        // console.log(this.state);
-    }
-
-    handleRoomChange(e){
-        var lessonDetail = this.state.lessonDetail;
-        lessonDetail.giangDuong.id = e.target.value;
-        this.setState({
-            lessonDetail: lessonDetail
-        })
-    }
-
-    handleTeacherMessageChange(e){
-        var lessonDetail = this.state.lessonDetail;
-        lessonDetail.giaoVienNhan = e.target.value;
-        this.setState({
-            lessonDetail: lessonDetail
+            studentNote: e.target.value
         })
     }
 
     handleSubmit(){
-        var lessonDetail= this.state.lessonDetail;
-        if(this.state.dateChange != ""){
-            lessonDetail.ngay = this.state.dateChange;
+        var editStudentNote = {
+            lessonId: this.state.lessonId,
+            editedNote: this.state.studentNote
         }
-        this.setState({
-            lessonDetail: lessonDetail
-        })
-        editLesson(this.state.lessonDetail, this.state.currentDate);
+        editCalendarNote(editStudentNote, this.state.currentDate)
     }
 
     render() {
-        var lessonDetail = this.state.lessonDetail;
-        var allLessons = this.state.allLessons;
-        var subjectRooms = this.state.subjectRooms;
         return (<div>
             {/*<!-- The Modal -->*/}
             <div id="myModal" className="modal">
@@ -133,67 +75,14 @@ class EditClass extends Component {
                 <div className="modal-content">
                     <div className="modal-header">
                         <span className="close" onClick={this.close}>&times;</span>
-                        {lessonDetail ? <h2>{this.state.lessonName}</h2> : ""}
+                        <h2>{this.state.lessonName}</h2>
                     </div>
                     <div className="modal-body">
                         <div className="field-section">
-                            <div className="section-title">Thay đổi thời gian</div>
-                            <div className="edit-title">
-                                Ngày
-                            </div>
-                            <input id="datetimepicker" className="halfLength"
-                                   value={this.state.dateChange}/><br/>
-                            <div className="edit-title">
-                                Từ tiết
-                            </div>
-                            <select id="start-lesson-selecbox" className="halfLength" value={lessonDetail.tkb_tietDauTien.id} onChange={this.handleStartLessonChange}>
-                                {allLessons ?
-                                    allLessons.map(lesson =>
-                                        <option key={lesson.id} value={lesson.id}>{lesson.ten}</option>
-                                    )
-
-                                    : ""
-                                }
-                            </select>
-                            <div className="edit-title">
-                                Tới tiết
-                            </div>
-                            <select id="end-lesson-selecbox" className="halfLength" value={lessonDetail.tkb_tietCuoiCung.id} onChange={this.handleEndLessonChange}>
-                                {allLessons ?
-                                    allLessons.map(lesson =>
-                                        <option key={lesson.id} value={lesson.id}>{lesson.ten}</option>
-                                    )
-
-                                    : ""
-                                }
-                            </select>
-                        </div>
-                        <div className="field-section">
-                            <div className="section-title">Thay đổi địa điểm</div>
-                            <div className="edit-title">
-                                Phòng
-                            </div>
-                            <select className="halfLength" value={lessonDetail.giangDuong.id} onChange={this.handleRoomChange}>
-                                {allLessons ?
-                                    subjectRooms.map(room =>
-                                        <option key={room.id} value={room.id}>{room.ten}</option>
-                                    )
-
-                                    : ""
-                                }
-                            </select>
-                        </div>
-                        <div className="field-section">
-                            <div className="section-title">Thay đổi lời nhắn</div>
-                            <div className="edit-title">
-                                Thay đổi lời nhắn với sinh viên
-                            </div>
-                            <textarea className="edit-note-textArea fullLength"
-                                      value={lessonDetail.giaoVienNhan? lessonDetail.giaoVienNhan: ""} onChange={this.handleTeacherMessageChange}/><br/>
                             <div className="edit-title">
                                 Thay đổi ghi chú cá nhân
                             </div>
-                            <textarea className="edit-note-textArea fullLength" value=""/><br/>
+                            <textarea className="edit-note-textArea fullLength" value={this.state.studentNote} onChange={this.handleStudentNoteChange}/><br/>
                         </div>
                     </div>
                     <div className="modal-footer">

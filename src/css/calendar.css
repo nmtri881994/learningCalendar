@@ -93,19 +93,19 @@
 }
 
 .lesson-happening {
-    outline: 4px solid #FB8C00;
-    outline-offset: -4px;
+    outline: 2px solid #FB8C00;
+    outline-offset: -2px;
     animation: blinking 1s linear infinite;
 }
 
 @keyframes blinking {
     from,
     49.9% {
-        outline: 4px solid #FB8C00;
+        outline: 2px solid #FB8C00;
     }
     50%,
     to {
-        outline: 4px solid #E65100;
+        outline: 2px solid #E65100;
     }
 }
 
@@ -129,7 +129,17 @@
 }
 
 .note-content{
-    margin: 0px -5px;
+    margin: 4px -5px;
+    height: 50px;
+    overflow-y: auto;
+    background-color: #FBE9E7;
+    padding: 3px;
+    border-left: 4px solid #1675b7;
+    border-radius: 5px;
+}
+
+.student-note-content{
+    margin: 4px -5px;
     height: 50px;
     overflow-y: auto;
     background-color: #ddffff;

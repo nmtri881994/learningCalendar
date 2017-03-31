@@ -14,7 +14,7 @@ import {getAllRoomsBySubject} from '../../action/subjectAction'
 import Weekday from '../calendar/weekday'
 import Teacher_editClass from './teacher_editClass'
 
-class SV_WeekCalendar extends Component {
+class Teacher_WeekCalendar extends Component {
 
     constructor(props) {
         super(props);
@@ -102,7 +102,7 @@ class SV_WeekCalendar extends Component {
         var lopHocCNs = [];
 
         var weekCalendar = nextProps.weekCalendar;
-        // console.log(weekCalendar);
+        console.log(weekCalendar);
 
         if (weekCalendar != null) {
             for (var i = 0; i < weekCalendar.length; i++) {
@@ -209,4 +209,4 @@ class SV_WeekCalendar extends Component {
     }
 }
 
-export default SV_WeekCalendar;
+export default Teacher_WeekCalendar;

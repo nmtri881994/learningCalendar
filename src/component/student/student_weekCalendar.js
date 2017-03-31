@@ -26,6 +26,8 @@ class SV_WeekCalendar extends Component {
             weekNumber: 0,
             currentDate: "",
             week: [],
+            editingLessonId: 0,
+            editingLessonName: "",
             stompClient: null
         }
         this.backOneWeek = this.backOneWeek.bind(this);
@@ -35,8 +37,10 @@ class SV_WeekCalendar extends Component {
     }
 
     triggerModal(lessonId, lessonName, subjectId) {
-        // alert(subjectId);
-        //to-do
+        this.setState({
+            editingLessonId: lessonId,
+            editingLessonName: lessonName
+        })
         var modal = $("#myModal");
         modal[0].style.display = "block";
     }
@@ -59,9 +63,9 @@ class SV_WeekCalendar extends Component {
         getWeekNumber(forthOneWeekDate);
     }
 
-    refreshCalendar(){
+    refreshCalendar() {
         var currentDate = this.state.currentDate;
-        console.log("current date: ",currentDate);
+        console.log("current date: ", currentDate);
         setCurrentDate(currentDate);
         getCurrentWeekCalendar(currentDate);
         getLearningYear(currentDate);
@@ -81,7 +85,8 @@ class SV_WeekCalendar extends Component {
             subjectId: subjectId,
             subjectName: subjectName,
             lopHocDetail: lichHocTheoNgay,
-            teacherName: teacherName
+            teacherName: teacherName,
+            studentShowing: true
         };
     }
 
@@ -104,7 +109,7 @@ class SV_WeekCalendar extends Component {
                 var subjectId = weekCalendar[i].monHoc.id;
                 // console.log(subjectId);
                 var lichHocTheoNgays = weekCalendar[i].tkb_lichHocTheoNgays;
-                var teacherName = weekCalendar[i].giaoVien.hoDem +" "+ weekCalendar[i].giaoVien.ten;
+                var teacherName = weekCalendar[i].giaoVien.hoDem + " " + weekCalendar[i].giaoVien.ten;
                 for (var j = 0; j < lichHocTheoNgays.length; j++) {
                     switch (lichHocTheoNgays[j].tkb_thu.ten) {
                         case "Thứ 2":
@@ -165,11 +170,11 @@ class SV_WeekCalendar extends Component {
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         var socket = SockJS('http://localhost:8080/calendar'); // <3>
         var stompClient = Stomp.over(socket);
         var refreshFunction = () => this.refreshCalendar();
-        stompClient.connect({}, function(frame) {
+        stompClient.connect({}, function (frame) {
             stompClient.subscribe("/socket/calendar", function (message) {
                 refreshFunction();
             });
@@ -204,11 +209,8 @@ class SV_WeekCalendar extends Component {
                     <Weekday name="Chủ nhật" triggerModal={this.triggerModal} lopHocs={this.state.lopHocCNs}
                              date={this.state.week[6]}/>
                 </div>
-                <Student_editClass currentDate={this.state.currentDate} subjectRooms={this.state.editingSubjectRooms}
-                                   lessonId={this.state.editingLessonId}
-                                   lessonName={this.state.editingLessonName}
-                                   lessonDetail={this.state.editingLessonDetail} allLessons={this.state.allLessons}
-                                   subjectId={this.state.editingSubjectId}/>
+                <Student_editClass lessonId={this.state.editingLessonId} lessonName={this.state.editingLessonName}
+                                   currentDate={this.state.currentDate}/>
             </div>
 
         );

@@ -72,19 +72,6 @@ class EditClass extends Component {
         }
     }
 
-    componentWillMount() {
-        var socket = SockJS('http://localhost:8080/calendar'); // <3>
-        var stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
-            stompClient.subscribe("/socket/calendar", function (message) {
-            });
-        });
-
-        this.setState({
-            stompClient: stompClient
-        })
-    }
-
     close() {
         var modal = $("#myModal")[0];
         modal.style.display = "none";
@@ -136,20 +123,6 @@ class EditClass extends Component {
         })
         this.state.stompClient.send("/socket/calendar", {}, "edited");
         editLesson(this.state.lessonDetail, this.state.currentDate);
-    }
-
-    componentDidMount() {
-        alert(1);
-        var socket = SockJS('http://localhost:8080/calendar'); // <3>
-        var stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
-            stompClient.subscribe("/socket/calendar", function (message) {
-            });
-        });
-
-        this.setState({
-            stompClient: stompClient
-        })
     }
 
     render() {
@@ -260,6 +233,17 @@ class EditClass extends Component {
             // console.log("1",lessonDetail);
             set({dateChange: date});
         });
+
+        var socket = SockJS('http://localhost:8080/calendar'); // <3>
+        var stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe("/socket/calendar", function (message) {
+            });
+        });
+
+        this.setState({
+            stompClient: stompClient
+        })
     }
 }
 
