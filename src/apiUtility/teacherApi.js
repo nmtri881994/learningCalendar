@@ -5,9 +5,10 @@ import axios from "axios";
 import {APP_URL} from '../configuration/appConfig'
 
 const BASE_URL = `${APP_URL}/api/giaovien`;
+const CALENDAR_URL = `${APP_URL}/api/calendar`
 
 //import actions
-// import {getCurrentWeekCalendar} from '../action/teacherAction'
+import {getCurrentWeekCalendar} from '../action/teacherAction'
 import {getLearningYear, getWeekNumber} from '../action/calendarAction'
 
 export const getCalendarByWeek = (date, cb) => {
@@ -38,11 +39,23 @@ export const editLesson = (lessonDetail, currentDate) =>{
     $.blockUI(loading);
     axios.post(BASE_URL+"/edit/lesson", lessonDetail, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
-            this.getCurrentWeekCalendar(currentDate);
+            getCurrentWeekCalendar(currentDate);
             // getWeekNumber(currentDate);
             // getLearningYear(currentDate);
             var modal = $("#myModal");
             modal[0].style.display = "none";
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+    $.unblockUI();
+}
+
+export const getAvailableLessonsOfRoomByDate = (roomId, date, cb) =>{
+    $.blockUI(loading);
+    axios(CALENDAR_URL+"/available-lessons/"+ roomId+"/"+date)
+        .then(function (response) {
+            cb(response.data);
         })
         .catch(function (error) {
             console.log(error)

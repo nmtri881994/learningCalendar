@@ -10,6 +10,9 @@ import {DATE_FORMAT_PICKER} from '../../configuration/appConfig'
 //import actions
 import {editLesson} from '../../action/teacherAction'
 
+//import Apis
+import * as API from '../../apiUtility/teacherApi'
+
 class EditClass extends Component {
 
     constructor(props) {
@@ -23,6 +26,7 @@ class EditClass extends Component {
                     id: 0
                 },
                 giaoVienNhan: "",
+                giaoVienGhiChu: "",
                 id: 0,
                 ngay: "",
                 thiCuoiKy: false,
@@ -43,13 +47,15 @@ class EditClass extends Component {
             subjectRooms: [],
             dateChange: "",
             currentDate: "",
-            stompClient: null
+            stompClient: null,
+            availableLessons: []
         }
 
         this.handleStartLessonChange = this.handleStartLessonChange.bind(this);
         this.handleEndLessonChange = this.handleEndLessonChange.bind(this);
         this.handleRoomChange = this.handleRoomChange.bind(this);
         this.handleTeacherMessageChange = this.handleTeacherMessageChange.bind(this);
+        this.handleTeacherNoteChange = this.handleTeacherNoteChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -65,11 +71,13 @@ class EditClass extends Component {
             currentDate: nextProps.currentDate
         })
         if (nextProps.lessonDetail) {
+            this.getAvailableLessons(nextProps.lessonDetail.giangDuong.id, nextProps.lessonDetail.ngay);
             this.setState({
                 lessonDetail: nextProps.lessonDetail,
                 dateChange: nextProps.lessonDetail.ngay
             })
         }
+
     }
 
     close() {
@@ -103,11 +111,46 @@ class EditClass extends Component {
         this.setState({
             lessonDetail: lessonDetail
         })
+
+        this.getAvailableLessons();
+    }
+
+    getAvailableLessons(roomId, date) {
+        var chosenRoomId;
+        if(roomId){
+            chosenRoomId = roomId;
+        }else{
+            chosenRoomId = this.state.lessonDetail.giangDuong.id;
+        }
+
+        var chosenDate;
+        if(date){
+            chosenDate = date;
+        }else{
+            chosenDate = this.state.dateChange;
+        }
+
+        API.getAvailableLessonsOfRoomByDate(chosenRoomId, chosenDate, (lessons) => {
+            console.log(lessons);
+            this.setState({
+                availableLessons: lessons
+            })
+        }, (error) => {
+            console.log("error: ", error);
+        })
     }
 
     handleTeacherMessageChange(e) {
         var lessonDetail = this.state.lessonDetail;
         lessonDetail.giaoVienNhan = e.target.value;
+        this.setState({
+            lessonDetail: lessonDetail
+        })
+    }
+
+    handleTeacherNoteChange(e) {
+        var lessonDetail = this.state.lessonDetail;
+        lessonDetail.giaoVienGhiChu = e.target.value;
         this.setState({
             lessonDetail: lessonDetail
         })
@@ -141,12 +184,25 @@ class EditClass extends Component {
                     </div>
                     <div className="modal-body">
                         <div className="field-section">
-                            <div className="section-title">Thay đổi thời gian</div>
+                            <div className="section-title">Thay đổi thời gian, địa điểm</div>
                             <div className="edit-title">
                                 Ngày
                             </div>
                             <input id="datetimepicker" className="halfLength"
                                    value={this.state.dateChange}/><br/>
+                            <div className="edit-title">
+                                Phòng
+                            </div>
+                            <select className="halfLength" value={lessonDetail.giangDuong.id}
+                                    onChange={this.handleRoomChange}>
+                                {allLessons ?
+                                    subjectRooms.map(room =>
+                                        <option key={room.id} value={room.id}>{room.ten}</option>
+                                    )
+
+                                    : ""
+                                }
+                            </select>
                             <div className="edit-title">
                                 Từ tiết
                             </div>
@@ -175,22 +231,6 @@ class EditClass extends Component {
                             </select>
                         </div>
                         <div className="field-section">
-                            <div className="section-title">Thay đổi địa điểm</div>
-                            <div className="edit-title">
-                                Phòng
-                            </div>
-                            <select className="halfLength" value={lessonDetail.giangDuong.id}
-                                    onChange={this.handleRoomChange}>
-                                {allLessons ?
-                                    subjectRooms.map(room =>
-                                        <option key={room.id} value={room.id}>{room.ten}</option>
-                                    )
-
-                                    : ""
-                                }
-                            </select>
-                        </div>
-                        <div className="field-section">
                             <div className="section-title">Thay đổi lời nhắn</div>
                             <div className="edit-title">
                                 Thay đổi lời nhắn với sinh viên
@@ -201,7 +241,9 @@ class EditClass extends Component {
                             <div className="edit-title">
                                 Thay đổi ghi chú cá nhân
                             </div>
-                            <textarea className="edit-note-textArea fullLength" value=""/><br/>
+                            <textarea className="edit-note-textArea fullLength"
+                                      value={lessonDetail.giaoVienGhiChu ? lessonDetail.giaoVienGhiChu : ""}
+                                      onChange={this.handleTeacherNoteChange}/><br/>
                         </div>
                     </div>
                     <div className="modal-footer">
@@ -225,13 +267,14 @@ class EditClass extends Component {
         const set = (val) => this.setState(val);
         // var lessonDetail = this.state.lessonDetail;
         // console.log(lessonDetail);
-
+        const getAvailableLessons = () => this.getAvailableLessons();
         $('#datetimepicker').change(function (val) {
             // var lessonDetail = this.state.lessonDetail;
             // console.log(val);
             var date = $('#datetimepicker').val();
             // console.log("1",lessonDetail);
             set({dateChange: date});
+            getAvailableLessons();
         });
 
         var socket = SockJS('http://localhost:8080/calendar'); // <3>

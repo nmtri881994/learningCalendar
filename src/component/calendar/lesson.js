@@ -185,8 +185,10 @@ class Lesson extends Component {
         var teacherName = "";
         var lopHoc = this.props.lopHoc;
         var studentShowing;
+        var teacherNote = "";
         // console.log(lopHoc);
         if(lopHoc){
+            // console.log(lopHoc);
             lopHocDetail = lopHoc.lopHocDetail;
             subjectName = lopHoc.subjectName;
             room = lopHocDetail.giangDuong.ten;
@@ -197,6 +199,7 @@ class Lesson extends Component {
             teacherMess = lopHocDetail.giaoVienNhan;
             teacherName = lopHoc.teacherName;
             studentShowing = lopHoc.studentShowing;
+            teacherNote = lopHoc.lopHocDetail.giaoVienGhiChu;
         }
 
         var css = "lesson";
@@ -237,7 +240,10 @@ class Lesson extends Component {
                 </div>: ""}
                 {studentShowing?<div className="student-note-content">
                         {this.state.studentNote}
-                    </div>: ""}
+                    </div>: <div className="teacher-note-content">
+                        {teacherNote}
+                    </div>}
+
             </div>
 
         </div>

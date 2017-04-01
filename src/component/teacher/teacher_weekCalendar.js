@@ -102,8 +102,7 @@ class Teacher_WeekCalendar extends Component {
         var lopHocCNs = [];
 
         var weekCalendar = nextProps.weekCalendar;
-        console.log(weekCalendar);
-
+        // console.log(weekCalendar);
         if (weekCalendar != null) {
             for (var i = 0; i < weekCalendar.length; i++) {
                 var subjectName = weekCalendar[i].monHoc.ten;
