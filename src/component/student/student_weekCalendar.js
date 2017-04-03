@@ -65,7 +65,6 @@ class SV_WeekCalendar extends Component {
 
     refreshCalendar() {
         var currentDate = this.state.currentDate;
-        console.log("current date: ", currentDate);
         setCurrentDate(currentDate);
         getCurrentWeekCalendar(currentDate);
         getLearningYear(currentDate);

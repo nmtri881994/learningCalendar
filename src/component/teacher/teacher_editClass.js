@@ -48,7 +48,8 @@ class EditClass extends Component {
             dateChange: "",
             currentDate: "",
             stompClient: null,
-            availableLessons: []
+            availableLessons: [],
+            availableEndLessons: []
         }
 
         this.handleStartLessonChange = this.handleStartLessonChange.bind(this);
@@ -71,13 +72,12 @@ class EditClass extends Component {
             currentDate: nextProps.currentDate
         })
         if (nextProps.lessonDetail) {
-            this.getAvailableLessons(nextProps.lessonDetail.giangDuong.id, nextProps.lessonDetail.ngay);
+            this.getAvailableLessons(nextProps.lessonDetail.giangDuong.id, nextProps.lessonDetail.ngay, nextProps.lessonDetail.tkb_tietDauTien.id);
             this.setState({
                 lessonDetail: nextProps.lessonDetail,
                 dateChange: nextProps.lessonDetail.ngay
             })
         }
-
     }
 
     close() {
@@ -86,23 +86,21 @@ class EditClass extends Component {
     }
 
     handleStartLessonChange(e) {
-        // console.log(e.target.value);
         var lessonDetail = this.state.lessonDetail;
         lessonDetail.tkb_tietDauTien.id = e.target.value;
         this.setState({
             lessonDetail: lessonDetail
         })
-        // console.log(this.state);
+
+        this.setAvailableEndLessonsCorresspondingToChosenStartLessons(e.target.value);
     }
 
     handleEndLessonChange(e) {
-        // console.log(e.target.value);
         var lessonDetail = this.state.lessonDetail;
         lessonDetail.tkb_tietCuoiCung.id = e.target.value;
         this.setState({
             lessonDetail: lessonDetail
         })
-        // console.log(this.state);
     }
 
     handleRoomChange(e) {
@@ -115,7 +113,7 @@ class EditClass extends Component {
         this.getAvailableLessons();
     }
 
-    getAvailableLessons(roomId, date) {
+    getAvailableLessons(roomId, date, defaulStartLesoonId) {
         var chosenRoomId;
         if(roomId){
             chosenRoomId = roomId;
@@ -130,14 +128,56 @@ class EditClass extends Component {
             chosenDate = this.state.dateChange;
         }
 
-        API.getAvailableLessonsOfRoomByDate(chosenRoomId, chosenDate, (lessons) => {
-            console.log(lessons);
+        var chosenLessonId = this.state.lessonId;
+
+        API.getAvailableLessonsOfRoomByDate(chosenLessonId, chosenRoomId, chosenDate, (lessons) => {
             this.setState({
                 availableLessons: lessons
-            })
+            });
+            if(defaulStartLesoonId){
+                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(defaulStartLesoonId);
+            }else{
+                var lessonDetail = this.state.lessonDetail;
+                lessonDetail.tkb_tietDauTien.id = lessons[0].id;
+                this.setState({
+                    lessonDetail: lessonDetail
+                })
+                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
+            }
         }, (error) => {
             console.log("error: ", error);
         })
+    }
+
+    setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonId){
+        var availableLessons = this.state.availableLessons;
+        var availableEndLessons =  [];
+        var indexOfStartLesson = -1;
+        var lessonDetail = this.state.lessonDetail;
+
+        for(var i = 0; i< availableLessons.length; i++){
+            if(startLessonId == availableLessons[i].id){
+                indexOfStartLesson = i;
+                break
+            }
+        }
+        var startLesson = availableLessons[indexOfStartLesson];
+
+        for(var i = indexOfStartLesson; i < availableLessons.length; i++){
+            if((availableLessons[i].thuTu - startLesson.thuTu) == (i - indexOfStartLesson)){
+                availableEndLessons.push(availableLessons[i]);
+            }else{
+                break;
+            }
+        }
+
+        lessonDetail.tkb_tietCuoiCung.id = availableEndLessons[0].id;
+
+        this.setState({
+            lessonDetail: lessonDetail,
+            availableEndLessons: availableEndLessons
+        })
+
     }
 
     handleTeacherMessageChange(e) {
@@ -170,8 +210,9 @@ class EditClass extends Component {
 
     render() {
         var lessonDetail = this.state.lessonDetail;
-        var allLessons = this.state.allLessons;
         var subjectRooms = this.state.subjectRooms;
+        var availableLessons = this.state.availableLessons;
+        var availableEndLessons = this.state.availableEndLessons;
         return (<div>
             {/*<!-- The Modal -->*/}
             <div id="myModal" className="modal">
@@ -195,7 +236,7 @@ class EditClass extends Component {
                             </div>
                             <select className="halfLength" value={lessonDetail.giangDuong.id}
                                     onChange={this.handleRoomChange}>
-                                {allLessons ?
+                                {subjectRooms ?
                                     subjectRooms.map(room =>
                                         <option key={room.id} value={room.id}>{room.ten}</option>
                                     )
@@ -208,9 +249,9 @@ class EditClass extends Component {
                             </div>
                             <select id="start-lesson-selecbox" className="halfLength"
                                     value={lessonDetail.tkb_tietDauTien.id} onChange={this.handleStartLessonChange}>
-                                {allLessons ?
-                                    allLessons.map(lesson =>
-                                        <option key={lesson.id} value={lesson.id}>{lesson.ten}</option>
+                                {availableLessons ?
+                                    availableLessons.map(lesson =>
+                                        <option key={"start"+lesson.id} value={lesson.id}>{lesson.ten}</option>
                                     )
 
                                     : ""
@@ -221,9 +262,9 @@ class EditClass extends Component {
                             </div>
                             <select id="end-lesson-selecbox" className="halfLength"
                                     value={lessonDetail.tkb_tietCuoiCung.id} onChange={this.handleEndLessonChange}>
-                                {allLessons ?
-                                    allLessons.map(lesson =>
-                                        <option key={lesson.id} value={lesson.id}>{lesson.ten}</option>
+                                {availableEndLessons ?
+                                    availableEndLessons.map(lesson =>
+                                        <option key={"end"+lesson.id} value={lesson.id}>{lesson.ten}</option>
                                     )
 
                                     : ""

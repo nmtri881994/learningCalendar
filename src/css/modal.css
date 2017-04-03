@@ -53,7 +53,7 @@
 
 /* The Close Button */
 .close {
-    color: white;
+    color: #1675b7;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -61,15 +61,16 @@
 
 .close:hover,
 .close:focus {
-    color: #000;
+    color: red;
     text-decoration: none;
     cursor: pointer;
 }
 
 .modal-header {
     padding: 2px 16px;
-    background-color: #78909C;
-    color: white;
+    background-color: white;
+    border-bottom: 2px solid #1675b7;
+    color: #1675b7;
 }
 
 .modal-body {

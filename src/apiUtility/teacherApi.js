@@ -35,9 +35,9 @@ export const getLessonDetail = (lessonId, cb) => {
     $.unblockUI();
 }
 
-export const editLesson = (lessonDetail, currentDate) =>{
+export const editLesson = (lessonDetail, currentDate) => {
     $.blockUI(loading);
-    axios.post(BASE_URL+"/edit/lesson", lessonDetail, {headers: {Authorization: localStorage.getItem('token')}})
+    axios.post(BASE_URL + "/edit/lesson", lessonDetail, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             getCurrentWeekCalendar(currentDate);
             // getWeekNumber(currentDate);
@@ -51,9 +51,9 @@ export const editLesson = (lessonDetail, currentDate) =>{
     $.unblockUI();
 }
 
-export const getAvailableLessonsOfRoomByDate = (roomId, date, cb) =>{
+export const getAvailableLessonsOfRoomByDate = (lessonId, roomId, date, cb) => {
     $.blockUI(loading);
-    axios(CALENDAR_URL+"/available-lessons/"+ roomId+"/"+date)
+    axios(BASE_URL + "/available-lessons/" + lessonId + "/" + roomId + "/" + date, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })

@@ -34,7 +34,6 @@ export const getCalendarStudentNote = (lessonId, cb) =>{
 }
 
 export const editCalendarStudentNote = (editStudentNote, currentDate, cb) =>{
-    console.log("edited note: ", editStudentNote);
     axios.post(BASE_URL+"/calendar/note/edit", editStudentNote,{headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             getCurrentWeekCalendar(currentDate);

@@ -256,6 +256,24 @@ class Lesson extends Component {
             </div>
         );
     }
+
+    componentDidMount(){
+        $(".lesson-morning").mouseenter(function () {
+            $(this).children(".lesson-actions-corner").css("visibility", "visible");
+        })
+
+        $(".lesson-morning").mouseleave(function () {
+            $(this).children(".lesson-actions-corner").css("visibility", "hidden");
+        })
+
+        $(".lesson-afternoon").mouseenter(function () {
+            $(this).children(".lesson-actions-corner").css("visibility", "visible");
+        })
+
+        $(".lesson-afternoon").mouseleave(function () {
+            $(this).children(".lesson-actions-corner").css("visibility", "hidden");
+        })
+    }
 }
 
 export default Lesson;
