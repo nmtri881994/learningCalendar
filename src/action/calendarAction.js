@@ -3,7 +3,7 @@
  */
 import {GET_LEARNING_YEAR, GET_WEEK_NUMBER, SET_CURRENT_DATE} from '../constant'
 
-import * as API from '../apiUtility/CalendarApi'
+import * as API from '../apiUtility/calendarApi'
 import {dispatch} from '../index'
 
 export const getLearningYear = (date) => {

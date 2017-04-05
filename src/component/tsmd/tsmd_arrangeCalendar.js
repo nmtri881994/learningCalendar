@@ -29,6 +29,7 @@ class TSMD_ArrangeCalendar extends Component {
 
         this.handleYearChange = this.handleYearChange.bind(this);
         this.handleTermChange = this.handleTermChange.bind(this);
+        this.handleFacultyChange = this.handleFacultyChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -48,6 +49,14 @@ class TSMD_ArrangeCalendar extends Component {
             this.setState({
                 faculties: faculties,
                 chosenFacultyId: faculties[0].id
+            });
+            API2.getAvailableYearOfAdmissions(this.state.chosenFacultyId, this.state.chosenYearId, this.state.chosenTermId, (yearOfAdmissions) => {
+                this.setState({
+                    yearOfAdmissions: yearOfAdmissions,
+                    chosenYearOfAdmissionId: yearOfAdmissions[0].id
+                })
+            }, (error) => {
+                console.log(error);
             })
         }, (error) => {
             console.log(error);
@@ -78,7 +87,19 @@ class TSMD_ArrangeCalendar extends Component {
         })
     }
 
-
+    handleFacultyChange(e){
+        this.setState({
+            chosenFacultyId: e.target.value
+        });
+        API2.getAvailableYearOfAdmissions(e.target.value, this.state.chosenYearId, this.state.chosenTermId, (yearOfAdmissions) => {
+            this.setState({
+                yearOfAdmissions: yearOfAdmissions,
+                chosenYearOfAdmissionId: yearOfAdmissions[0].id
+            })
+        }, (error) => {
+            console.log(error);
+        })
+    }
 
     render() {
         var years = this.state.years;
@@ -111,7 +132,7 @@ class TSMD_ArrangeCalendar extends Component {
                     <span className="edit-title">
                         Khoa
                     </span>
-                    <select className="year-select-long" value={this.state.chosenFacultyId}>
+                    <select className="year-select-long" onChange={this.handleFacultyChange} value={this.state.chosenFacultyId}>
                         {faculties.map(faculty => <option key={faculty.id} value={faculty.id}>{faculty.ten}</option>)}
                     </select>
                 </div>
@@ -119,7 +140,7 @@ class TSMD_ArrangeCalendar extends Component {
                     <span className="edit-title">
                         Khóa
                     </span>
-                    <select className="year-select-short">
+                    <select className="year-select-short" value={this.state.chosenYearOfAdmissionId}>
                         {yearOfAdmissions.map(yearOfAdmission => <option key={yearOfAdmission.id}
                                                                          value={yearOfAdmission.id}>
                             {yearOfAdmission.nam}</option>)}

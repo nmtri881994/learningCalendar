@@ -41,3 +41,15 @@ export const getAllFaculties = (cb) => {
         })
     $.unblockUI();
 }
+
+export const getAvailableYearOfAdmissions = (facultyId, yearId, termId, cb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/" + facultyId + "/khoa-hoc-not-end/" + yearId + "/" + termId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    $.unblockUI();
+}
