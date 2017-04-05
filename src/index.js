@@ -14,6 +14,7 @@ import {currentLearningYear, currentWeekNumber, currentDate} from './reducer/cal
 import {teacherWeekCalendar, teacherEditLessonDetail} from './reducer/teacherReducer'
 import {allLessons} from './reducer/lessonReducers'
 import {subjectRooms} from './reducer/subjectReducer'
+import {yearsNotEnd, semestersNotEnd} from './reducer/tsmdReducer'
 //Import components
 // import HomePage from './component/homePage'
 // import Login from './component/login'
@@ -24,10 +25,11 @@ import LoginContainer from './container/loginContainer'
 import Student_MainContainer from './container/student_mainContainer'
 import Student_WeekCalendarContainer from './container/student_weekCalendarContainer'
 
-
 import Teacher_MainContainer from './container/teacher_mainContainer'
 import Teacher_WeekCalendarContainer from './container/teacher_weekCalendarContainer'
 
+import TSMD_MainContainer from './container/tsmd_mainContainer'
+import TSMD_ArrangeCalendarContainer from './container/tsmd_arrangeCalendarContainer'
 //Import CSS
 require("style-loader!css-loader!./css/header.css");
 require("style-loader!css-loader!./css/body.css");
@@ -37,6 +39,7 @@ require("style-loader!css-loader!./css/footer.css");
 require("style-loader!css-loader!./css/calendar.css");
 require("style-loader!css-loader!./css/loginForm.css");
 require("style-loader!css-loader!./css/modal.css");
+require("style-loader!css-loader!./css/arrangeCalendar.css");
 // require("style-loader!css-loader!./css/googleForm.css");
 
 //Import JS
@@ -57,6 +60,8 @@ const store = createStore(
         teacherEditLessonDetail,
         allLessons,
         subjectRooms,
+        yearsNotEnd,
+        semestersNotEnd,
         routing: routerReducer
     }),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -78,7 +83,10 @@ ReactDOM.render(
                 <Route path="thoi-khoa-bieu-tuan" component={Teacher_WeekCalendarContainer}/>
                 <Route path="system-chat" component={SystemChat}/>
             </Route>
-            <Route path="giaovu" component={Student_MainContainer}/>
+            <Route path="giaovu" component={TSMD_MainContainer}>
+                <Route path="sap-xep-tkb" component={TSMD_ArrangeCalendarContainer}/>
+                {/*<Route path="mo-dang-ky" component={}/>*/}
+            </Route>
         </Router>
     </Provider>,
     document.getElementById('root')

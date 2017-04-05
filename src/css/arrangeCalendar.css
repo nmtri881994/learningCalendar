@@ -1,0 +1,17 @@
+.choose-condition{
+
+}
+
+.choose-condition-item{
+    margin: 0 20px;
+    display: inline-block;
+    height: 30px;
+}
+
+.year-select-long{
+    width: 200px;
+}
+
+.year-select-short{
+    width: 100px;
+}

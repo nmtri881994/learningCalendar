@@ -49,7 +49,9 @@ class EditClass extends Component {
             currentDate: "",
             stompClient: null,
             availableLessons: [],
-            availableEndLessons: []
+            availableEndLessons: [],
+            message: "",
+            error: ""
         }
 
         this.handleStartLessonChange = this.handleStartLessonChange.bind(this);
@@ -115,58 +117,71 @@ class EditClass extends Component {
 
     getAvailableLessons(roomId, date, defaulStartLesoonId) {
         var chosenRoomId;
-        if(roomId){
+        if (roomId) {
             chosenRoomId = roomId;
-        }else{
+        } else {
             chosenRoomId = this.state.lessonDetail.giangDuong.id;
         }
 
         var chosenDate;
-        if(date){
+        if (date) {
             chosenDate = date;
-        }else{
+        } else {
             chosenDate = this.state.dateChange;
         }
 
         var chosenLessonId = this.state.lessonId;
 
         API.getAvailableLessonsOfRoomByDate(chosenLessonId, chosenRoomId, chosenDate, (lessons) => {
-            this.setState({
-                availableLessons: lessons
-            });
-            if(defaulStartLesoonId){
-                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(defaulStartLesoonId);
-            }else{
-                var lessonDetail = this.state.lessonDetail;
-                lessonDetail.tkb_tietDauTien.id = lessons[0].id;
+            // alert(lessons);
+            if (typeof lessons == "string") {
+                $("#edit-class-button").prop("disabled", true);
                 this.setState({
-                    lessonDetail: lessonDetail
+                    availableLessons: [],
+                    availableEndLessons: [],
+                    message: lessons
                 })
-                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
+            } else {
+                $("#edit-class-button").prop("disabled", false);
+                this.setState({
+                    availableLessons: lessons,
+                    message: ""
+                });
+                if (defaulStartLesoonId) {
+                    this.setAvailableEndLessonsCorresspondingToChosenStartLessons(defaulStartLesoonId);
+                } else {
+                    var lessonDetail = this.state.lessonDetail;
+                    lessonDetail.tkb_tietDauTien.id = lessons[0].id;
+                    this.setState({
+                        lessonDetail: lessonDetail
+                    })
+                    this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
+                }
             }
+
         }, (error) => {
             console.log("error: ", error);
         })
     }
 
-    setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonId){
+    setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonId) {
         var availableLessons = this.state.availableLessons;
-        var availableEndLessons =  [];
+        var availableEndLessons = [];
         var indexOfStartLesson = -1;
         var lessonDetail = this.state.lessonDetail;
 
-        for(var i = 0; i< availableLessons.length; i++){
-            if(startLessonId == availableLessons[i].id){
+        for (var i = 0; i < availableLessons.length; i++) {
+            if (startLessonId == availableLessons[i].id) {
                 indexOfStartLesson = i;
                 break
             }
         }
         var startLesson = availableLessons[indexOfStartLesson];
 
-        for(var i = indexOfStartLesson; i < availableLessons.length; i++){
-            if((availableLessons[i].thuTu - startLesson.thuTu) == (i - indexOfStartLesson)){
+        for (var i = indexOfStartLesson; i < availableLessons.length; i++) {
+            if ((availableLessons[i].thuTu - startLesson.thuTu) == (i - indexOfStartLesson)) {
                 availableEndLessons.push(availableLessons[i]);
-            }else{
+            } else {
                 break;
             }
         }
@@ -204,6 +219,10 @@ class EditClass extends Component {
         this.setState({
             lessonDetail: lessonDetail
         })
+
+        if (lessonDetail.ngay) {
+
+        }
         this.state.stompClient.send("/socket/calendar", {}, "edited");
         editLesson(this.state.lessonDetail, this.state.currentDate);
     }
@@ -251,7 +270,7 @@ class EditClass extends Component {
                                     value={lessonDetail.tkb_tietDauTien.id} onChange={this.handleStartLessonChange}>
                                 {availableLessons ?
                                     availableLessons.map(lesson =>
-                                        <option key={"start"+lesson.id} value={lesson.id}>{lesson.ten}</option>
+                                        <option key={"start" + lesson.id} value={lesson.id}>{lesson.ten}</option>
                                     )
 
                                     : ""
@@ -264,12 +283,15 @@ class EditClass extends Component {
                                     value={lessonDetail.tkb_tietCuoiCung.id} onChange={this.handleEndLessonChange}>
                                 {availableEndLessons ?
                                     availableEndLessons.map(lesson =>
-                                        <option key={"end"+lesson.id} value={lesson.id}>{lesson.ten}</option>
+                                        <option key={"end" + lesson.id} value={lesson.id}>{lesson.ten}</option>
                                     )
 
                                     : ""
                                 }
                             </select>
+                        </div>
+                        <div className="error-message">
+                            {this.state.message}
                         </div>
                         <div className="field-section">
                             <div className="section-title">Thay đổi lời nhắn</div>
@@ -286,9 +308,12 @@ class EditClass extends Component {
                                       value={lessonDetail.giaoVienGhiChu ? lessonDetail.giaoVienGhiChu : ""}
                                       onChange={this.handleTeacherNoteChange}/><br/>
                         </div>
+                        <div className="error-message">
+                            {this.state.error}
+                        </div>
                     </div>
                     <div className="modal-footer">
-                        <button onClick={this.handleSubmit}>Lưu</button>
+                        <button id="edit-class-button" onClick={this.handleSubmit}>Lưu</button>
                         {/*<button >Cancel</button>*/}
                     </div>
                 </div>

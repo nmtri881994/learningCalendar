@@ -85,7 +85,7 @@ class Login extends Component {
                             </div>
                         </div>
 
-                        <a className="btn btn-primary btn-large btn-block" onClick={this.handleSubmit}>Đăng nhập</a>
+                        <a className="btn btn-primary btn-large btn-block cursor" onClick={this.handleSubmit}>Đăng nhập</a>
                         <div id="login-message" ref="loginMessage" className="error-message">
                             {this.props.loginMessage}
                         </div>

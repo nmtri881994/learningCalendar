@@ -73,11 +73,13 @@ strong {
     display: block;
     padding: 7px 15px;
     word-wrap: break-word;
+    overflow-x: hidden;
 }
 
 .slide-bar-nav-inner-item-icon {
     margin-right: 15px;
     color: #707070;
+    width: 30px;
 }
 
 .slide-bar-nav-inner-item-title {
