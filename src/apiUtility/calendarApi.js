@@ -56,7 +56,19 @@ export const getAvailableYearOfAdmissions = (facultyId, yearId, termId, cb) => {
 
 export const getAvailableMajors = (yearId, termId, facultyId, yearOfAdmissionId, cb, fcb) => {
     $.blockUI(loading);
-    axios(BASE_URL + "/nganhs/"+yearId+"/"+termId+"/"+facultyId+"/"+yearOfAdmissionId , {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/nganhs/" + yearId + "/" + termId + "/" + facultyId + "/" + yearOfAdmissionId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
+
+export const getClasses = (yearId, termId, facultyId, yearOfAdmissionId, majorId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/lopMonHocs/" + yearId + "/" + termId + "/" + facultyId + "/" + yearOfAdmissionId + "/" + majorId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })

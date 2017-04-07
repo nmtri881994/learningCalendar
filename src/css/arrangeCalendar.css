@@ -15,3 +15,15 @@
 .year-select-short{
     width: 100px;
 }
+
+#classes-table{
+    margin: 20px;
+}
+
+.data-table{
+    text-align: center;
+}
+
+.arrange-class-icon{
+    font-size: 20px;
+}

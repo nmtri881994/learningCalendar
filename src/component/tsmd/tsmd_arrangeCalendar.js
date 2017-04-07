@@ -10,6 +10,9 @@ import {getYearsNotEnd, getSemestersNotEndOfYear} from '../../action/tsmdAction'
 import * as API from '../../apiUtility/tsmdApi'
 import * as API2 from '../../apiUtility/calendarApi'
 
+//import components
+import TSMD_ShowAllClassesComponent from './tsmd_showAllClassesComponent'
+
 class TSMD_ArrangeCalendar extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +27,8 @@ class TSMD_ArrangeCalendar extends Component {
             chosenYearOfAdmissionId: 0,
             haveMajor: false,
             majors: [],
-            chosenMajorId: 0
+            chosenMajorId: 0,
+            classes: []
         }
 
         this.handleYearChange = this.handleYearChange.bind(this);
@@ -32,6 +36,7 @@ class TSMD_ArrangeCalendar extends Component {
         this.handleFacultyChange = this.handleFacultyChange.bind(this);
         this.handleYearOfAdmissionChange = this.handleYearOfAdmissionChange.bind(this);
         this.handleMajorChange = this.handleMajorChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -200,7 +205,7 @@ class TSMD_ArrangeCalendar extends Component {
         })
     }
 
-    handleYearOfAdmissionChange(e){
+    handleYearOfAdmissionChange(e) {
         this.setState({
             chosenYearOfAdmissionId: e.target.value
         });
@@ -221,10 +226,21 @@ class TSMD_ArrangeCalendar extends Component {
         })
     }
 
-    handleMajorChange(e){
+    handleMajorChange(e) {
         this.setState({
             chosenMajorId: e.target.value
         })
+    }
+
+    handleSubmit() {
+        var state = this.state;
+        API2.getClasses(state.chosenYearId, state.chosenTermId, state.chosenFacultyId, state.chosenYearOfAdmissionId, state.chosenMajorId, (classes) => {
+            this.setState({
+                classes: classes
+            });
+        }, (error) => {
+            console.log(error);
+        });
     }
 
     render() {
@@ -267,7 +283,8 @@ class TSMD_ArrangeCalendar extends Component {
                     <span className="edit-title">
                         Khóa
                     </span>
-                    <select className="year-select-short" onChange={this.handleYearOfAdmissionChange} value={this.state.chosenYearOfAdmissionId}>
+                    <select className="year-select-short" onChange={this.handleYearOfAdmissionChange}
+                            value={this.state.chosenYearOfAdmissionId}>
                         {yearOfAdmissions.map(yearOfAdmission => <option key={yearOfAdmission.id}
                                                                          value={yearOfAdmission.id}>
                             {yearOfAdmission.nam}</option>)}
@@ -277,13 +294,17 @@ class TSMD_ArrangeCalendar extends Component {
                     <span className="edit-title">
                         Ngành
                     </span>
-                    <select className="year-select-long" onChange={this.handleMajorChange} value={this.state.chosenMajorId}>
-                        {majors.map(major => <option key={major.id} value={major.id}>{major.ten}</option>)}
-                    </select>
-                </div> : ""}
+                        <select className="year-select-long" onChange={this.handleMajorChange}
+                                value={this.state.chosenMajorId}>
+                            {majors.map(major => <option key={major.id} value={major.id}>{major.ten}</option>)}
+                        </select>
+                    </div> : ""}
                 <div className="choose-condition-item">
-                    <button>OK</button>
+                    <button onClick={this.handleSubmit}>OK</button>
                 </div>
+            </div>
+            <div id="classes-table">
+                <TSMD_ShowAllClassesComponent classes={this.state.classes} />
             </div>
 
         </div>)

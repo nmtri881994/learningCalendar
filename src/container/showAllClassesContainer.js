@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import ShowAllClassesComponent from '../component/showAllClassesComponent'
+import ShowAllClassesComponent from '../component/tsmd/showAllClassesComponent'
 import {getAllClasses} from '../action/classAction'
 
 const mapStateToProp = (state, ownProps) => {
