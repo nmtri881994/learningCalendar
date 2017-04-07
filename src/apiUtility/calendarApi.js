@@ -53,3 +53,15 @@ export const getAvailableYearOfAdmissions = (facultyId, yearId, termId, cb) => {
         })
     $.unblockUI();
 }
+
+export const getAvailableMajors = (yearId, termId, facultyId, yearOfAdmissionId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/nganhs/"+yearId+"/"+termId+"/"+facultyId+"/"+yearOfAdmissionId , {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
