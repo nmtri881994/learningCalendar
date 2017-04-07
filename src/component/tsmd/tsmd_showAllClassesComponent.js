@@ -7,7 +7,6 @@ class TSMD_ShowAllClassesComponent extends Component {
             classes: [],
             tableData: ""
         }
-        this.triggerModal = this.triggerModal.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -41,9 +40,6 @@ class TSMD_ShowAllClassesComponent extends Component {
         })
     }
 
-    triggerModal(id) {
-
-    }
 
     render() {
         var myTable = $('#myTable').dataTable();
@@ -64,7 +60,7 @@ class TSMD_ShowAllClassesComponent extends Component {
                     cl.soTietLyThuyet,
                     cl.soTietThucHanh,
                     cl.soBuoiLyThuyetMotTuan,
-                    cl.soBuoiLyThuyetMotTuan,
+                    cl.soTietLyThuyetMotTuan,
                     cl.soBuoiThucHanhMotTuan,
                     cl.soTietThucHanhMotTuan,
                     '<i class="fa fa-cog arrange-class-icon cursor" aria-hidden="true" data-id="'+cl.id+'"/>'
@@ -128,7 +124,7 @@ class TSMD_ShowAllClassesComponent extends Component {
     }
 
     componentDidUpdate(){
-        var triggerModal = (id) => this.triggerModal(id);
+        var triggerModal = (id) => this.props.triggerModal(id);
         $(document).ready(function () {
             $('.arrange-class-icon').on('click', function(evt){
                 triggerModal($(this).attr("data-id"));

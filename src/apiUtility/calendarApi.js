@@ -77,3 +77,27 @@ export const getClasses = (yearId, termId, facultyId, yearOfAdmissionId, majorId
         })
     $.unblockUI();
 }
+
+export const getThus = (cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/thus", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
+
+export const getWeekCalendarOfClass = (classId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/lich-hoc-theo-tuan/" + classId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}

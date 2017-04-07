@@ -12,6 +12,7 @@ import * as API2 from '../../apiUtility/calendarApi'
 
 //import components
 import TSMD_ShowAllClassesComponent from './tsmd_showAllClassesComponent'
+import TSMD_EditClass from './tsmd_editClass'
 
 class TSMD_ArrangeCalendar extends Component {
     constructor(props) {
@@ -28,7 +29,8 @@ class TSMD_ArrangeCalendar extends Component {
             haveMajor: false,
             majors: [],
             chosenMajorId: 0,
-            classes: []
+            classes: [],
+            editingClassId: 0
         }
 
         this.handleYearChange = this.handleYearChange.bind(this);
@@ -37,6 +39,7 @@ class TSMD_ArrangeCalendar extends Component {
         this.handleYearOfAdmissionChange = this.handleYearOfAdmissionChange.bind(this);
         this.handleMajorChange = this.handleMajorChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.triggerModal = this.triggerModal.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -243,6 +246,14 @@ class TSMD_ArrangeCalendar extends Component {
         });
     }
 
+    triggerModal(id){
+        this.setState({
+            editingClassId: id
+        })
+        var modal = $("#myModal");
+        modal[0].style.display = "block";
+    }
+
     render() {
         var years = this.state.years;
         var terms = this.state.terms;
@@ -304,8 +315,10 @@ class TSMD_ArrangeCalendar extends Component {
                 </div>
             </div>
             <div id="classes-table">
-                <TSMD_ShowAllClassesComponent classes={this.state.classes} />
+                <TSMD_ShowAllClassesComponent classes={this.state.classes} triggerModal={this.triggerModal} />
             </div>
+
+            <TSMD_EditClass classId={this.state.editingClassId}/>
 
         </div>)
     }

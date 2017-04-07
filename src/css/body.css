@@ -94,3 +94,7 @@ button:focus {
     font-size: 20px;
     font-weight: bold;
 }
+
+.text-center{
+    text-align: center;
+}

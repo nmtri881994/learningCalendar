@@ -28,6 +28,10 @@
     animation-duration: 0.4s
 }
 
+.modal-small{
+    width: 30%;
+}
+
 /* Add Animation */
 @-webkit-keyframes animatetop {
     from {
