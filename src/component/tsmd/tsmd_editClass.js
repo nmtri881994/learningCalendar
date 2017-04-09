@@ -4,6 +4,8 @@
 import React, {Component} from 'react'
 //import actions
 
+//import components
+import TSMD_ClassCalendar from './tsmd_classCalendar'
 
 //import Apis
 import * as API from '../../apiUtility/calendarApi'
@@ -65,35 +67,9 @@ class TSMD_EditClass extends Component {
                         <h3>Tên class</h3>
                     </div>
                     <div className="modal-body">
-                        <div className="field-section">
-                            <div className="section-title">Chọn thời gian, địa điểm</div>
-                            <div className="edit-title">
-                                Thứ
-                            </div>
-                            <select className="halfLength">
-                                {weekDays ? weekDays.map(weekDay => <option
-                                        key={weekDay.id}>{weekDay.ten}</option>) : ""}
-                            </select>
-                            <div className="edit-title">
-                                Phòng
-                            </div>
-                            <select className="halfLength">
-
-                            </select>
-                            <div className="edit-title">
-                                Từ tiết
-                            </div>
-                            <select id="start-lesson-selecbox" className="halfLength">
-                            </select>
-                            <div className="edit-title">
-                                Tới tiết
-                            </div>
-                            <select id="end-lesson-selecbox" className="halfLength">
-                            </select>
-                        </div>
-                        <div className="error-message">
-                            {this.state.message}
-                        </div>
+                        <TSMD_ClassCalendar/>
+                        <TSMD_ClassCalendar/>
+                        <TSMD_ClassCalendar/>
                     </div>
                     <div className="modal-footer text-center">
                         <button id="edit-class-button">Lưu</button>
@@ -104,7 +80,16 @@ class TSMD_EditClass extends Component {
         </div>);
     }
 
-    componentDidMount() {
+    componentDidMount(){
+        $(document).ready(function () {
+            $('.class-week-calendar-time').on('click', function (evt) {
+                $(this).children('.week-calendar-time-detail').show();
+            })
+
+            $('.week-calendar-time-cancel-button').on('click', function (evt) {
+                $(this).parent().parent().css('background-color', 'red');
+            })
+        })
     }
 }
 
