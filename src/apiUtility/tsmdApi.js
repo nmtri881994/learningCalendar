@@ -43,3 +43,27 @@ export const updateWeekCalendar = (calendar, cb, fcb) => {
         })
     $.unblockUI();
 }
+
+export const addWeekCalendar = (calendar, classId, cb, fcb) => {
+    $.blockUI(loading);
+    axios.post(BASE_URL + "/add-calendar/"+classId, calendar, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data)
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
+
+export const deleteWeekCalendar = (calendarId, cb, fcb) => {
+    $.blockUI(loading);
+    axios.delete(BASE_URL + "/delete-calendar/"+calendarId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data)
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}

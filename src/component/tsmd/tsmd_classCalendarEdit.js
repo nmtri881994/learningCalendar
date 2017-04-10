@@ -16,6 +16,7 @@ class TSMD_ClassCalendarEdit extends Component {
 
         this.state = {
             stompClient: null,
+            stompClient2: null,
             classId: 0,
             classType: 0,
             calendar: null,
@@ -38,6 +39,7 @@ class TSMD_ClassCalendarEdit extends Component {
         this.handleStartLessonChange = this.handleStartLessonChange.bind(this);
         this.handleEndLessonChang = this.handleEndLessonChang.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     switchMode() {
@@ -102,30 +104,35 @@ class TSMD_ClassCalendarEdit extends Component {
     }
 
     setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonId) {
+        if(startLessonId == 0){
+            this.setState({
+                availableEndLessons: [],
+            })
+        }else{
+            var availableLessons = this.state.availableLessons;
+            var availableEndLessons = [];
+            var indexOfStartLesson = -1;
 
-        var availableLessons = this.state.availableLessons;
-        var availableEndLessons = [];
-        var indexOfStartLesson = -1;
-
-        for (var i = 0; i < availableLessons.length; i++) {
-            if (startLessonId == availableLessons[i].id) {
-                indexOfStartLesson = i;
-                break
+            for (var i = 0; i < availableLessons.length; i++) {
+                if (startLessonId == availableLessons[i].id) {
+                    indexOfStartLesson = i;
+                    break
+                }
             }
-        }
-        var startLesson = availableLessons[indexOfStartLesson];
+            var startLesson = availableLessons[indexOfStartLesson];
 
-        for (var i = indexOfStartLesson; i < availableLessons.length; i++) {
-            if ((availableLessons[i].thuTu - startLesson.thuTu) == (i - indexOfStartLesson)) {
-                availableEndLessons.push(availableLessons[i]);
-            } else {
-                break;
+            for (var i = indexOfStartLesson; i < availableLessons.length; i++) {
+                if ((availableLessons[i].thuTu - startLesson.thuTu) == (i - indexOfStartLesson)) {
+                    availableEndLessons.push(availableLessons[i]);
+                } else {
+                    break;
+                }
             }
-        }
 
-        this.setState({
-            availableEndLessons: availableEndLessons
-        })
+            this.setState({
+                availableEndLessons: availableEndLessons
+            })
+        }
 
     }
 
@@ -219,13 +226,24 @@ class TSMD_ClassCalendarEdit extends Component {
         calendar.tkb_tietDauTien.id = this.state.chosenStartLessonId;
         calendar.tkb_tietCuoiCung.id = this.state.chosenEndLessonId;
 
+        console.log(calendar);
+
         API2.updateWeekCalendar(calendar, (newCalendar) => {
             this.setState({
                 calendar: newCalendar
             });
-            this.state.stompClient.send("/socket/week-calendar", {}, JSON.stringify({roomId: calendar.giangDuong.id, weekDayId: calendar.tkb_thu.id}));
+            this.state.stompClient.send("/socket/week-calendar/edit", {}, JSON.stringify({roomId: calendar.giangDuong.id, weekDayId: calendar.tkb_thu.id}));
             this.switchMode();
         },(error) =>{
+            console.log(error);
+        })
+    }
+
+    handleDelete(){
+        API2.deleteWeekCalendar(this.state.calendar.id, (data)=>{
+            this.state.stompClient2.send("/socket/week-calendar/add-or-delete", {}, JSON.stringify({classId: this.state.classId}));
+            this.switchMode();
+        }, (error)=>{
             console.log(error);
         })
     }
@@ -278,6 +296,7 @@ class TSMD_ClassCalendarEdit extends Component {
                 </select>
                 <div className="action-corner">
                     <button onClick={this.handleSubmit}>OK</button>
+                    <button onClick={this.handleDelete}>Xóa</button>
                 </div>
                 <div className="error-message">
                 </div>
@@ -286,15 +305,25 @@ class TSMD_ClassCalendarEdit extends Component {
     }
 
     componentDidMount() {
-        var socket = SockJS('http://localhost:8080/week-calendar'); // <3>
+        var socket = SockJS('http://localhost:8080/week-calendar/edit'); // <3>
         var stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
-            stompClient.subscribe("/socket/week-calendar", function (message) {
+            stompClient.subscribe("/socket/week-calendar/edit", function (message) {
             });
         });
 
         this.setState({
             stompClient: stompClient
+        })
+
+        var socket2 = SockJS('http://localhost:8080/week-calendar/add-or-delete'); // <3>
+        var stompClient2 = Stomp.over(socket2);
+        stompClient2.connect({}, function (frame) {
+            stompClient2.subscribe("/socket/week-calendar/add-or-delete", function (message) {
+            });
+        });
+        this.setState({
+            stompClient2: stompClient2
         })
     }
 }
