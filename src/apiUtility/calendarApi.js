@@ -101,3 +101,51 @@ export const getWeekCalendarOfClass = (classId, cb, fcb) => {
         })
     $.unblockUI();
 }
+
+export const getClassType = (classId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/loai-lop/" + classId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
+
+export const getRoomTypes = (cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/day-nha/", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
+
+export const getRooms = (classId, roomTypeID, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/giang-duong/" + classId + "/" + roomTypeID, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
+
+export const getAvailableLessons = (weekCalendarId, weekDayId, roomId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/tkb-tuan/tiets-free/" + weekCalendarId + "/" + weekDayId + "/" + roomId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}

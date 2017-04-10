@@ -30,7 +30,8 @@ class TSMD_ArrangeCalendar extends Component {
             majors: [],
             chosenMajorId: 0,
             classes: [],
-            editingClassId: 0
+            editingClassId: 0,
+            editingClassName: ""
         }
 
         this.handleYearChange = this.handleYearChange.bind(this);
@@ -246,9 +247,11 @@ class TSMD_ArrangeCalendar extends Component {
         });
     }
 
-    triggerModal(id){
+    triggerModal(id, name){
+        console.log("namemea",name);
         this.setState({
-            editingClassId: id
+            editingClassId: id,
+            editingClassName: name
         })
         var modal = $("#myModal");
         modal[0].style.display = "block";
@@ -318,7 +321,7 @@ class TSMD_ArrangeCalendar extends Component {
                 <TSMD_ShowAllClassesComponent classes={this.state.classes} triggerModal={this.triggerModal} />
             </div>
 
-            <TSMD_EditClass classId={this.state.editingClassId}/>
+            <TSMD_EditClass classId={this.state.editingClassId} className={this.state.editingClassName}/>
 
         </div>)
     }

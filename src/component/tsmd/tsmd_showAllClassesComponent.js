@@ -63,7 +63,7 @@ class TSMD_ShowAllClassesComponent extends Component {
                     cl.soTietLyThuyetMotTuan,
                     cl.soBuoiThucHanhMotTuan,
                     cl.soTietThucHanhMotTuan,
-                    '<i class="fa fa-cog arrange-class-icon cursor" aria-hidden="true" data-id="'+cl.id+'"/>'
+                    '<i class="fa fa-cog arrange-class-icon cursor" aria-hidden="true" data-id="'+cl.id+'" data-name="'+cl.monHoc.ten+'"/>'
                 ]);
                 index ++;
             })
@@ -124,10 +124,10 @@ class TSMD_ShowAllClassesComponent extends Component {
     }
 
     componentDidUpdate(){
-        var triggerModal = (id) => this.props.triggerModal(id);
+        var triggerModal = (id, name) => this.props.triggerModal(id, name);
         $(document).ready(function () {
             $('.arrange-class-icon').on('click', function(evt){
-                triggerModal($(this).attr("data-id"));
+                triggerModal($(this).attr("data-id"), $(this).attr("data-name"));
             })
         })
     }

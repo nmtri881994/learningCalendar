@@ -5,7 +5,6 @@ import axios from "axios";
 import {APP_URL} from '../configuration/appConfig'
 
 const BASE_URL = `${APP_URL}/api/giaovu`;
-const CALENDAR_URL = `${APP_URL}/api/calendar`
 
 //import actions
 
@@ -21,14 +20,26 @@ export const getYearsNotEnd = (cb) => {
     $.unblockUI();
 }
 
-export const getSemestersNotEndOfYear = (yearId, cb) =>{
+export const getSemestersNotEndOfYear = (yearId, cb) => {
     $.blockUI(loading);
-    axios(BASE_URL + "/calendar/"+yearId+"/semester-not-end", {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/calendar/" + yearId + "/semester-not-end", {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
         .catch(function (error) {
             console.log(error);
+        })
+    $.unblockUI();
+}
+
+export const updateWeekCalendar = (calendar, cb, fcb) => {
+    $.blockUI(loading);
+    axios.post(BASE_URL + "/edit-calendar", calendar, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data)
+        })
+        .catch(function (error) {
+            fcb(error);
         })
     $.unblockUI();
 }

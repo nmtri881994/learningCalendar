@@ -29,25 +29,29 @@
 }
 
 .class-week-calendar-time{
-    background-color: #7986CB;
     margin: 5px 0;
-    cursor: pointer;
-}
-
-.class-week-calendar-time:hover{
-    background-color: #3F51B5;
 }
 
 .week-calendar-time-summary{
+    padding: 0 4px;
+    background-color: #7986CB;
+    cursor: pointer;
     color: white;
 }
 
+.week-calendar-time-summary:hover{
+    background-color: #3F51B5;
+}
+
 .week-calendar-time-detail{
-    display: none;
     background-color: white;
     border: 1px solid #ccc;
     border-top: none;
     padding: 0 10px 10px 10px;
+}
+
+.hide{
+    display: none;
 }
 
 .action-corner{
