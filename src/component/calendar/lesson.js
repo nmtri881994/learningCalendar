@@ -235,9 +235,9 @@ class Lesson extends Component {
             <div className="subject-detail">
                 {room?"Phòng học: "+room:""}<br/>
                 {studentShowing?"Giảng viên: "+teacherName: ""}
-                {teacherMess? <div className="note-content">
+                <div className="note-content">
                     {teacherMess}
-                </div>: ""}
+                </div>
                 {studentShowing?<div className="student-note-content">
                         {this.state.studentNote}
                     </div>: <div className="teacher-note-content">
