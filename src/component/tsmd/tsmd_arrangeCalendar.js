@@ -268,6 +268,23 @@ class TSMD_ArrangeCalendar extends Component {
         var yearOfAdmissions = this.state.yearOfAdmissions;
         var haveMajor = this.state.haveMajor;
         var majors = this.state.majors;
+
+        var chosenKhoa;
+        for (var i = 0; i < faculties.length; i++) {
+            if(faculties[i].id == this.state.chosenFacultyId){
+                chosenKhoa = faculties[i];
+                break;
+            }
+        }
+
+        var chosenYearOfAdmission;
+        for (var i = 0; i < yearOfAdmissions.length; i++) {
+            if(yearOfAdmissions[i].id == this.state.chosenYearOfAdmissionId){
+                chosenYearOfAdmission = yearOfAdmissions[i];
+                break;
+            }
+        }
+
         return (<div>
             <div className="choose-condition">
                 <div className="choose-condition-item">
@@ -322,7 +339,9 @@ class TSMD_ArrangeCalendar extends Component {
                 </div>
             </div>
             <div id="classes-table">
-                <TSMD_ShowAllClassesComponent classes={this.state.classes} triggerModal={this.triggerModal}/>
+                <TSMD_ShowAllClassesComponent khoa={chosenKhoa}
+                                              khoaHoc={chosenYearOfAdmission}
+                                              classes={this.state.classes} triggerModal={this.triggerModal}/>
             </div>
 
             <div id="classes-calendar">
@@ -336,16 +355,16 @@ class TSMD_ArrangeCalendar extends Component {
         </div>)
     }
 
-    refreshCaledar(classId){
+    refreshCaledar(classId) {
         var shoudldRefresh = false;
         var classes = this.state.classes;
-        for(var i =0; i< classes.length;i++){
-            if(classes[i].id == classId){
+        for (var i = 0; i < classes.length; i++) {
+            if (classes[i].id == classId) {
                 shoudldRefresh = true;
                 break;
             }
         }
-        if(shoudldRefresh){
+        if (shoudldRefresh) {
             var state = this.state;
             API2.getClasses(state.chosenYearId, state.chosenTermId, state.chosenFacultyId, state.chosenYearOfAdmissionId, state.chosenMajorId, (classes) => {
                 this.setState({
@@ -357,7 +376,7 @@ class TSMD_ArrangeCalendar extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         var socket = SockJS('http://localhost:8080/week-calendar/edit'); // <3>
         var stompClient = Stomp.over(socket);
         var refreshCalendar = (classId) => this.refreshCaledar(classId);

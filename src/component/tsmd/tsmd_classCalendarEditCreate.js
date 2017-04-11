@@ -291,12 +291,45 @@ class TSMD_ClassCalendarCreate extends Component {
         // if(weekCalendar.roomId == this.state.chosenRoomId && weekCalendar.weekDayId == this.state.chosenWeekDayId){
         API.getAvailableLessons(this.state.classId, 0, this.state.chosenWeekDayId, this.state.chosenRoomId, (lessons) => {
             if (lessons.length != 0) {
+                var changeChosenStartLesson = true;
+                for(var i = 0 ; i< lessons.length;i++){
+                    if(lessons[i].id == this.state.chosenStartLessonId){
+                        changeChosenStartLesson = false;
+                        break;
+                    }
+                }
+
+                var changeChosenEndLesson = true;
+                for(var i = 0 ; i< lessons.length;i++){
+                    if(lessons[i].id == this.state.chosenEndLessonId){
+                        changeChosenEndLesson = false;
+                        break;
+                    }
+                }
+
+                console.log(changeChosenStartLesson + " -------"+changeChosenEndLesson);
+
+                var chosenStartLessonId = 0;
+                var chosenEndlessonId = 0;
+                if(!changeChosenStartLesson){
+                    chosenStartLessonId = this.state.chosenStartLessonId;
+                    if(!changeChosenEndLesson){
+                        chosenEndlessonId = this.state.chosenEndLessonId;
+                    }else{
+                        chosenEndlessonId = chosenStartLessonId;
+                    }
+                }else{
+                    chosenStartLessonId = lessons[0].id;
+                    chosenEndlessonId = lessons[0].id;
+                }
+
+
                 this.setState({
                     availableLessons: lessons,
-                    chosenStartLessonId: lessons[0].id,
-                    chosenEndLessonId: lessons[0].id
+                    chosenStartLessonId: chosenStartLessonId,
+                    chosenEndLessonId: chosenEndlessonId
                 });
-                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
+                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(chosenStartLessonId);
             } else {
                 this.setState({
                     availableLessons: [],

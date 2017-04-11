@@ -5,6 +5,8 @@ class TSMD_ShowAllClassesComponent extends Component {
         super(props)
         this.state = {
             classes: [],
+            khoaId: 0,
+            khoaHocId: 0,
             tableData: ""
         }
     }
@@ -35,7 +37,9 @@ class TSMD_ShowAllClassesComponent extends Component {
         //     )
         // }
         this.setState({
-            classes: classes
+            classes: classes,
+            khoa: nextProps.khoa,
+            khoaHoc: nextProps.khoaHoc
             // tableData: tableData
         })
     }
@@ -53,7 +57,7 @@ class TSMD_ShowAllClassesComponent extends Component {
                 var triggerModal = () => this.triggerModal.bind(null, cl.id);
                 myTable.fnAddData([
                     index,
-                    cl.id,
+                    cl.monHoc.maMonHoc+"."+this.state.khoa.maKhoa+"."+this.state.khoaHoc.nam+"."+cl.id,
                     cl.monHoc.ten,
                     cl.giaoVien.hoDem + " " +cl.giaoVien.ten,
                     cl.soLuongToiDa,

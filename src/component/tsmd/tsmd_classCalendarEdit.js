@@ -104,11 +104,11 @@ class TSMD_ClassCalendarEdit extends Component {
     }
 
     setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonId) {
-        if(startLessonId == 0){
+        if (startLessonId == 0) {
             this.setState({
                 availableEndLessons: [],
             })
-        }else{
+        } else {
             var availableLessons = this.state.availableLessons;
             var availableEndLessons = [];
             var indexOfStartLesson = -1;
@@ -219,14 +219,12 @@ class TSMD_ClassCalendarEdit extends Component {
         })
     }
 
-    handleSubmit(){
+    handleSubmit() {
         var calendar = this.state.calendar;
         calendar.giangDuong.id = this.state.chosenRoomId;
         calendar.tkb_thu.id = this.state.chosenWeekDayId;
         calendar.tkb_tietDauTien.id = this.state.chosenStartLessonId;
         calendar.tkb_tietCuoiCung.id = this.state.chosenEndLessonId;
-
-        console.log(calendar);
 
         API2.updateWeekCalendar(calendar, (newCalendar) => {
             this.setState({
@@ -234,16 +232,16 @@ class TSMD_ClassCalendarEdit extends Component {
             });
             this.state.stompClient.send("/socket/week-calendar/edit", {}, JSON.stringify({classId: this.state.classId}));
             this.switchMode();
-        },(error) =>{
+        }, (error) => {
             console.log(error);
         })
     }
 
-    handleDelete(){
-        API2.deleteWeekCalendar(this.state.calendar.id, (data)=>{
+    handleDelete() {
+        API2.deleteWeekCalendar(this.state.calendar.id, (data) => {
             this.state.stompClient2.send("/socket/week-calendar/add-or-delete", {}, JSON.stringify({classId: this.state.classId}));
             this.switchMode();
-        }, (error)=>{
+        }, (error) => {
             console.log(error);
         })
     }
@@ -257,7 +255,8 @@ class TSMD_ClassCalendarEdit extends Component {
         var availableEndLessons = this.state.availableEndLessons;
         return (<div className="class-week-calendar-time">
             <div className="week-calendar-time-summary" onClick={this.switchMode}>
-                {calendar.tkb_thu.ten} - {calendar.giangDuong.ten} - {calendar.tkb_tietDauTien.ten} tới {calendar.tkb_tietCuoiCung.ten}
+                {calendar.tkb_thu.ten} - {calendar.giangDuong.ten} - {calendar.tkb_tietDauTien.ten}
+                tới {calendar.tkb_tietCuoiCung.ten}
             </div>
             <div className="week-calendar-time-detail hide" ref="detail">
                 <div className="edit-title">
