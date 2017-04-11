@@ -138,9 +138,9 @@ export const getRooms = (classId, roomTypeID, cb, fcb) => {
     $.unblockUI();
 }
 
-export const getAvailableLessons = (weekCalendarId, weekDayId, roomId, cb, fcb) => {
+export const getAvailableLessons = (classId, weekCalendarId, weekDayId, roomId, cb, fcb) => {
     $.blockUI(loading);
-    axios(BASE_URL + "/tkb-tuan/tiets-free/" + weekCalendarId + "/" + weekDayId + "/" + roomId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/tkb-tuan/tiets-free/"+ classId + "/" + weekCalendarId + "/" + weekDayId + "/" + roomId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })

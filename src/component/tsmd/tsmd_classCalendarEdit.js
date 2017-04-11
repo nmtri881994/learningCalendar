@@ -52,13 +52,13 @@ class TSMD_ClassCalendarEdit extends Component {
 
     componentWillMount() {
         var calendar = this.props.calendar;
-
+        var classId = this.props.classId
         this.setState({
-            classId: this.props.classId,
+            classId: classId,
             calendar: calendar
         })
 
-        API.getClassType(this.props.classId, (classType) => {
+        API.getClassType(classId, (classType) => {
             this.setState({
                 classType: classType
             })
@@ -76,12 +76,12 @@ class TSMD_ClassCalendarEdit extends Component {
                     roomTypes: roomTypes,
                     chosenRoomTypeId: calendar.giangDuong.dayNha.id
                 });
-                API.getRooms(this.props.classId, calendar.giangDuong.dayNha.id, (rooms) => {
+                API.getRooms(classId, calendar.giangDuong.dayNha.id, (rooms) => {
                     this.setState({
                         rooms: rooms,
                         chosenRoomId: calendar.giangDuong.id
                     });
-                    API.getAvailableLessons(calendar.id, calendar.tkb_thu.id, calendar.giangDuong.id, (lessons) => {
+                    API.getAvailableLessons(classId, calendar.id, calendar.tkb_thu.id, calendar.giangDuong.id, (lessons) => {
                         this.setState({
                             availableLessons: lessons,
                             chosenStartLessonId: calendar.tkb_tietDauTien.id,
@@ -146,7 +146,7 @@ class TSMD_ClassCalendarEdit extends Component {
                 rooms: rooms,
                 chosenRoomId: rooms[0].id
             });
-            API.getAvailableLessons(this.state.calendar.id, chosenWeekDayId, rooms[0].id, (lessons) => {
+            API.getAvailableLessons(this.state.classId, this.state.calendar.id, chosenWeekDayId, rooms[0].id, (lessons) => {
                 this.setState({
                     availableLessons: lessons,
                     chosenStartLessonId: lessons[0].id,
@@ -171,7 +171,7 @@ class TSMD_ClassCalendarEdit extends Component {
                 rooms: rooms,
                 chosenRoomId: rooms[0].id
             });
-            API.getAvailableLessons(this.state.calendar.id, this.state.chosenWeekDayId, rooms[0].id, (lessons) => {
+            API.getAvailableLessons(this.state.classId, this.state.calendar.id, this.state.chosenWeekDayId, rooms[0].id, (lessons) => {
                 this.setState({
                     availableLessons: lessons,
                     chosenStartLessonId: lessons[0].id,
@@ -191,7 +191,7 @@ class TSMD_ClassCalendarEdit extends Component {
         this.setState({
             chosenRoomId: chosenRoomId
         })
-        API.getAvailableLessons(this.state.calendar.id, this.state.chosenWeekDayId, chosenRoomId, (lessons) => {
+        API.getAvailableLessons(this.state.classId, this.state.calendar.id, this.state.chosenWeekDayId, chosenRoomId, (lessons) => {
             this.setState({
                 availableLessons: lessons,
                 chosenStartLessonId: lessons[0].id,
@@ -232,7 +232,7 @@ class TSMD_ClassCalendarEdit extends Component {
             this.setState({
                 calendar: newCalendar
             });
-            this.state.stompClient.send("/socket/week-calendar/edit", {}, JSON.stringify({roomId: calendar.giangDuong.id, weekDayId: calendar.tkb_thu.id}));
+            this.state.stompClient.send("/socket/week-calendar/edit", {}, JSON.stringify({classId: this.state.classId}));
             this.switchMode();
         },(error) =>{
             console.log(error);

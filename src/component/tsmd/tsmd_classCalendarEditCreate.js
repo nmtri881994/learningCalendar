@@ -48,8 +48,9 @@ class TSMD_ClassCalendarCreate extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.classId) {
+            var classId = nextProps.classId;
             this.setState({
-                classId: nextProps.classId
+                classId: classId
             });
 
             API.getClassType(nextProps.classId, (classType) => {
@@ -72,20 +73,20 @@ class TSMD_ClassCalendarCreate extends Component {
                         } else {
                             dayNhaId = 2;
                         }
-                        API.getRooms(nextProps.classId, dayNhaId, (rooms) => {
+                        API.getRooms(classId, dayNhaId, (rooms) => {
                             this.setState({
                                 rooms: rooms,
                                 chosenRoomId: rooms[0].id
                             });
-                            API.getAvailableLessons(0, this.state.chosenWeekDayId, this.state.chosenRoomId, (lessons) => {
-                                if(lessons.length != 0){
+                            API.getAvailableLessons(classId, 0, this.state.chosenWeekDayId, this.state.chosenRoomId, (lessons) => {
+                                if (lessons.length != 0) {
                                     this.setState({
                                         availableLessons: lessons,
                                         chosenStartLessonId: lessons[0].id,
                                         chosenEndLessonId: lessons[0].id
                                     });
                                     this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
-                                }else{
+                                } else {
                                     this.setState({
                                         availableLessons: [],
                                         chosenStartLessonId: 0,
@@ -122,15 +123,15 @@ class TSMD_ClassCalendarCreate extends Component {
                 rooms: rooms,
                 chosenRoomId: rooms[0].id
             });
-            API.getAvailableLessons(0, this.state.chosenWeekDayId, this.state.chosenRoomId, (lessons) => {
-                if(lessons.length != 0){
+            API.getAvailableLessons(this.state.classId, 0, this.state.chosenWeekDayId, this.state.chosenRoomId, (lessons) => {
+                if (lessons.length != 0) {
                     this.setState({
                         availableLessons: lessons,
                         chosenStartLessonId: lessons[0].id,
                         chosenEndLessonId: lessons[0].id
                     });
                     this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
-                }else{
+                } else {
                     this.setState({
                         availableLessons: [],
                         chosenStartLessonId: 0,
@@ -157,15 +158,15 @@ class TSMD_ClassCalendarCreate extends Component {
                 rooms: rooms,
                 chosenRoomId: rooms[0].id
             });
-            API.getAvailableLessons(0, this.state.chosenWeekDayId, this.state.chosenRoomId, (lessons) => {
-                if(lessons.length != 0){
+            API.getAvailableLessons(this.state.classId, 0, this.state.chosenWeekDayId, this.state.chosenRoomId, (lessons) => {
+                if (lessons.length != 0) {
                     this.setState({
                         availableLessons: lessons,
                         chosenStartLessonId: lessons[0].id,
                         chosenEndLessonId: lessons[0].id
                     });
                     this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
-                }else{
+                } else {
                     this.setState({
                         availableLessons: [],
                         chosenStartLessonId: 0,
@@ -187,15 +188,15 @@ class TSMD_ClassCalendarCreate extends Component {
         this.setState({
             chosenRoomId: chosenRoomId
         })
-        API.getAvailableLessons(0, this.state.chosenWeekDayId, this.state.chosenRoomId, (lessons) => {
-            if(lessons.length != 0){
+        API.getAvailableLessons(this.state.classId, 0, this.state.chosenWeekDayId, this.state.chosenRoomId, (lessons) => {
+            if (lessons.length != 0) {
                 this.setState({
                     availableLessons: lessons,
                     chosenStartLessonId: lessons[0].id,
                     chosenEndLessonId: lessons[0].id
                 });
                 this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
-            }else{
+            } else {
                 this.setState({
                     availableLessons: [],
                     chosenStartLessonId: 0,
@@ -242,10 +243,10 @@ class TSMD_ClassCalendarCreate extends Component {
             }
         }
 
-        API2.addWeekCalendar(calendar, this.state.classId, (data)=>{
+        API2.addWeekCalendar(calendar, this.state.classId, (data) => {
             this.state.stompClient2.send("/socket/week-calendar/add-or-delete", {}, JSON.stringify({classId: this.state.classId}));
             this.switchMode();
-        }, (error)=>{
+        }, (error) => {
             console.log(error);
         });
     }
@@ -254,11 +255,11 @@ class TSMD_ClassCalendarCreate extends Component {
     }
 
     setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonId) {
-        if(startLessonId == 0){
+        if (startLessonId == 0) {
             this.setState({
                 availableEndLessons: [],
             })
-        }else{
+        } else {
             var availableLessons = this.state.availableLessons;
             var availableEndLessons = [];
             var indexOfStartLesson = -1;
@@ -288,15 +289,15 @@ class TSMD_ClassCalendarCreate extends Component {
     refreshLesson(message) {
         var weekCalendar = JSON.parse(message.body);
         // if(weekCalendar.roomId == this.state.chosenRoomId && weekCalendar.weekDayId == this.state.chosenWeekDayId){
-        API.getAvailableLessons(0, this.state.chosenWeekDayId, this.state.chosenRoomId, (lessons) => {
-            if(lessons.length != 0){
+        API.getAvailableLessons(this.state.classId, 0, this.state.chosenWeekDayId, this.state.chosenRoomId, (lessons) => {
+            if (lessons.length != 0) {
                 this.setState({
                     availableLessons: lessons,
                     chosenStartLessonId: lessons[0].id,
                     chosenEndLessonId: lessons[0].id
                 });
                 this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
-            }else{
+            } else {
                 this.setState({
                     availableLessons: [],
                     chosenStartLessonId: 0,

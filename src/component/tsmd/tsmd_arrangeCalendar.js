@@ -2,6 +2,8 @@
  * Created by Tri on 4/4/2017.
  */
 import React, {Component} from 'react'
+import SockJS from 'sockjs-client'
+import Stomp from 'stompjs'
 
 //import actions
 import {getYearsNotEnd, getSemestersNotEndOfYear} from '../../action/tsmdAction'
@@ -13,6 +15,7 @@ import * as API2 from '../../apiUtility/calendarApi'
 //import components
 import TSMD_ShowAllClassesComponent from './tsmd_showAllClassesComponent'
 import TSMD_EditClass from './tsmd_editClass'
+import TSMD_Calendar from './tsmd_calendar'
 
 class TSMD_ArrangeCalendar extends Component {
     constructor(props) {
@@ -41,6 +44,8 @@ class TSMD_ArrangeCalendar extends Component {
         this.handleMajorChange = this.handleMajorChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.triggerModal = this.triggerModal.bind(this);
+
+        this.refreshCaledar = this.refreshCaledar.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -247,8 +252,7 @@ class TSMD_ArrangeCalendar extends Component {
         });
     }
 
-    triggerModal(id, name){
-        console.log("namemea",name);
+    triggerModal(id, name) {
         this.setState({
             editingClassId: id,
             editingClassName: name
@@ -318,12 +322,67 @@ class TSMD_ArrangeCalendar extends Component {
                 </div>
             </div>
             <div id="classes-table">
-                <TSMD_ShowAllClassesComponent classes={this.state.classes} triggerModal={this.triggerModal} />
+                <TSMD_ShowAllClassesComponent classes={this.state.classes} triggerModal={this.triggerModal}/>
             </div>
 
+            <div id="classes-calendar">
+                <TSMD_Calendar yearId={this.state.chosenYearId} termId={this.state.chosenTermId}
+                               facultyId={this.state.chosenFacultyId}
+                               yearOfAdmissionId={this.state.chosenYearOfAdmissionId} majorId={this.state.chosenMajorId}
+                               classes={this.state.classes}/>
+            </div>
             <TSMD_EditClass classId={this.state.editingClassId} className={this.state.editingClassName}/>
 
         </div>)
+    }
+
+    refreshCaledar(classId){
+        var shoudldRefresh = false;
+        var classes = this.state.classes;
+        for(var i =0; i< classes.length;i++){
+            if(classes[i].id == classId){
+                shoudldRefresh = true;
+                break;
+            }
+        }
+        if(shoudldRefresh){
+            var state = this.state;
+            API2.getClasses(state.chosenYearId, state.chosenTermId, state.chosenFacultyId, state.chosenYearOfAdmissionId, state.chosenMajorId, (classes) => {
+                this.setState({
+                    classes: classes
+                });
+            }, (error) => {
+                console.log(error);
+            });
+        }
+    }
+
+    componentDidMount(){
+        var socket = SockJS('http://localhost:8080/week-calendar/edit'); // <3>
+        var stompClient = Stomp.over(socket);
+        var refreshCalendar = (classId) => this.refreshCaledar(classId);
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe("/socket/week-calendar/edit", function (message) {
+                var cl = JSON.parse(message.body);
+                refreshCalendar(cl.classId);
+            });
+        });
+
+        this.setState({
+            stompClient: stompClient
+        })
+
+        var socket2 = SockJS('http://localhost:8080/week-calendar/add-or-delete'); // <3>
+        var stompClient2 = Stomp.over(socket2);
+        stompClient2.connect({}, function (frame) {
+            stompClient2.subscribe("/socket/week-calendar/add-or-delete", function (message) {
+                var cl = JSON.parse(message.body);
+                refreshCalendar(cl.classId);
+            });
+        });
+        this.setState({
+            stompClient2: stompClient2
+        })
     }
 }
 
