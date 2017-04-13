@@ -97,17 +97,6 @@ class TSMD_EditClass extends Component {
     componentDidMount() {
 
         var refreshCalendars = (cl) => this.refreshCalendar(cl);
-
-        var socket2 = SockJS('http://localhost:8080/week-calendar/add-or-delete'); // <3>
-        var stompClient2 = Stomp.over(socket2);
-        stompClient2.connect({}, function (frame) {
-            stompClient2.subscribe("/socket/week-calendar/add-or-delete", function (message) {
-                refreshCalendars(JSON.parse(message.body));
-            });
-        });
-        this.setState({
-            stompClient2: stompClient2
-        })
     }
 }
 

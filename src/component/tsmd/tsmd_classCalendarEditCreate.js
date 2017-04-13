@@ -244,7 +244,6 @@ class TSMD_ClassCalendarCreate extends Component {
         }
 
         API2.addWeekCalendar(calendar, this.state.classId, (data) => {
-            this.state.stompClient2.send("/socket/week-calendar/add-or-delete", {}, JSON.stringify({classId: this.state.classId}));
             this.switchMode();
         }, (error) => {
             console.log(error);
@@ -401,29 +400,6 @@ class TSMD_ClassCalendarCreate extends Component {
     }
 
     componentDidMount() {
-        var socket = SockJS('http://localhost:8080/week-calendar/edit'); // <3>
-        var stompClient = Stomp.over(socket);
-        var refreshLesson = (message) => this.refreshLesson(message);
-        stompClient.connect({}, function (frame) {
-            stompClient.subscribe("/socket/week-calendar/edit", function (message) {
-                refreshLesson(message);
-            });
-        });
-        this.setState({
-            stompClient: stompClient
-        })
-
-
-        var socket2 = SockJS('http://localhost:8080/week-calendar/add-or-delete'); // <3>
-        var stompClient2 = Stomp.over(socket2);
-        stompClient2.connect({}, function (frame) {
-            stompClient2.subscribe("/socket/week-calendar/add-or-delete", function (message) {
-                refreshLesson(message);
-            });
-        });
-        this.setState({
-            stompClient2: stompClient2
-        })
     }
 }
 

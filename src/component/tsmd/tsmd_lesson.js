@@ -75,7 +75,7 @@ class TSMD_Lesson extends Component {
         var numberOfLesson = 0;
         if (lopHoc) {
             type = lopHoc.giangDuong.dayNha.ten;
-            subjectName = lopHoc.monHoc.ten;
+            subjectName = lopHoc.maLopHoc;
             room = lopHoc.giangDuong.ten;
             teacherName = lopHoc.giaoVien.hoDem + " " +  lopHoc.giaoVien.ten;
             var startLesson = this.getTietByTenTiet(lopHoc.tkb_tietDauTien.ten);
@@ -110,8 +110,8 @@ class TSMD_Lesson extends Component {
                 {subjectName}
             </div>
             <div className="subject-detail">
-                {room ? "Phòng học: " + room : ""}<br/>
-                {teacherName ? "Giảng viên: " + teacherName : ""}
+                {room ?room : ""}<br/>
+                Tuần: 1-3
             </div>
 
         </div>

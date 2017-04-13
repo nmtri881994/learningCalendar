@@ -18,6 +18,7 @@ import {yearsNotEnd, semestersNotEnd} from './reducer/tsmdReducer'
 //Import components
 // import HomePage from './component/homePage'
 // import Login from './component/login'
+import CalendarNewStyle from './component/test/CalendarNewStyle'
 import SystemChat from './component/systemChat'
 
 //Import container
@@ -75,6 +76,7 @@ ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
             <Route path="/" component={LoginContainer}/>
+            <Route path="test-calendar" component={CalendarNewStyle}/>
             <Route path="sinhvien" component={Student_MainContainer}>
                 <Route path="thoi-khoa-bieu-tuan" component={Student_WeekCalendarContainer}/>
                 <Route path="system-chat" component={SystemChat}/>

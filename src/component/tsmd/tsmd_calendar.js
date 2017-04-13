@@ -35,29 +35,31 @@ class TSMD_Calendar extends Component {
         var lopHocCNs = [];
 
         var classes = nextProps.classes;
+        var khoa = nextProps.khoa;
+        var khoaHoc = nextProps.khoaHoc;
         classes.map(cl => {
             cl.tkb_lichHocTheoTuans.map(tkb => {
-                switch (tkb.tkb_thu.ten){
+                switch (tkb.tkb_thu.ten) {
                     case "Thứ 2":
-                        lopHocThu2s.push(this.getLopHoc(cl.monHoc, cl.giaoVien, tkb));
+                        lopHocThu2s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
                         break;
                     case "Thứ 3":
-                        lopHocThu3s.push(this.getLopHoc(cl.monHoc, cl.giaoVien, tkb));
+                        lopHocThu3s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
                         break;
                     case "Thứ 4":
-                        lopHocThu4s.push(this.getLopHoc(cl.monHoc, cl.giaoVien, tkb));
+                        lopHocThu4s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
                         break;
                     case "Thứ 5":
-                        lopHocThu5s.push(this.getLopHoc(cl.monHoc, cl.giaoVien, tkb));
+                        lopHocThu5s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
                         break;
                     case "Thứ 6":
-                        lopHocThu6s.push(this.getLopHoc(cl.monHoc, cl.giaoVien, tkb));
+                        lopHocThu6s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
                         break;
                     case "Thứ 7":
-                        lopHocThu7s.push(this.getLopHoc(cl.monHoc, cl.giaoVien, tkb));
+                        lopHocThu7s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
                         break;
                     case "Chủ nhật":
-                        lopHocCNs.push(this.getLopHoc(cl.monHoc, cl.giaoVien, tkb));
+                        lopHocCNs.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
                         break;
                     default:
                         console.log(tkb.tkb_thu.ten);
@@ -76,8 +78,9 @@ class TSMD_Calendar extends Component {
         })
     }
 
-    getLopHoc(monHoc, giaoVien, tkb){
+    getLopHoc(khoa, khoaHoc, classId, monHoc, giaoVien, tkb) {
         return {
+            maLopHoc: monHoc.maMonHoc + "." + khoa.maKhoa + "." + khoaHoc.nam + "." + classId,
             monHoc: monHoc,
             giaoVien: giaoVien,
             giangDuong: tkb.giangDuong,

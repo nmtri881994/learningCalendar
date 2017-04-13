@@ -230,7 +230,6 @@ class TSMD_ClassCalendarEdit extends Component {
             this.setState({
                 calendar: newCalendar
             });
-            this.state.stompClient.send("/socket/week-calendar/edit", {}, JSON.stringify({classId: this.state.classId}));
             this.switchMode();
         }, (error) => {
             console.log(error);
@@ -239,7 +238,6 @@ class TSMD_ClassCalendarEdit extends Component {
 
     handleDelete() {
         API2.deleteWeekCalendar(this.state.calendar.id, (data) => {
-            this.state.stompClient2.send("/socket/week-calendar/add-or-delete", {}, JSON.stringify({classId: this.state.classId}));
             this.switchMode();
         }, (error) => {
             console.log(error);
@@ -278,6 +276,18 @@ class TSMD_ClassCalendarEdit extends Component {
                     {rooms.map(room => <option key={room.id} value={room.id}>{room.ten}</option>)}
                 </select>
                 <div className="edit-title">
+                    Từ tuần
+                </div>
+                <select id="start-lesson-selecbox" className="halfLength">
+
+                </select>
+                <div className="edit-title">
+                    Tới tuần
+                </div>
+                <select id="start-lesson-selecbox" className="halfLength">
+
+                </select>
+                <div className="edit-title">
                     Từ tiết
                 </div>
                 <select id="start-lesson-selecbox" className="halfLength" value={this.state.chosenStartLessonId}
@@ -304,26 +314,6 @@ class TSMD_ClassCalendarEdit extends Component {
     }
 
     componentDidMount() {
-        var socket = SockJS('http://localhost:8080/week-calendar/edit'); // <3>
-        var stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
-            stompClient.subscribe("/socket/week-calendar/edit", function (message) {
-            });
-        });
-
-        this.setState({
-            stompClient: stompClient
-        })
-
-        var socket2 = SockJS('http://localhost:8080/week-calendar/add-or-delete'); // <3>
-        var stompClient2 = Stomp.over(socket2);
-        stompClient2.connect({}, function (frame) {
-            stompClient2.subscribe("/socket/week-calendar/add-or-delete", function (message) {
-            });
-        });
-        this.setState({
-            stompClient2: stompClient2
-        })
     }
 }
 

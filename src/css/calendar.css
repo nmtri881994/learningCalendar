@@ -1,7 +1,7 @@
 .weekday {
     float: left;
     margin: 5px 1px;
-    width: 150px;
+    width: 154px;
     text-align: center;
     color: white;
 }
@@ -9,12 +9,13 @@
 .weekday-title {
     font-weight: 500;
     background-color: #1675b7;
+    margin-bottom: 2px;
 }
 
 .lesson-morning {
     text-align: left;
     color: black;
-    margin: 1px 0;
+    margin-bottom: 2px;
     height: 80px;
     background-color: #99B1Da;
     overflow-y: auto;
@@ -24,7 +25,7 @@
 .lesson-afternoon {
     text-align: left;
     color: black;
-    margin: 1px 0;
+    margin-bottom: 2px;
     height: 80px;
     background-color: #4DB6AC;
     overflow-y: auto;
@@ -32,28 +33,69 @@
 }
 
 .lesson-1 {
-    margin: 1px 0;
     height: 80px;
 }
 
 .lesson-2 {
-    margin: 1px 0;
-    height: 161px;
+    height: 162px;
 }
 
 .lesson-3 {
-    margin: 1px 0;
-    height: 242px;
+    height: 244px;
 }
 
 .lesson-4 {
-    margin: 1px 0;
-    height: 323px;
+    height: 326px;
 }
 
 .lesson-5 {
-    margin: 1px 0;
-    height: 404px;
+    height: 408px;
+}
+
+.lesson-small{
+    float: left;
+    width: 76px;
+    display: inline-block;
+}
+
+.lesson-tiny{
+    float: left;
+    width: 30px;
+    display: block;
+}
+
+.left{
+    margin-right: 1px;
+}
+
+.center{
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+.right{
+    margin-left: 1px;
+}
+
+.morning{
+    overflow-y: auto;
+    margin-bottom: 2px;
+    background-color: #99B1Da;
+}
+
+.afternoon{
+    overflow-y: auto;
+    margin-bottom: 2px;
+    background-color: #4DB6AC;
+}
+
+.sub-lesson-final{
+    margin-bottom: 0px;
+}
+
+
+.lesson-container{
+    background-color: transparent;
 }
 
 .calendar {
@@ -86,10 +128,11 @@
 .subject-name {
     font-size: 14px;
     text-align: center;
+    word-break: break-all;
 }
 
 .subject-detail {
-    margin: 5px 5px;
+    margin: 0px 5px;
 }
 
 .lesson-happening {

@@ -271,7 +271,7 @@ class TSMD_ArrangeCalendar extends Component {
 
         var chosenKhoa;
         for (var i = 0; i < faculties.length; i++) {
-            if(faculties[i].id == this.state.chosenFacultyId){
+            if (faculties[i].id == this.state.chosenFacultyId) {
                 chosenKhoa = faculties[i];
                 break;
             }
@@ -279,7 +279,7 @@ class TSMD_ArrangeCalendar extends Component {
 
         var chosenYearOfAdmission;
         for (var i = 0; i < yearOfAdmissions.length; i++) {
-            if(yearOfAdmissions[i].id == this.state.chosenYearOfAdmissionId){
+            if (yearOfAdmissions[i].id == this.state.chosenYearOfAdmissionId) {
                 chosenYearOfAdmission = yearOfAdmissions[i];
                 break;
             }
@@ -344,12 +344,9 @@ class TSMD_ArrangeCalendar extends Component {
                                               classes={this.state.classes} triggerModal={this.triggerModal}/>
             </div>
 
-            <div id="classes-calendar">
-                <TSMD_Calendar yearId={this.state.chosenYearId} termId={this.state.chosenTermId}
-                               facultyId={this.state.chosenFacultyId}
-                               yearOfAdmissionId={this.state.chosenYearOfAdmissionId} majorId={this.state.chosenMajorId}
-                               classes={this.state.classes}/>
-            </div>
+            {/*<div id="classes-calendar">*/}
+                {/*<TSMD_Calendar khoa={chosenKhoa} khoaHoc={chosenYearOfAdmission} classes={this.state.classes}/>*/}
+            {/*</div>*/}
             <TSMD_EditClass classId={this.state.editingClassId} className={this.state.editingClassName}/>
 
         </div>)
@@ -377,31 +374,6 @@ class TSMD_ArrangeCalendar extends Component {
     }
 
     componentDidMount() {
-        var socket = SockJS('http://localhost:8080/week-calendar/edit'); // <3>
-        var stompClient = Stomp.over(socket);
-        var refreshCalendar = (classId) => this.refreshCaledar(classId);
-        stompClient.connect({}, function (frame) {
-            stompClient.subscribe("/socket/week-calendar/edit", function (message) {
-                var cl = JSON.parse(message.body);
-                refreshCalendar(cl.classId);
-            });
-        });
-
-        this.setState({
-            stompClient: stompClient
-        })
-
-        var socket2 = SockJS('http://localhost:8080/week-calendar/add-or-delete'); // <3>
-        var stompClient2 = Stomp.over(socket2);
-        stompClient2.connect({}, function (frame) {
-            stompClient2.subscribe("/socket/week-calendar/add-or-delete", function (message) {
-                var cl = JSON.parse(message.body);
-                refreshCalendar(cl.classId);
-            });
-        });
-        this.setState({
-            stompClient2: stompClient2
-        })
     }
 }
 
