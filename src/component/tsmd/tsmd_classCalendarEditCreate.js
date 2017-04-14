@@ -29,7 +29,11 @@ class TSMD_ClassCalendarCreate extends Component {
             availableLessons: [],
             chosenStartLessonId: 0,
             availableEndLessons: [],
-            chosenEndLessonId: 0
+            chosenEndLessonId: 0,
+            availableWeeks: [],
+            chosenStartWeek: 0,
+            availableEndWeeks: [],
+            chosenEndWeek: 0
         }
 
         this.switchMode = this.switchMode.bind(this);
@@ -38,6 +42,9 @@ class TSMD_ClassCalendarCreate extends Component {
         this.handleRoomChange = this.handleRoomChange.bind(this);
         this.handleStartLessonChange = this.handleStartLessonChange.bind(this);
         this.handleEndLessonChange = this.handleEndLessonChange.bind(this);
+        this.handleStartWeekChange = this.handleStartWeekChange.bind(this);
+        this.handleEndWeekChange = this.handleEndWeekChange.bind(this);
+
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -49,8 +56,13 @@ class TSMD_ClassCalendarCreate extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.classId) {
             var classId = nextProps.classId;
+            var availableWeeks = nextProps.availableWeeks;
             this.setState({
-                classId: classId
+                classId: classId,
+                availableWeeks: availableWeeks,
+                chosenStartWeek: availableWeeks[0],
+                availableEndWeeks: availableWeeks,
+                chosenEndWeek: availableWeeks[0]
             });
 
             API.getClassType(nextProps.classId, (classType) => {
@@ -226,6 +238,28 @@ class TSMD_ClassCalendarCreate extends Component {
         })
     }
 
+    handleStartWeekChange(e) {
+        var availableWeeks = this.state.availableWeeks;
+        var lastWeek = availableWeeks[availableWeeks.length - 1];
+        var chosenStartWeek = e.target.value;
+        var availableEndWeeks = [];
+        for (var i = chosenStartWeek; i <= lastWeek; i++) {
+            availableEndWeeks.push(i);
+        }
+        this.setState({
+            chosenStartWeek: chosenStartWeek,
+            availableEndWeeks: availableEndWeeks,
+            chosenEndWeek: availableEndWeeks[0]
+        })
+    }
+
+    handleEndWeekChange(e) {
+        var chosenEndWeek = e.target.value;
+        this.setState({
+            chosenEndWeek: chosenEndWeek
+        })
+    }
+
     handleSubmit() {
         var calendar = {
             id: 0,
@@ -240,7 +274,9 @@ class TSMD_ClassCalendarCreate extends Component {
             },
             tkb_tietCuoiCung: {
                 id: this.state.chosenEndLessonId
-            }
+            },
+            tuanBatDau: this.state.chosenStartWeek,
+            tuanKetThuc: this.state.chosenEndWeek
         }
 
         API2.addWeekCalendar(calendar, this.state.classId, (data) => {
@@ -291,33 +327,33 @@ class TSMD_ClassCalendarCreate extends Component {
         API.getAvailableLessons(this.state.classId, 0, this.state.chosenWeekDayId, this.state.chosenRoomId, (lessons) => {
             if (lessons.length != 0) {
                 var changeChosenStartLesson = true;
-                for(var i = 0 ; i< lessons.length;i++){
-                    if(lessons[i].id == this.state.chosenStartLessonId){
+                for (var i = 0; i < lessons.length; i++) {
+                    if (lessons[i].id == this.state.chosenStartLessonId) {
                         changeChosenStartLesson = false;
                         break;
                     }
                 }
 
                 var changeChosenEndLesson = true;
-                for(var i = 0 ; i< lessons.length;i++){
-                    if(lessons[i].id == this.state.chosenEndLessonId){
+                for (var i = 0; i < lessons.length; i++) {
+                    if (lessons[i].id == this.state.chosenEndLessonId) {
                         changeChosenEndLesson = false;
                         break;
                     }
                 }
 
-                console.log(changeChosenStartLesson + " -------"+changeChosenEndLesson);
+                console.log(changeChosenStartLesson + " -------" + changeChosenEndLesson);
 
                 var chosenStartLessonId = 0;
                 var chosenEndlessonId = 0;
-                if(!changeChosenStartLesson){
+                if (!changeChosenStartLesson) {
                     chosenStartLessonId = this.state.chosenStartLessonId;
-                    if(!changeChosenEndLesson){
+                    if (!changeChosenEndLesson) {
                         chosenEndlessonId = this.state.chosenEndLessonId;
-                    }else{
+                    } else {
                         chosenEndlessonId = chosenStartLessonId;
                     }
-                }else{
+                } else {
                     chosenStartLessonId = lessons[0].id;
                     chosenEndlessonId = lessons[0].id;
                 }
@@ -351,6 +387,8 @@ class TSMD_ClassCalendarCreate extends Component {
         var rooms = this.state.rooms;
         var availableLessons = this.state.availableLessons;
         var availableEndLessons = this.state.availableEndLessons;
+        var availableWeeks = this.state.availableWeeks;
+        var availableEndWeeks = this.state.availableEndWeeks;
         return (<div className="class-week-calendar-time">
             <div className="week-calendar-time-summary" onClick={this.switchMode}>
                 Thêm lịch
@@ -373,6 +411,20 @@ class TSMD_ClassCalendarCreate extends Component {
                 </div>
                 <select className="halfLength" onChange={this.handleRoomChange} value={this.state.chosenRoomId}>
                     {rooms.map(room => <option key={room.id} value={room.id}>{room.ten}</option>)}
+                </select>
+                <div className="edit-title">
+                    Từ tuần
+                </div>
+                <select id="start-lesson-selecbox" className="halfLength" value={this.state.chosenStartWeek}
+                        onChange={this.handleStartWeekChange}>
+                    {availableWeeks.map(week => <option key={week} value={week}>{week}</option>)}
+                </select>
+                <div className="edit-title">
+                    Tới tuần
+                </div>
+                <select id="start-lesson-selecbox" className="halfLength" value={this.state.chosenEndWeek}
+                        onChange={this.handleEndWeekChange}>
+                    {availableEndWeeks.map(week => <option key={week} value={week}>{week}</option>)}
                 </select>
                 <div className="edit-title">
                     Từ tiết

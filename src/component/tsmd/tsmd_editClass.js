@@ -27,6 +27,7 @@ class TSMD_EditClass extends Component {
             classType: 0,
             calendars: [],
             weekDays: [],
+            availableWeeks: [],
         }
 
         this.refreshCalendar = this.refreshCalendar.bind(this);
@@ -34,6 +35,17 @@ class TSMD_EditClass extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.classId != 0) {
+            API.getTermWeekTime(nextProps.termId, nextProps.yearId, (weekTime) => {
+                var availableWeeks = [];
+                for(var i = weekTime.startWeek; i<=weekTime.endWeek; i++){
+                    availableWeeks.push(i);
+                }
+                this.setState({
+                    availableWeeks: availableWeeks
+                })
+            }, (error) => {
+                console.log(error)
+            });
             API.getWeekCalendarOfClass(nextProps.classId, (calendars) => {
                 this.setState({
                     classId: nextProps.classId,
@@ -82,8 +94,8 @@ class TSMD_EditClass extends Component {
                         <h3>{this.state.className}</h3>
                     </div>
                     <div className="modal-body">
-                        {calendars.length>0 ? calendars.map(calendar => <TSMD_ClassCalendarEdit key={calendar.id} classId={this.state.classId} calendar={calendar}/>) : ""}
-                        <TSMD_ClassCalendarCreate classId={this.state.classId}/>
+                        {calendars.length>0 ? calendars.map(calendar => <TSMD_ClassCalendarEdit key={calendar.id} availableWeeks={this.state.availableWeeks} classId={this.state.classId} calendar={calendar}/>) : ""}
+                        <TSMD_ClassCalendarCreate availableWeeks={this.state.availableWeeks} classId={this.state.classId}/>
                     </div>
                     <div className="modal-footer text-center">
                         <button id="edit-class-button">Lưu</button>

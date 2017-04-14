@@ -149,3 +149,15 @@ export const getAvailableLessons = (classId, weekCalendarId, weekDayId, roomId, 
         })
     $.unblockUI();
 }
+
+export const getTermWeekTime = (termId, yearId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/term/week-time/"+ termId + "/" + yearId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}

@@ -29,7 +29,11 @@ class TSMD_ClassCalendarEdit extends Component {
             availableLessons: [],
             chosenStartLessonId: 0,
             availableEndLessons: [],
-            chosenEndLessonId: 0
+            chosenEndLessonId: 0,
+            availableWeeks: [],
+            chosenStartWeek: 0,
+            availableEndWeeks: [],
+            chosenEndWeek: 0
         }
 
         this.switchMode = this.switchMode.bind(this);
@@ -38,6 +42,9 @@ class TSMD_ClassCalendarEdit extends Component {
         this.handleRoomChange = this.handleRoomChange.bind(this);
         this.handleStartLessonChange = this.handleStartLessonChange.bind(this);
         this.handleEndLessonChang = this.handleEndLessonChang.bind(this);
+        this.handleStartWeekChange = this.handleStartWeekChange.bind(this);
+        this.handleEndWeekChange = this.handleEndWeekChange.bind(this);
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
@@ -48,14 +55,23 @@ class TSMD_ClassCalendarEdit extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-    }
-
-    componentWillMount() {
-        var calendar = this.props.calendar;
-        var classId = this.props.classId
+        var calendar = nextProps.calendar;
+        var classId = nextProps.classId
+        var availableWeeks = nextProps.availableWeeks;
+        var startWeek = calendar.tuanBatDau;
+        var endWeek = calendar.tuanKetThuc;
+        var availableEndWeeks = [];
+        var lastWeek = availableWeeks[availableWeeks.length - 1];
+        for (var i = startWeek; i <= lastWeek; i++) {
+            availableEndWeeks.push(i);
+        }
         this.setState({
             classId: classId,
-            calendar: calendar
+            calendar: calendar,
+            availableWeeks: availableWeeks,
+            chosenStartWeek: startWeek,
+            availableEndWeeks: availableEndWeeks,
+            chosenEndWeek: endWeek
         })
 
         API.getClassType(classId, (classType) => {
@@ -100,6 +116,9 @@ class TSMD_ClassCalendarEdit extends Component {
         }, (error) => {
             console.log(error);
         })
+    }
+
+    componentWillMount() {
 
     }
 
@@ -219,6 +238,28 @@ class TSMD_ClassCalendarEdit extends Component {
         })
     }
 
+    handleStartWeekChange(e) {
+        var availableWeeks = this.state.availableWeeks;
+        var lastWeek = availableWeeks[availableWeeks.length - 1];
+        var chosenStartWeek = e.target.value;
+        var availableEndWeeks = [];
+        for (var i = chosenStartWeek; i <= lastWeek; i++) {
+            availableEndWeeks.push(i);
+        }
+        this.setState({
+            chosenStartWeek: chosenStartWeek,
+            availableEndWeeks: availableEndWeeks,
+            chosenEndWeek: availableEndWeeks[0]
+        })
+    }
+
+    handleEndWeekChange(e) {
+        var chosenEndWeek = e.target.value;
+        this.setState({
+            chosenEndWeek: chosenEndWeek
+        })
+    }
+
     handleSubmit() {
         var calendar = this.state.calendar;
         calendar.giangDuong.id = this.state.chosenRoomId;
@@ -251,10 +292,11 @@ class TSMD_ClassCalendarEdit extends Component {
         var rooms = this.state.rooms;
         var availableLessons = this.state.availableLessons;
         var availableEndLessons = this.state.availableEndLessons;
+        var availableWeeks = this.state.availableWeeks;
+        var availableEndWeeks = this.state.availableEndWeeks;
         return (<div className="class-week-calendar-time">
             <div className="week-calendar-time-summary" onClick={this.switchMode}>
-                {calendar.tkb_thu.ten} - {calendar.giangDuong.ten} - {calendar.tkb_tietDauTien.ten}
-                tới {calendar.tkb_tietCuoiCung.ten}
+                {calendar ? calendar.tkb_thu.ten + " - " + calendar.giangDuong.ten + " - tuần " + calendar.tuanBatDau + " tới " + calendar.tuanKetThuc + " - " + calendar.tkb_tietDauTien.ten + " tới " + calendar.tkb_tietCuoiCung.ten : ""}
             </div>
             <div className="week-calendar-time-detail hide" ref="detail">
                 <div className="edit-title">
@@ -278,14 +320,16 @@ class TSMD_ClassCalendarEdit extends Component {
                 <div className="edit-title">
                     Từ tuần
                 </div>
-                <select id="start-lesson-selecbox" className="halfLength">
-
+                <select id="start-lesson-selecbox" className="halfLength" value={this.state.chosenStartWeek}
+                        onChange={this.handleStartWeekChange}>
+                    {availableWeeks.map(week => <option key={week} value={week}>{week}</option>)}
                 </select>
                 <div className="edit-title">
                     Tới tuần
                 </div>
-                <select id="start-lesson-selecbox" className="halfLength">
-
+                <select id="start-lesson-selecbox" className="halfLength" value={this.state.chosenEndWeek}
+                        onChange={this.handleEndWeekChange}>
+                    {availableEndWeeks.map(week => <option key={week} value={week}>{week}</option>)}
                 </select>
                 <div className="edit-title">
                     Từ tiết
