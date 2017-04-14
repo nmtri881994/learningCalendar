@@ -32,9 +32,9 @@ export const getSemestersNotEndOfYear = (yearId, cb) => {
     $.unblockUI();
 }
 
-export const updateWeekCalendar = (calendar, cb, fcb) => {
+export const updateWeekCalendar = (calendar, yearId, termId, facultyId, yearOfAdmissionId, majorId, cb, fcb) => {
     $.blockUI(loading);
-    axios.post(BASE_URL + "/edit-calendar", calendar, {headers: {Authorization: localStorage.getItem('token')}})
+    axios.post(BASE_URL + "/edit-calendar/" + yearId + "/" + termId + "/" + facultyId + "/" + yearOfAdmissionId + "/" + majorId, calendar, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data)
         })
@@ -44,9 +44,9 @@ export const updateWeekCalendar = (calendar, cb, fcb) => {
     $.unblockUI();
 }
 
-export const addWeekCalendar = (calendar, classId, cb, fcb) => {
+export const addWeekCalendar = (calendar, classId, yearId, termId, facultyId, yearOfAdmissionId, majorId, cb, fcb) => {
     $.blockUI(loading);
-    axios.post(BASE_URL + "/add-calendar/"+classId, calendar, {headers: {Authorization: localStorage.getItem('token')}})
+    axios.post(BASE_URL + "/add-calendar/" + classId + "/" + yearId + "/" + termId + "/" + facultyId + "/" + yearOfAdmissionId + "/" + majorId, calendar, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data)
         })
@@ -58,7 +58,7 @@ export const addWeekCalendar = (calendar, classId, cb, fcb) => {
 
 export const deleteWeekCalendar = (calendarId, cb, fcb) => {
     $.blockUI(loading);
-    axios.delete(BASE_URL + "/delete-calendar/"+calendarId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios.delete(BASE_URL + "/delete-calendar/" + calendarId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data)
         })

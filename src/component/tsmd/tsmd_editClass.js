@@ -22,6 +22,9 @@ class TSMD_EditClass extends Component {
 
         this.state = {
             stompClient2: null,
+
+            basicInfo: null,
+
             classId: 0,
             className: "",
             classType: 0,
@@ -34,10 +37,20 @@ class TSMD_EditClass extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        var basicInfo = {
+            yearId: nextProps.yearId,
+            termId: nextProps.termId,
+            facultyId: nextProps.facultyId,
+            yearOfAdmissionId: nextProps.yearOfAdmissionId,
+            majorId: nextProps.majorId
+        }
+        this.setState({
+            basicInfo: basicInfo
+        })
         if (nextProps.classId != 0) {
             API.getTermWeekTime(nextProps.termId, nextProps.yearId, (weekTime) => {
                 var availableWeeks = [];
-                for(var i = weekTime.startWeek; i<=weekTime.endWeek; i++){
+                for (var i = weekTime.startWeek; i <= weekTime.endWeek; i++) {
                     availableWeeks.push(i);
                 }
                 this.setState({
@@ -59,8 +72,8 @@ class TSMD_EditClass extends Component {
 
     }
 
-    refreshCalendar(cl){
-        if(cl.classId = this.state.classId){
+    refreshCalendar(cl) {
+        if (cl.classId = this.state.classId) {
             API.getWeekCalendarOfClass(this.props.classId, (calendars) => {
                 this.setState({
                     calendars: calendars
@@ -94,8 +107,14 @@ class TSMD_EditClass extends Component {
                         <h3>{this.state.className}</h3>
                     </div>
                     <div className="modal-body">
-                        {calendars.length>0 ? calendars.map(calendar => <TSMD_ClassCalendarEdit key={calendar.id} availableWeeks={this.state.availableWeeks} classId={this.state.classId} calendar={calendar}/>) : ""}
-                        <TSMD_ClassCalendarCreate availableWeeks={this.state.availableWeeks} classId={this.state.classId}/>
+                        {calendars.length > 0 ? calendars.map(calendar => <TSMD_ClassCalendarEdit key={calendar.id}
+                                                                                                  basicInfo={this.state.basicInfo}
+                                                                                                  availableWeeks={this.state.availableWeeks}
+                                                                                                  classId={this.state.classId}
+                                                                                                  calendar={calendar}/>) : ""}
+                        <TSMD_ClassCalendarCreate availableWeeks={this.state.availableWeeks}
+                                                  basicInfo={this.state.basicInfo}
+                                                  classId={this.state.classId}/>
                     </div>
                     <div className="modal-footer text-center">
                         <button id="edit-class-button">Lưu</button>
