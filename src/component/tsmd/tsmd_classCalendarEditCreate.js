@@ -353,7 +353,13 @@ class TSMD_ClassCalendarCreate extends Component {
         }, (error) => {
             if (error.response.status == 403) {
                 this.setState({
-                    errorMessage: "Khoảng thời gian này đã có quá nhiều lớp học (>=3)"
+                    errorMessage: "Khoảng thời gian này, khoa-khóa học đã có quá nhiều lớp học (>=3)"
+                })
+            }
+
+            if (error.response.status == 409) {
+                this.setState({
+                    errorMessage: "Khoảng thời gian này, giáo viên đã có quá nhiều lớp học (>=3)"
                 })
             }
 

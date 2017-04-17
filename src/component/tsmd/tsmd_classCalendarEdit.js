@@ -318,7 +318,17 @@ class TSMD_ClassCalendarEdit extends Component {
             });
             this.switchMode();
         }, (error) => {
-            console.log(error);
+            if (error.response.status == 403) {
+                this.setState({
+                    errorMessage: "Khoảng thời gian này, khoa-khóa học đã có quá nhiều lớp học (>=3)"
+                })
+            }
+
+            if (error.response.status == 409) {
+                this.setState({
+                    errorMessage: "Khoảng thời gian này, giáo viên đã có quá nhiều lớp học (>=3)"
+                })
+            }
         })
     }
 
