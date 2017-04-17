@@ -59,9 +59,15 @@ class TSMD_ClassCalendarCreate extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.classId != 0 && nextProps.classId != this.state.classId) {
+        if (nextProps.classId != 0 && nextProps.classId != this.state.classId && nextProps.availableWeeks.length && nextProps.availableEndWeeks != this.state.availableEndWeeks) {
             var classId = nextProps.classId;
             var availableWeeks = nextProps.availableWeeks;
+
+            this.setState({
+                classId: classId,
+                availableWeeks: availableWeeks
+            })
+
             var basicInfo = nextProps.basicInfo;
 
             var classType1 = 0;
@@ -81,7 +87,7 @@ class TSMD_ClassCalendarCreate extends Component {
                     weekDays1 = weekDays;
                     chosenWeekDayId = weekDays[0].id;
                     API.getRoomTypes((roomTypes) => {
-                        console.log(roomTypes);
+
                         roomTypes1 = roomTypes;
                         chosenRoomTypeId = roomTypes[0].id;
                         var dayNhaId = 0;
@@ -91,7 +97,6 @@ class TSMD_ClassCalendarCreate extends Component {
                             dayNhaId = 2;
                         }
                         API.getRooms(classId, dayNhaId, (rooms) => {
-                            console.log(rooms1);
                             rooms1 = rooms;
                             chosenRoomId = rooms[0].id;
                             if (availableWeeks[0]) {
@@ -107,26 +112,25 @@ class TSMD_ClassCalendarCreate extends Component {
                                             chosenEndLessonId = 0;
                                             this.setAvailableEndLessonsCorresspondingToChosenStartLessons(0, []);
                                         }
-                                    this.setState({
-                                        errorMessage: "",
-                                        basicInfo: basicInfo,
-                                        classId: classId,
-                                        availableWeeks: availableWeeks,
-                                        chosenStartWeek: availableWeeks[0],
-                                        availableEndWeeks: availableWeeks,
-                                        chosenEndWeek: availableWeeks[0],
+                                        this.setState({
+                                            errorMessage: "",
+                                            basicInfo: basicInfo,
 
-                                        classType: classType1,
-                                        weekDays: weekDays1,
-                                        chosenWeekDayId: chosenWeekDayId,
-                                        roomTypes: roomTypes1,
-                                        chosenRoomTypeId: chosenRoomTypeId,
-                                        rooms: rooms1,
-                                        chosenRoomId: chosenRoomId,
-                                        availableLessons: availableLessons,
-                                        chosenStartLessonId: chosenStartLessonId,
-                                        chosenEndLessonId: chosenEndLessonId
-                                    });
+                                            chosenStartWeek: availableWeeks[0],
+                                            availableEndWeeks: availableWeeks,
+                                            chosenEndWeek: availableWeeks[0],
+
+                                            classType: classType1,
+                                            weekDays: weekDays1,
+                                            chosenWeekDayId: chosenWeekDayId,
+                                            roomTypes: roomTypes1,
+                                            chosenRoomTypeId: chosenRoomTypeId,
+                                            rooms: rooms1,
+                                            chosenRoomId: chosenRoomId,
+                                            availableLessons: availableLessons,
+                                            chosenStartLessonId: chosenStartLessonId,
+                                            chosenEndLessonId: chosenEndLessonId
+                                        });
                                     }, (error) => {
                                         console.log(error);
                                     }

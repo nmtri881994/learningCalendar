@@ -56,25 +56,18 @@
     float: left;
     width: 76px;
     display: inline-block;
+    margin-right: 2px;
 }
 
 .lesson-tiny{
     float: left;
-    width: 30px;
+    width: 50px;
     display: block;
+    margin-right: 2px;
 }
 
-.left{
-    margin-right: 1px;
-}
-
-.center{
-    margin-left: 1px;
-    margin-right: 1px;
-}
-
-.right{
-    margin-left: 1px;
+.lesson-column-final{
+    margin-right: 0;
 }
 
 .morning{

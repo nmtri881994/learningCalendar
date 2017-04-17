@@ -68,19 +68,25 @@ class TSMD_Lesson extends Component {
 
     render() {
         var lopHoc = this.props.lopHoc;
+
         var type = "";
         var subjectName = "";
         var room = "";
         var teacherName = "";
         var numberOfLesson = 0;
+        var startWeek=0;
+        var endWeek = 0;
         if (lopHoc) {
             type = lopHoc.giangDuong.dayNha.ten;
             subjectName = lopHoc.maLopHoc;
             room = lopHoc.giangDuong.ten;
             teacherName = lopHoc.giaoVien.hoDem + " " +  lopHoc.giaoVien.ten;
-            var startLesson = this.getTietByTenTiet(lopHoc.tkb_tietDauTien.ten);
-            var endLesson = this.getTietByTenTiet(lopHoc.tkb_tietCuoiCung.ten);
+            var startLesson = this.getTietByTenTiet(lopHoc.tkb.tkb_tietDauTien.ten);
+            var endLesson = this.getTietByTenTiet(lopHoc.tkb.tkb_tietCuoiCung.ten);
             numberOfLesson = endLesson - startLesson + 1;
+
+            startWeek = lopHoc.tkb.tuanBatDau;
+            endWeek = lopHoc.tkb.tuanKetThuc;
         }
 
         var css = "lesson";
@@ -110,8 +116,8 @@ class TSMD_Lesson extends Component {
                 {subjectName}
             </div>
             <div className="subject-detail">
-                {room ?room : ""}<br/>
-                Tuần: 1-3
+                {room}<br/>
+                Tuần: {startWeek} - {endWeek}
             </div>
 
         </div>

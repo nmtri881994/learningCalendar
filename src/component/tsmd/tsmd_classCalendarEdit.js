@@ -62,6 +62,11 @@ class TSMD_ClassCalendarEdit extends Component {
         if(nextProps.classId != 0 && nextProps.classId != this.state.classId){
             var calendar = nextProps.calendar;
             var classId = nextProps.classId
+
+            this.setState({
+                classId: classId
+            })
+
             var availableWeeks = nextProps.availableWeeks;
             var startWeek = calendar.tuanBatDau;
             var endWeek = calendar.tuanKetThuc;
@@ -105,7 +110,6 @@ class TSMD_ClassCalendarEdit extends Component {
                             this.setAvailableEndLessonsCorresspondingToChosenStartLessons(calendar.tkb_tietDauTien.id, lessons);
                             this.setState({
                                 basicInfo: basicInfo,
-                                classId: classId,
                                 calendar: calendar,
                                 availableWeeks: availableWeeks,
                                 chosenStartWeek: startWeek,

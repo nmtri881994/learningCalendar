@@ -344,9 +344,9 @@ class TSMD_ArrangeCalendar extends Component {
                                               classes={this.state.classes} triggerModal={this.triggerModal}/>
             </div>
 
-            {/*<div id="classes-calendar">*/}
-            {/*<TSMD_Calendar khoa={chosenKhoa} khoaHoc={chosenYearOfAdmission} classes={this.state.classes}/>*/}
-            {/*</div>*/}
+            <div id="classes-calendar">
+            <TSMD_Calendar khoa={chosenKhoa} khoaHoc={chosenYearOfAdmission} classes={this.state.classes}/>
+            </div>
             <TSMD_EditClass termId={this.state.chosenTermId} yearId={this.state.chosenYearId}
                             facultyId={this.state.chosenFacultyId}
                             yearOfAdmissionId={this.state.chosenYearOfAdmissionId} majorId={this.state.chosenMajorId}

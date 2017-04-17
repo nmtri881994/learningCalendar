@@ -13,7 +13,7 @@ class CalendarNewStyle extends Component {
                 <div className="weekday-lessons">
                     <div className="lesson-morning lesson-2"></div>
                     <div className="lesson-morning lesson-3 lesson-container">
-                        <div className="lesson-small left lesson-3 lesson-container">
+                        <div className="lesson-tiny lesson-3 lesson-container">
                             <div className="lesson-1 morning">
                             </div>
                             <div className="lesson-2 morning sub-lesson-final">
@@ -28,7 +28,21 @@ class CalendarNewStyle extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="lesson-small right lesson-3 lesson-container">
+                        <div className="lesson-tiny lesson-3 lesson-container">
+                            <div className="lesson-2 morning">
+                                <div className="class-content">
+                                    <div className="subject-name thuc-hanh">
+                                        THDC.CNTT.2013.3
+                                    </div>
+                                    <div className="subject-detail">
+                                        F102<br/>
+                                        Tuần: 3-4
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="lesson-1 morning sub-lesson-final"></div>
+                        </div>
+                        <div className="lesson-tiny lesson-3 lesson-container lesson-column-final">
                             <div className="lesson-2 morning">
                                 <div className="class-content">
                                     <div className="subject-name thuc-hanh">
