@@ -58,57 +58,74 @@ class TSMD_ClassCalendarEdit extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        var calendar = nextProps.calendar;
-        var classId = nextProps.classId
-        var availableWeeks = nextProps.availableWeeks;
-        var startWeek = calendar.tuanBatDau;
-        var endWeek = calendar.tuanKetThuc;
-        var availableEndWeeks = [];
-        var lastWeek = availableWeeks[availableWeeks.length - 1];
-        var basicInfo = nextProps.basicInfo;
-        for (var i = startWeek; i <= lastWeek; i++) {
-            availableEndWeeks.push(i);
-        }
-        this.setState({
-            basicInfo: basicInfo,
-            classId: classId,
-            calendar: calendar,
-            availableWeeks: availableWeeks,
-            chosenStartWeek: startWeek,
-            availableEndWeeks: availableEndWeeks,
-            chosenEndWeek: endWeek
-        })
 
-        API.getClassType(classId, (classType) => {
-            this.setState({
-                classType: classType
+        if(nextProps.classId != 0 && nextProps.classId != this.state.classId){
+            var calendar = nextProps.calendar;
+            var classId = nextProps.classId
+            var availableWeeks = nextProps.availableWeeks;
+            var startWeek = calendar.tuanBatDau;
+            var endWeek = calendar.tuanKetThuc;
+            var availableEndWeeks = [];
+            var lastWeek = availableWeeks[availableWeeks.length - 1];
+            var basicInfo = nextProps.basicInfo;
+            for (var i = startWeek; i <= lastWeek; i++) {
+                availableEndWeeks.push(i);
+            }
+
+            var classType = 0;
+            var weekDays = [];
+            var chosenWeekDayId = 0;
+            var roomTypes = [];
+            var chosenRoomTypeId = 0;
+            var rooms = [];
+            var chosenRoomId = 0;
+            var availableLessons = [];
+            var chosenStartLessonId = 0;
+            var chosenEndLessonId = 0;
+
+            API.getClassType(classId, (classType) => {
+                classType = classType;
+            }, (error) => {
+                console.log(error);
             })
-        }, (error) => {
-            console.log(error);
-        })
 
-        API.getThus((weekDays) => {
-            this.setState({
-                weekDays: weekDays,
-                chosenWeekDayId: calendar.tkb_thu.id
-            });
-            API.getRoomTypes((roomTypes) => {
-                this.setState({
-                    roomTypes: roomTypes,
-                    chosenRoomTypeId: calendar.giangDuong.dayNha.id
-                });
-                API.getRooms(classId, calendar.giangDuong.dayNha.id, (rooms) => {
-                    this.setState({
-                        rooms: rooms,
-                        chosenRoomId: calendar.giangDuong.id
-                    });
-                    API.getAvailableLessons(classId, calendar.id, calendar.tkb_thu.id, calendar.giangDuong.id, startWeek, endWeek, (lessons) => {
-                        this.setState({
-                            availableLessons: lessons,
-                            chosenStartLessonId: calendar.tkb_tietDauTien.id,
-                            chosenEndLessonId: calendar.tkb_tietCuoiCung.id
-                        });
-                        this.setAvailableEndLessonsCorresspondingToChosenStartLessons(calendar.tkb_tietDauTien.id);
+            API.getThus((weekDays) => {
+                weekDays = weekDays;
+                chosenWeekDayId = calendar.tkb_thu.id;
+                API.getRoomTypes((roomTypes) => {
+                    roomTypes = roomTypes;
+                    chosenRoomTypeId = calendar.giangDuong.dayNha.id;
+                    API.getRooms(classId, calendar.giangDuong.dayNha.id, (rooms) => {
+                        rooms = rooms;
+                        chosenRoomId = calendar.giangDuong.id;
+                        API.getAvailableLessons(classId, calendar.id, calendar.tkb_thu.id, calendar.giangDuong.id, startWeek, endWeek, (lessons) => {
+                            availableLessons = lessons;
+                            chosenStartLessonId = calendar.tkb_tietDauTien.id;
+                            chosenEndLessonId = calendar.tkb_tietCuoiCung.id;
+                            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(calendar.tkb_tietDauTien.id, lessons);
+                            this.setState({
+                                basicInfo: basicInfo,
+                                classId: classId,
+                                calendar: calendar,
+                                availableWeeks: availableWeeks,
+                                chosenStartWeek: startWeek,
+                                availableEndWeeks: availableEndWeeks,
+                                chosenEndWeek: endWeek,
+
+                                classType: classType,
+                                weekDays: weekDays,
+                                chosenWeekDayId: chosenWeekDayId,
+                                roomTypes: roomTypes,
+                                chosenRoomTypeId: chosenRoomTypeId,
+                                rooms: rooms,
+                                chosenRoomId: chosenRoomId,
+                                availableLessons: availableLessons,
+                                chosenStartLessonId: chosenStartLessonId,
+                                chosenEndLessonId: chosenEndLessonId
+                            })
+                        }, (error) => {
+                            console.log(error);
+                        })
                     }, (error) => {
                         console.log(error);
                     })
@@ -118,22 +135,23 @@ class TSMD_ClassCalendarEdit extends Component {
             }, (error) => {
                 console.log(error);
             })
-        }, (error) => {
-            console.log(error);
-        })
+
+
+        }
+
     }
 
     componentWillMount() {
 
     }
 
-    setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonId) {
+    setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonId, lessons) {
         if (startLessonId == 0) {
             this.setState({
                 availableEndLessons: [],
             })
         } else {
-            var availableLessons = this.state.availableLessons;
+            var availableLessons = lessons ? lessons : this.state.availableLessons;
             var availableEndLessons = [];
             var indexOfStartLesson = -1;
 
@@ -176,7 +194,7 @@ class TSMD_ClassCalendarEdit extends Component {
                     chosenStartLessonId: lessons[0].id,
                     chosenEndLessonId: lessons[0].id
                 });
-                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
+                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id, lessons);
             }, (error) => {
                 console.log(error);
             })
@@ -201,7 +219,7 @@ class TSMD_ClassCalendarEdit extends Component {
                     chosenStartLessonId: lessons[0].id,
                     chosenEndLessonId: lessons[0].id
                 });
-                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
+                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id, lessons);
             }, (error) => {
                 console.log(error);
             })
@@ -221,7 +239,7 @@ class TSMD_ClassCalendarEdit extends Component {
                 chosenStartLessonId: lessons[0].id,
                 chosenEndLessonId: lessons[0].id
             });
-            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
+            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id, lessons);
         }, (error) => {
             console.log(error);
         })
@@ -262,7 +280,7 @@ class TSMD_ClassCalendarEdit extends Component {
                 chosenStartLessonId: lessons[0].id,
                 chosenEndLessonId: lessons[0].id
             });
-            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
+            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id, lessons);
         }, (error) => {
             console.log(error);
         })
@@ -279,7 +297,7 @@ class TSMD_ClassCalendarEdit extends Component {
                 chosenStartLessonId: lessons[0].id,
                 chosenEndLessonId: lessons[0].id
             });
-            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
+            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id, lessons);
         }, (error) => {
             console.log(error);
         })

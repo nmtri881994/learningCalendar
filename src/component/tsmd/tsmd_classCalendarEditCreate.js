@@ -59,33 +59,31 @@ class TSMD_ClassCalendarCreate extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.classId) {
+        if (nextProps.classId != 0 && nextProps.classId != this.state.classId) {
             var classId = nextProps.classId;
             var availableWeeks = nextProps.availableWeeks;
             var basicInfo = nextProps.basicInfo;
-            this.setState({
-                basicInfo: basicInfo,
-                classId: classId,
-                availableWeeks: availableWeeks,
-                chosenStartWeek: availableWeeks[0],
-                availableEndWeeks: availableWeeks,
-                chosenEndWeek: availableWeeks[0]
-            });
+
+            var classType1 = 0;
+            var weekDays1 = [];
+            var chosenWeekDayId = 0;
+            var roomTypes1 = [];
+            var chosenRoomTypeId = 0;
+            var rooms1 = [];
+            var chosenRoomId = 0;
+            var availableLessons = [];
+            var chosenStartLessonId = 0;
+            var chosenEndLessonId = 0;
 
             API.getClassType(nextProps.classId, (classType) => {
-                this.setState({
-                    classType: classType
-                });
+                classType1 = classType;
                 API.getThus((weekDays) => {
-                    this.setState({
-                        weekDays: weekDays,
-                        chosenWeekDayId: weekDays[0].id
-                    });
+                    weekDays1 = weekDays;
+                    chosenWeekDayId = weekDays[0].id;
                     API.getRoomTypes((roomTypes) => {
-                        this.setState({
-                            roomTypes: roomTypes,
-                            chosenRoomTypeId: roomTypes[0].id
-                        });
+                        console.log(roomTypes);
+                        roomTypes1 = roomTypes;
+                        chosenRoomTypeId = roomTypes[0].id;
                         var dayNhaId = 0;
                         if (classType == 1 || classType == 3) {
                             dayNhaId = 1;
@@ -93,29 +91,42 @@ class TSMD_ClassCalendarCreate extends Component {
                             dayNhaId = 2;
                         }
                         API.getRooms(classId, dayNhaId, (rooms) => {
-                            console.log("11111111", rooms);
-                            this.setState({
-                                rooms: rooms,
-                                chosenRoomId: rooms[0].id
-                            });
+                            console.log(rooms1);
+                            rooms1 = rooms;
+                            chosenRoomId = rooms[0].id;
                             if (availableWeeks[0]) {
                                 API.getAvailableLessons(classId, 0, this.state.chosenWeekDayId, this.state.chosenRoomId, availableWeeks[0], availableWeeks[0], (lessons) => {
                                         if (lessons.length != 0) {
-                                            this.setState({
-                                                availableLessons: lessons,
-                                                chosenStartLessonId: lessons[0].id,
-                                                chosenEndLessonId: lessons[0].id
-                                            });
-                                            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
+                                            availableLessons = lessons;
+                                            chosenStartLessonId = lessons[0].id;
+                                            chosenEndLessonId = lessons[0].id;
+                                            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id, lessons);
                                         } else {
-                                            this.setState({
-                                                availableLessons: [],
-                                                chosenStartLessonId: 0,
-                                                chosenEndLessonId: 0
-                                            });
-                                            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(0);
+                                            availableLessons = [];
+                                            chosenStartLessonId = 0;
+                                            chosenEndLessonId = 0;
+                                            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(0, []);
                                         }
+                                    this.setState({
+                                        errorMessage: "",
+                                        basicInfo: basicInfo,
+                                        classId: classId,
+                                        availableWeeks: availableWeeks,
+                                        chosenStartWeek: availableWeeks[0],
+                                        availableEndWeeks: availableWeeks,
+                                        chosenEndWeek: availableWeeks[0],
 
+                                        classType: classType1,
+                                        weekDays: weekDays1,
+                                        chosenWeekDayId: chosenWeekDayId,
+                                        roomTypes: roomTypes1,
+                                        chosenRoomTypeId: chosenRoomTypeId,
+                                        rooms: rooms1,
+                                        chosenRoomId: chosenRoomId,
+                                        availableLessons: availableLessons,
+                                        chosenStartLessonId: chosenStartLessonId,
+                                        chosenEndLessonId: chosenEndLessonId
+                                    });
                                     }, (error) => {
                                         console.log(error);
                                     }
@@ -134,6 +145,7 @@ class TSMD_ClassCalendarCreate extends Component {
             }, (error) => {
                 console.log(error);
             })
+
         }
     }
 
@@ -351,13 +363,13 @@ class TSMD_ClassCalendarCreate extends Component {
     componentWillMount() {
     }
 
-    setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonId) {
+    setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonId, lessons) {
         if (startLessonId == 0) {
             this.setState({
                 availableEndLessons: [],
             })
         } else {
-            var availableLessons = this.state.availableLessons;
+            var availableLessons = lessons ? lessons : this.state.availableLessons;
             var availableEndLessons = [];
             var indexOfStartLesson = -1;
 
