@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react'
 import TSMD_Lesson from './tsmd_lesson'
+import TSMD_LessonContainer from './tsmd_lessonContainer'
 class TSMD_Weekday extends Component {
 
     constructor(props) {
@@ -41,7 +42,7 @@ class TSMD_Weekday extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.lopHocs){
+        if (nextProps.lopHocs) {
             var notFreeLessons = [];
             var freeLessons = [];
             for (var i = 0; i < nextProps.lopHocs.length; i++) {
@@ -63,45 +64,112 @@ class TSMD_Weekday extends Component {
         }
     }
 
-    render() {
+    checkContainer(lopHoc, lopHocs) {
 
-        const trueVar = true;
-        const falseVar = false;
+        for (var i = 0; i < lopHocs.length; i++) {
+            if (lopHoc != lopHocs[i]) {
+                var condition1 = lopHocs[i].tkb.tkb_tietCuoiCung.thuTu < lopHoc.tkb.tkb_tietDauTien.thuTu;
+                var condition2 = lopHocs[i].tkb.tkb_tietDauTien.thuTu > lopHoc.tkb.tkb_tietCuoiCung.thuTu;
+                if (!(condition1 || condition2)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    render() {
 
         var lopHocs = this.props.lopHocs;
 
         var lessons = [];
         var freeLessons = this.state.freeLessons;
-        if(lopHocs){
+        var haveClass = false;
+        var morning = false;
+        if (lopHocs) {
             for (var i = 1; i <= 10; i++) {
                 if (freeLessons.indexOf(i) != -1) {
+                    haveClass = false;
                     if (i < 6) {
-                        lessons.push(<TSMD_Lesson key={i} morning={trueVar} haveClass={falseVar}/>);
+                        morning = true;
                     } else {
-                        lessons.push(<TSMD_Lesson key={i} morning={falseVar} haveClass={falseVar}/>);
+                        morning = false;
                     }
+                    lessons.push(<TSMD_Lesson key={i} morning={morning} haveClass={haveClass}/>);
                 } else {
                     for (var j = 0; j < lopHocs.length; j++) {
                         var lopHoc = lopHocs[j];
-                        var startLesson = this.getTietByTenTiet(lopHoc.tkb.tkb_tietDauTien.ten);
-                        if (startLesson == i) {
-                            var lopHoc = lopHocs[j];
-                            if (i < 6) {
-                                lessons.push(<TSMD_Lesson triggerModal={this.props.triggerModal} key={i} date={this.props.date} lopHoc={lopHoc} morning={trueVar} haveClass={trueVar}/>);
-                            } else {
-                                lessons.push(<TSMD_Lesson triggerModal={this.props.triggerModal} key={i} date={this.props.date} lopHoc={lopHoc} morning={falseVar} haveClass={trueVar}/>);
+                        if (lopHoc) {
+                            var startLesson = this.getTietByTenTiet(lopHoc.tkb.tkb_tietDauTien.ten);
+                            haveClass = true;
+                            if (startLesson == i) {
+                                if (i < 6) {
+                                    morning = true;
+                                } else {
+                                    morning = false;
+                                }
+
+                                var container = this.checkContainer(lopHoc, lopHocs);
+                                if (container) {
+                                    var containerLessons = [];
+                                    containerLessons.push(lopHoc);
+                                    var startLessonOfContainer = lopHoc.tkb.tkb_tietDauTien.thuTu;
+                                    var endLessonOfContainer = lopHoc.tkb.tkb_tietDauTien.thuTu;
+
+
+                                    for (var m = 0; m < lopHocs.length; m++) {
+                                        if (lopHoc != lopHocs[m]) {
+                                            var condition1 = lopHocs[m].tkb.tkb_tietCuoiCung.thuTu < startLesson;
+                                            var condition2 = lopHocs[m].tkb.tkb_tietDauTien.thuTu > endLessonOfContainer;
+
+                                            if (!(condition1 || condition2)) {
+                                                containerLessons.push(lopHocs[m]);
+                                                if (lopHocs[m].tkb.tkb_tietDauTien.thuTu < startLessonOfContainer) {
+                                                    startLessonOfContainer = lopHocs[m].tkb.tkb_tietDauTien.thuTu;
+                                                }
+
+                                                if (lopHocs[m].tkb.tkb_tietCuoiCung.thuTu > endLessonOfContainer) {
+                                                    endLessonOfContainer = lopHocs[m].tkb.tkb_tietCuoiCung.thuTu
+                                                }
+                                                delete lopHocs[m];
+                                            }
+                                        }
+                                    }
+
+                                    for (var m = 0; m < lopHocs.length; m++) {
+                                        if (lopHocs[m] && lopHoc!=lopHocs[m]) {
+                                            if (lopHocs[m].tkb.tkb_tietDauTien.thuTu >= startLessonOfContainer && lopHocs[m].tkb.tkb_tietCuoiCung.thuTu <= endLessonOfContainer) {
+                                                containerLessons.push(lopHocs[m]);
+                                                delete lopHocs[m];
+                                            }
+                                        }
+                                    }
+                                    lessons.push(<TSMD_LessonContainer key={i} id={i} morning={morning}
+                                                                       startLesson={startLessonOfContainer}
+                                                                       endLesson={endLessonOfContainer}
+                                                                       lessons={containerLessons}/>)
+                                    i = endLessonOfContainer;
+                                } else {
+                                    lessons.push(<TSMD_Lesson triggerModal={this.props.triggerModal} key={i}
+                                                              date={this.props.date} lopHoc={lopHoc} morning={morning}
+                                                              haveClass={haveClass}/>);
+                                    i = lopHoc.tkb.tkb_tietCuoiCung.thuTu;
+                                }
+                                delete lopHocs[j];
                             }
                         }
                     }
                 }
             }
-        }else{
+        } else {
+            haveClass = false
             for (var i = 1; i <= 10; i++) {
-                if(i<6){
-                    lessons.push(<TSMD_Lesson key={i} morning={trueVar} haveClass={falseVar}/>);
-                }else{
-                    lessons.push(<TSMD_Lesson key={i} morning={falseVar} haveClass={falseVar}/>);
+                if (i < 6) {
+                    morning = true;
+                } else {
+                    morning = false;
                 }
+                lessons.push(<TSMD_Lesson key={i} morning={morning} haveClass={haveClass}/>);
             }
         }
 

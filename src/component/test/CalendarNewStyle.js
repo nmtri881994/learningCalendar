@@ -50,7 +50,7 @@ class CalendarNewStyle extends Component {
                                     </div>
                                     <div className="subject-detail">
                                         F102<br/>
-                                        Tuần: 3-4
+                                        Tuần: 1-2
                                     </div>
                                 </div>
                             </div>
