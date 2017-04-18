@@ -27,6 +27,10 @@ class TSMD_SubContainer extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+    }
+
     componentWillMount() {
         var timeInfo = this.props.timeInfo;
         var css = "lesson-" + timeInfo.numberOfLessons + " lesson-container";
@@ -54,22 +58,24 @@ class TSMD_SubContainer extends Component {
             var final = false;
             if (notFreeLessons.indexOf(i) == -1) {
                 haveClass = false;
-                if(i == timeInfo.endLesson){
+                if (i == timeInfo.endLesson) {
                     final = true;
-                }else{
+                } else {
                     final = false;
                 }
-                lessonsArray.push(<TSMD_SubLesson key={this.props.id+"."+i} haveClass={haveClass} morning={morning} final={final}/>);
+                lessonsArray.push(<TSMD_SubLesson key={this.props.id + "." + i} haveClass={haveClass} morning={morning}
+                                                  final={final}/>);
             } else {
                 haveClass = true;
                 for (var j = 0; j < lessons.length; j++) {
-                    if(lessons[j].tkb.tkb_tietDauTien.thuTu == i){
-                        if(lessons[j].tkb.tkb_tietCuoiCung.thuTu == timeInfo.endLesson){
+                    if (lessons[j].tkb.tkb_tietDauTien.thuTu == i) {
+                        if (lessons[j].tkb.tkb_tietCuoiCung.thuTu == timeInfo.endLesson) {
                             final = true;
-                        }else{
+                        } else {
                             final = false;
                         }
-                        lessonsArray.push(<TSMD_SubLesson key={this.props.id+"."+i} haveClass={haveClass} morning={morning} lesson={lessons[j]} final={final}/>)
+                        lessonsArray.push(<TSMD_SubLesson key={this.props.id + "." + i} haveClass={haveClass}
+                                                          morning={morning} lesson={lessons[j]} final={final}/>)
                         i = lessons[j].tkb.tkb_tietCuoiCung.thuTu;
                         break;
                     }

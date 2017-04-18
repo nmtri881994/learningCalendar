@@ -13,10 +13,13 @@ class TSMD_SubLesson extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps);
+    }
+
     componentWillMount() {
         var css = "";
         var lesson = this.props.lesson;
-        console.log(lesson);
         if (!this.props.haveClass) {
             if (this.props.morning) {
                 css = "lesson-1 morning";
@@ -30,11 +33,6 @@ class TSMD_SubLesson extends Component {
             } else {
                 css = "lesson-" + numberOfLesson + " afternoon"
             }
-
-            if(this.props.final){
-                css += " sub-lesson-final";
-            }
-
         }
 
         this.setState({
@@ -43,8 +41,12 @@ class TSMD_SubLesson extends Component {
     }
 
     render() {
+        var css = this.state.css;
+        if(this.props.final){
+            css += " sub-lesson-final";
+        }
         var lesson = this.props.lesson;
-        return (<div className={this.state.css}>
+        return (<div className={css}>
             {this.props.haveClass ? <div className="class-content">
                     <div className="subject-name thuc-hanh">
                         {lesson.maLopHoc}

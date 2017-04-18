@@ -12,32 +12,8 @@ class TSMD_ShowAllClassesComponent extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        var classes = nextProps.classes;
-        // var index = 0;
-        // var tableData = "";
-        // if (classes.length != 0) {
-        //     tableData = classes.map(cl => {
-        //             index++;
-        //             return <tr key={cl.id}>
-        //                 <td>{index}</td>
-        //                 <td>{cl.id}</td>
-        //                 <td>{cl.monHoc.ten}</td>
-        //                 <td>{cl.giaoVien.ten}</td>
-        //                 <td>{cl.soLuongToiDa}</td>
-        //                 <td>{cl.soTietLyThuyet}</td>
-        //                 <td>{cl.soTietThucHanh}</td>
-        //                 <td>{cl.soBuoiLyThuyetMotTuan}</td>
-        //                 <td>{cl.soTietLyThuyetMotTuan}</td>
-        //                 <td>{cl.soBuoiThucHanhMotTuan}</td>
-        //                 <td>{cl.soTietThucHanhMotTuan}</td>
-        //                 <td><i className="fa fa-cog arrange-class-icon cursor" data={cl.id} aria-hidden="true"
-        //                        onClick={this.triggerModal.bind(null, cl.id)}/></td>
-        //             </tr>
-        //         }
-        //     )
-        // }
         this.setState({
-            classes: classes,
+            classes: nextProps.classes,
             khoa: nextProps.khoa,
             khoaHoc: nextProps.khoaHoc
             // tableData: tableData

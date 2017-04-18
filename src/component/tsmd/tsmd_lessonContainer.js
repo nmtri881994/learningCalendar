@@ -20,6 +20,7 @@ class TSMD_LessonContainer extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(11111111);
     }
 
     checkLessonCanBeInGroup(lesson, lessonGroup, startLesson, endLesson) {
@@ -109,9 +110,9 @@ class TSMD_LessonContainer extends Component {
 
         if (lessonGroups.length == 2) {
             small = true;
-            subContainers.push(<TSMD_SubContainer key={this.props.id + "." + i} id={this.props.id + "." + i} lessons={lessonGroups[0]} timeInfo={timeInfo}
+            subContainers.push(<TSMD_SubContainer key={this.props.id + "." + 1} id={this.props.id + "." + 1} lessons={lessonGroups[0]} timeInfo={timeInfo}
                                                   small={small} final={false}/>);
-            subContainers.push(<TSMD_SubContainer key={this.props.id + "." + i} id={this.props.id + "." + i} lessons={lessonGroups[1]} timeInfo={timeInfo}
+            subContainers.push(<TSMD_SubContainer key={this.props.id + "." + 2} id={this.props.id + "." + 2} lessons={lessonGroups[1]} timeInfo={timeInfo}
                                                   small={small} final={true}/>);
         } else {
             small = false
@@ -119,7 +120,7 @@ class TSMD_LessonContainer extends Component {
                 subContainers.push(<TSMD_SubContainer key={this.props.id + "." + i} id={this.props.id + "." + i} lessons={lessonGroups[i]} timeInfo={timeInfo}
                                                       small={small} final={false}/>);
             }
-            subContainers.push(<TSMD_SubContainer key={this.props.id + "." + i} id={this.props.id + "." + i} lessons={lessonGroups[2]} timeInfo={timeInfo}
+            subContainers.push(<TSMD_SubContainer key={this.props.id + "." + 2} id={this.props.id + "." + i} lessons={lessonGroups[2]} timeInfo={timeInfo}
                                                   small={small} final={true}/>);
         }
         this.setState({
