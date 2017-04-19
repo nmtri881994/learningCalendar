@@ -2,10 +2,12 @@
  * Created by Tri on 3/12/2017.
  */
 import React, {Component} from 'react'
-import TSMD_Lesson from './tsmd_lesson'
-import TSMD_LessonContainer from './tsmd_lessonContainer'
-class TSMD_Weekday extends Component {
 
+//import components
+import Week_Lesson from './week_lesson'
+import Week_LessonContainer from './week_lessonContainer'
+
+class Week_Weekday extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -72,7 +74,7 @@ class TSMD_Weekday extends Component {
                         } else {
                             morning = false;
                         }
-                        lessons.push(<TSMD_Lesson key={i} morning={morning} haveClass={haveClass}/>);
+                        lessons.push(<Week_Lesson key={i} morning={morning} haveClass={haveClass}/>);
                     } else {
                         for (var j = 0; j < lopHocs.length; j++) {
                             var lopHoc1 = lopHocs[j];
@@ -114,20 +116,29 @@ class TSMD_Weekday extends Component {
 
                                         for (var m = 0; m < lopHocs.length; m++) {
                                             if (lopHocs[m] && lopHoc1 != lopHocs[m]) {
-                                                if (lopHocs[m].tkb.tkb_tietDauTien.thuTu >= startLessonOfContainer && lopHocs[m].tkb.tkb_tietCuoiCung.thuTu <= endLessonOfContainer) {
+                                                var condition1 = lopHocs[m].tkb.tkb_tietCuoiCung.thuTu < startLessonOfContainer;
+                                                var condition2 = lopHocs[m].tkb.tkb_tietDauTien.thuTu > endLessonOfContainer;
+                                                if (!(condition1 || condition2)) {
                                                     containerLessons.push(lopHocs[m]);
+                                                    if (lopHocs[m].tkb.tkb_tietDauTien.thuTu < startLessonOfContainer) {
+                                                        startLessonOfContainer = lopHocs[m].tkb.tkb_tietDauTien.thuTu;
+                                                    }
+
+                                                    if (lopHocs[m].tkb.tkb_tietCuoiCung.thuTu > endLessonOfContainer) {
+                                                        endLessonOfContainer = lopHocs[m].tkb.tkb_tietCuoiCung.thuTu
+                                                    }
                                                     delete lopHocs[m];
                                                 }
                                             }
                                         }
 
-                                        lessons.push(<TSMD_LessonContainer key={i} id={i} morning={morning}
+                                        lessons.push(<Week_LessonContainer key={i} id={i} morning={morning}
                                                                            startLesson={startLessonOfContainer}
                                                                            endLesson={endLessonOfContainer}
                                                                            lessons={containerLessons}/>)
                                         // i = endLessonOfContainer;
                                     } else {
-                                        lessons.push(<TSMD_Lesson key={i} lopHoc={lopHoc1}
+                                        lessons.push(<Week_Lesson key={i} lopHoc={lopHoc1}
                                                                   morning={morning}
                                                                   haveClass={haveClass}/>);
                                         // i = lopHoc.tkb.tkb_tietCuoiCung.thuTu;
@@ -146,7 +157,7 @@ class TSMD_Weekday extends Component {
                     } else {
                         morning = false;
                     }
-                    lessons.push(<TSMD_Lesson key={i} morning={morning} haveClass={haveClass}/>);
+                    lessons.push(<Week_Lesson key={i} morning={morning} haveClass={haveClass}/>);
                 }
             }
 
@@ -179,11 +190,11 @@ class TSMD_Weekday extends Component {
         if (lessons.length == 0) {
             for (var i = 0; i < 10; i++) {
                 if (i < 6) {
-                    lessons.push(<TSMD_Lesson key={i}
+                    lessons.push(<Week_Lesson key={i}
                                               morning={true}
                                               haveClass={false}/>)
                 } else {
-                    lessons.push(<TSMD_Lesson key={i}
+                    lessons.push(<Week_Lesson key={i}
                                               morning={false}
                                               haveClass={false}/>)
                 }
@@ -207,4 +218,4 @@ class TSMD_Weekday extends Component {
     }
 }
 
-export default TSMD_Weekday;
+export default Week_Weekday;

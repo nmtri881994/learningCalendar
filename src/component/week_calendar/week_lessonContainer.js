@@ -2,9 +2,9 @@
  * Created by Tri on 4/18/2017.
  */
 import React, {Component} from 'react'
-import TSMD_SubContainer from './tsmd_subContainer'
+import Week_SubContainer from './week_subContainer'
 
-class TSMD_LessonContainer extends Component {
+class Week_LessonContainer extends Component {
 
     constructor(props) {
         super(props);
@@ -20,7 +20,75 @@ class TSMD_LessonContainer extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(11111111);
+        var numberOfLessons = nextProps.endLesson - nextProps.startLesson + 1;
+        var css = "lesson-container lesson-" + numberOfLessons;
+        if (nextProps.morning) {
+            css = "lesson-morning " + css;
+        } else {
+            css = "lesson-afternoon " + css;
+        }
+        var subContainers = [];
+        var small = false;
+
+        var lessons = nextProps.lessons;
+        var startLesson = nextProps.startLesson;
+        var endLesson = nextProps.endLesson;
+        var lessonGroups = [];
+        for (var i = 0; i < lessons.length; i++) {
+            if (lessons[i]) {
+                if (lessonGroups.length == 0) {
+                    var lessonGroup = [];
+                    lessonGroup.push(lessons[i]);
+                    // console.log(1, lessons[i]);
+                    lessonGroups.push(lessonGroup);
+                    delete lessons[i];
+                } else {
+                    // console.log(2, lessons[i]);
+                    var length = lessonGroups.length;
+                    var same = false;
+                    for (var j = 0; j < length; j++) {
+                        if(this.checkLessonCanBeInGroup(lessons[i], lessonGroups[j], startLesson, endLesson)){
+                            same = true;
+                            lessonGroups[j].push(lessons[i]);
+                            delete lessons[j];
+                        }
+                    }
+                    if(!same){
+                        var lessonGroup = [];
+                        lessonGroup.push(lessons[i]);
+                        lessonGroups.push(lessonGroup);
+                        delete lessons[i];
+                    }
+                }
+            }
+        }
+
+        var timeInfo = {
+            morning: nextProps.morning,
+            startLesson: startLesson,
+            endLesson: endLesson,
+            numberOfLessons: numberOfLessons
+        }
+
+        if (lessonGroups.length == 2) {
+            small = true;
+            subContainers.push(<Week_SubContainer key={nextProps.id + "." + 1} id={nextProps.id + "." + 1} lessons={lessonGroups[0]} timeInfo={timeInfo}
+                                                  small={small} final={false}/>);
+            subContainers.push(<Week_SubContainer key={nextProps.id + "." + 2} id={nextProps.id + "." + 2} lessons={lessonGroups[1]} timeInfo={timeInfo}
+                                                  small={small} final={true}/>);
+        } else {
+            small = false
+            for (var i = 0; i < 2; i++) {
+                subContainers.push(<Week_SubContainer key={nextProps.id + "." + i} id={nextProps.id + "." + i} lessons={lessonGroups[i]} timeInfo={timeInfo}
+                                                      small={small} final={false}/>);
+            }
+            subContainers.push(<Week_SubContainer key={nextProps.id + "." + 2} id={nextProps.id + "." + i} lessons={lessonGroups[2]} timeInfo={timeInfo}
+                                                  small={small} final={true}/>);
+        }
+        this.setState({
+            css: css,
+            subContainers: subContainers
+        })
     }
 
     checkLessonCanBeInGroup(lesson, lessonGroup, startLesson, endLesson) {
@@ -110,17 +178,17 @@ class TSMD_LessonContainer extends Component {
 
         if (lessonGroups.length == 2) {
             small = true;
-            subContainers.push(<TSMD_SubContainer key={this.props.id + "." + 1} id={this.props.id + "." + 1} lessons={lessonGroups[0]} timeInfo={timeInfo}
+            subContainers.push(<Week_SubContainer key={this.props.id + "." + 1} id={this.props.id + "." + 1} lessons={lessonGroups[0]} timeInfo={timeInfo}
                                                   small={small} final={false}/>);
-            subContainers.push(<TSMD_SubContainer key={this.props.id + "." + 2} id={this.props.id + "." + 2} lessons={lessonGroups[1]} timeInfo={timeInfo}
+            subContainers.push(<Week_SubContainer key={this.props.id + "." + 2} id={this.props.id + "." + 2} lessons={lessonGroups[1]} timeInfo={timeInfo}
                                                   small={small} final={true}/>);
         } else {
             small = false
             for (var i = 0; i < 2; i++) {
-                subContainers.push(<TSMD_SubContainer key={this.props.id + "." + i} id={this.props.id + "." + i} lessons={lessonGroups[i]} timeInfo={timeInfo}
+                subContainers.push(<Week_SubContainer key={this.props.id + "." + i} id={this.props.id + "." + i} lessons={lessonGroups[i]} timeInfo={timeInfo}
                                                       small={small} final={false}/>);
             }
-            subContainers.push(<TSMD_SubContainer key={this.props.id + "." + 2} id={this.props.id + "." + i} lessons={lessonGroups[2]} timeInfo={timeInfo}
+            subContainers.push(<Week_SubContainer key={this.props.id + "." + 2} id={this.props.id + "." + i} lessons={lessonGroups[2]} timeInfo={timeInfo}
                                                   small={small} final={true}/>);
         }
         this.setState({
@@ -139,4 +207,4 @@ class TSMD_LessonContainer extends Component {
     }
 }
 
-export default TSMD_LessonContainer
+export default Week_LessonContainer

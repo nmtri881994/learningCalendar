@@ -161,3 +161,15 @@ export const getTermWeekTime = (termId, yearId, cb, fcb) => {
         })
     $.unblockUI();
 }
+
+export const getOne = (calendarId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/tkb-tuan/find-one/" + calendarId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}

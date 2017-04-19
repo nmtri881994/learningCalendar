@@ -20,14 +20,14 @@ class TSMD_NavSideBar extends Component {
                                     <ul className="calendars">
                                         <li>
                                             <a href="/giaovu/sap-xep-tkb" className="slide-bar-nav-inner-item-link">
-                                                <span className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></span>
-                                                <span className="slide-bar-nav-inner-item-title">Sắp xếp thời khóa biểu</span>
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Sắp xếp thời khóa biểu</div>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/giaovu/mo-dang-ky" className="slide-bar-nav-inner-item-link">
-                                                <span className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></span>
-                                                <span className="slide-bar-nav-inner-item-title">Mở đăng ký</span>
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Mở đăng ký</div>
                                             </a>
                                         </li>
                                     </ul>

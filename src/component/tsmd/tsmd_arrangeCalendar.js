@@ -15,12 +15,17 @@ import * as API2 from '../../apiUtility/calendarApi'
 //import components
 import TSMD_ShowAllClassesComponent from './tsmd_showAllClassesComponent'
 import TSMD_EditClass from './tsmd_editClass'
-import TSMD_Calendar from './tsmd_calendar'
+import Week_Calendar from '../week_calendar/week_calendar'
+
+//import config
+import {APP_URL} from '../../configuration/appConfig'
 
 class TSMD_ArrangeCalendar extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            stompClient: null,
+
             years: [],
             chosenYearId: 0,
             terms: [],
@@ -345,7 +350,7 @@ class TSMD_ArrangeCalendar extends Component {
             </div>
 
             <div id="classes-calendar">
-            <TSMD_Calendar khoa={chosenKhoa} khoaHoc={chosenYearOfAdmission} classes={this.state.classes}/>
+            <Week_Calendar khoa={chosenKhoa} khoaHoc={chosenYearOfAdmission} classes={this.state.classes}/>
             </div>
             <TSMD_EditClass termId={this.state.chosenTermId} yearId={this.state.chosenYearId}
                             facultyId={this.state.chosenFacultyId}
@@ -377,6 +382,19 @@ class TSMD_ArrangeCalendar extends Component {
     }
 
     componentDidMount() {
+        var socket = SockJS(APP_URL+"/week-calendar/edit");
+        var stompClient = Stomp.over(socket);
+
+        var refresh = (classId) => this.refreshCaledar(classId);
+
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe("/socket/week-calendar/edit", function (message) {
+                refresh(JSON.parse(message.body).classId);
+            });
+        });
+        this.setState({
+            stompClient: stompClient
+        })
     }
 }
 

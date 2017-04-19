@@ -2,9 +2,9 @@
  * Created by Tri on 4/18/2017.
  */
 import React, {Component} from 'react'
-import TSMD_SubLesson from './tsmd_subLesson'
+import Week_SubLesson from './week_subLesson'
 
-class TSMD_SubContainer extends Component {
+class Week_SubContainer extends Component {
 
     constructor(props) {
         super(props);
@@ -28,13 +28,13 @@ class TSMD_SubContainer extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
+        this.helpRender(nextProps);
     }
 
-    componentWillMount() {
-        var timeInfo = this.props.timeInfo;
+    helpRender(props){
+        var timeInfo = props.timeInfo;
         var css = "lesson-" + timeInfo.numberOfLessons + " lesson-container";
-        var lessons = this.props.lessons;
+        var lessons = props.lessons;
         this.arrangeLessons(lessons)
 
         var notFreeLessons = [];
@@ -63,7 +63,7 @@ class TSMD_SubContainer extends Component {
                 } else {
                     final = false;
                 }
-                lessonsArray.push(<TSMD_SubLesson key={this.props.id + "." + i} haveClass={haveClass} morning={morning}
+                lessonsArray.push(<Week_SubLesson key={props.id + "." + i} haveClass={haveClass} morning={morning}
                                                   final={final}/>);
             } else {
                 haveClass = true;
@@ -74,7 +74,7 @@ class TSMD_SubContainer extends Component {
                         } else {
                             final = false;
                         }
-                        lessonsArray.push(<TSMD_SubLesson key={this.props.id + "." + i} haveClass={haveClass}
+                        lessonsArray.push(<Week_SubLesson key={props.id + "." + i} haveClass={haveClass}
                                                           morning={morning} lesson={lessons[j]} final={final}/>)
                         i = lessons[j].tkb.tkb_tietCuoiCung.thuTu;
                         break;
@@ -84,13 +84,13 @@ class TSMD_SubContainer extends Component {
         }
 
 
-        if (this.props.small) {
+        if (props.small) {
             css = "lesson-small " + css;
         } else {
             css = "lesson-tiny " + css;
         }
 
-        if (this.props.final) {
+        if (props.final) {
             css += " lesson-column-final";
         }
 
@@ -98,6 +98,10 @@ class TSMD_SubContainer extends Component {
             css: css,
             lessonsArray: lessonsArray
         })
+    }
+
+    componentWillMount() {
+        this.helpRender(this.props);
     }
 
     render() {
@@ -108,4 +112,4 @@ class TSMD_SubContainer extends Component {
 
 }
 
-export default TSMD_SubContainer
+export default Week_SubContainer

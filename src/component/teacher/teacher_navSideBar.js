@@ -20,8 +20,8 @@ class NavSideBar extends Component {
                                     <ul className="calendars">
                                         <li>
                                             <a href="/giangvien/thoi-khoa-bieu-tuan" className="slide-bar-nav-inner-item-link">
-                                                <span className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></span>
-                                                <span className="slide-bar-nav-inner-item-title">Theo tuần</span>
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Theo tuần</div>
                                             </a>
                                         </li>
                                     </ul>
@@ -33,26 +33,26 @@ class NavSideBar extends Component {
                                     <ul className="calendars">
                                         <li>
                                             <a href="#" className="slide-bar-nav-inner-item-link">
-                                                <span className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></span>
-                                                <span className="slide-bar-nav-inner-item-title">1</span>
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">1</div>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" className="slide-bar-nav-inner-item-link">
-                                                <span className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></span>
-                                                <span className="slide-bar-nav-inner-item-title">2</span>
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">2</div>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" className="slide-bar-nav-inner-item-link">
-                                                <span className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></span>
-                                                <span className="slide-bar-nav-inner-item-title">3</span>
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">3</div>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" className="slide-bar-nav-inner-item-link">
-                                                <span className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></span>
-                                                <span className="slide-bar-nav-inner-item-title">4</span>
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">4</div>
                                             </a>
                                         </li>
                                     </ul>

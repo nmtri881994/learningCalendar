@@ -7,9 +7,9 @@ import React, {Component} from 'react'
 import * as API2 from '../../apiUtility/calendarApi'
 
 //Import components
-import TSMD_Weekday from './tsmd_weekday'
+import Week_Weekday from './week_weekday'
 
-class TSMD_Calendar extends Component {
+class Week_Calendar extends Component {
 
     constructor(props) {
         super(props);
@@ -99,18 +99,19 @@ class TSMD_Calendar extends Component {
         return (
             <div className="calendar-panel">
                 <div className="calendar">
-                    <TSMD_Weekday name="Thứ 2" lopHocs={this.state.lopHocThu2s}/>
-                    <TSMD_Weekday name="Thứ 3" lopHocs={this.state.lopHocThu3s}/>
-                    <TSMD_Weekday name="Thứ 4" lopHocs={this.state.lopHocThu4s}/>
-                    <TSMD_Weekday name="Thứ 5" lopHocs={this.state.lopHocThu5s}/>
-                    <TSMD_Weekday name="Thứ 6" lopHocs={this.state.lopHocThu6s}/>
-                    <TSMD_Weekday name="Thứ 7" lopHocs={this.state.lopHocThu7s}/>
-                    <TSMD_Weekday name="Chủ nhật" lopHocs={this.state.lopHocCNs}/>
+                    <Week_Weekday name="Thứ 2" lopHocs={this.state.lopHocThu2s}/>
+                    <Week_Weekday name="Thứ 3" lopHocs={this.state.lopHocThu3s}/>
+                    <Week_Weekday name="Thứ 4" lopHocs={this.state.lopHocThu4s}/>
+                    <Week_Weekday name="Thứ 5" lopHocs={this.state.lopHocThu5s}/>
+                    <Week_Weekday name="Thứ 6" lopHocs={this.state.lopHocThu6s}/>
+                    <Week_Weekday name="Thứ 7" lopHocs={this.state.lopHocThu7s}/>
+                    <Week_Weekday name="Chủ nhật" lopHocs={this.state.lopHocCNs}/>
                 </div>
             </div>
 
         );
     }
+
 }
 
-export default TSMD_Calendar;
+export default Week_Calendar;

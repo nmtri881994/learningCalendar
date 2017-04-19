@@ -169,20 +169,6 @@ class SV_WeekCalendar extends Component {
 
     }
 
-    componentDidMount() {
-        var socket = SockJS('http://localhost:8080/calendar'); // <3>
-        var stompClient = Stomp.over(socket);
-        var refreshFunction = () => this.refreshCalendar();
-        stompClient.connect({}, function (frame) {
-            stompClient.subscribe("/socket/calendar", function (message) {
-                refreshFunction();
-            });
-        });
-        this.setState({
-            stompClient: stompClient
-        })
-    }
-
     render() {
         return (
             <div className="calendar-panel">
@@ -213,6 +199,20 @@ class SV_WeekCalendar extends Component {
             </div>
 
         );
+    }
+
+    componentDidMount() {
+        var socket = SockJS('http://localhost:8080/calendar'); // <3>
+        var stompClient = Stomp.over(socket);
+        var refreshFunction = () => this.refreshCalendar();
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe("/socket/calendar", function (message) {
+                refreshFunction();
+            });
+        });
+        this.setState({
+            stompClient: stompClient
+        })
     }
 }
 

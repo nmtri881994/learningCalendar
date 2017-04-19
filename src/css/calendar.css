@@ -130,19 +130,19 @@
 }
 
 .lesson-happening {
-    outline: 2px solid #FB8C00;
-    outline-offset: -2px;
+    outline: 3px solid #FB8C00;
+    outline-offset: -3px;
     animation: blinking 1s linear infinite;
 }
 
 @keyframes blinking {
     from,
     49.9% {
-        outline: 2px solid #FB8C00;
+        outline: 3px solid #FB8C00;
     }
     50%,
     to {
-        outline: 2px solid #E65100;
+        outline: 3px solid #E65100;
     }
 }
 
@@ -154,7 +154,7 @@
 .lesson-actions-corner{
     position: absolute;
     bottom: 0;
-    width: 140px;
+    width: 144px;
     height: 20px;
     padding: 5px;
     background:rgba(255,255,255,0.2);
@@ -166,7 +166,7 @@
 }
 
 .note-content{
-    margin: 4px -5px;
+    margin: 4px -2px;
     height: 50px;
     overflow-y: auto;
     background-color: #FBE9E7;
@@ -176,7 +176,7 @@
 }
 
 .student-note-content{
-    margin: 4px -5px;
+    margin: 4px -2px;
     height: 50px;
     overflow-y: auto;
     background-color: #ddffff;
@@ -186,7 +186,7 @@
 }
 
 .teacher-note-content{
-    margin: 4px -5px;
+    margin: 4px -2px;
     height: 50px;
     overflow-y: auto;
     background-color: #ddffff;

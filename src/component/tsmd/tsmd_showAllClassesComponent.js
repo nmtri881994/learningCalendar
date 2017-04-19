@@ -30,7 +30,6 @@ class TSMD_ShowAllClassesComponent extends Component {
         myTable.fnClearTable();
         if (classes.length != 0) {
             classes.map(cl => {
-                var triggerModal = () => this.triggerModal.bind(null, cl.id);
                 myTable.fnAddData([
                     index,
                     cl.monHoc.maMonHoc+"."+this.state.khoa.maKhoa+"."+this.state.khoaHoc.nam+"."+cl.id,

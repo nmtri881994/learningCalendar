@@ -7,30 +7,8 @@ import moment from 'moment'
 import * as API from '../../apiUtility/studentApi'
 //import components
 
-import {
-    LESSON_1_START,
-    LESSON_1_END,
-    LESSON_2_START,
-    LESSON_2_END,
-    LESSON_3_START,
-    LESSON_3_END,
-    LESSON_4_START,
-    LESSON_4_END,
-    LESSON_5_START,
-    LESSON_5_END,
-    LESSON_6_START,
-    LESSON_6_END,
-    LESSON_7_START,
-    LESSON_7_END,
-    LESSON_8_START,
-    LESSON_8_END,
-    LESSON_9_START,
-    LESSON_9_END,
-    LESSON_10_START,
-    LESSON_10_END,
-} from '../../configuration/appConfig'
 
-class TSMD_Lesson extends Component {
+class Week_Lesson extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -132,4 +110,4 @@ class TSMD_Lesson extends Component {
     }
 }
 
-export default TSMD_Lesson;
+export default Week_Lesson;

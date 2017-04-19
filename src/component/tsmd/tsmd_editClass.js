@@ -9,10 +9,13 @@ import Stomp from 'stompjs'
 
 //import components
 import TSMD_ClassCalendarEdit from './tsmd_classCalendarEdit'
-import TSMD_ClassCalendarCreate from './tsmd_classCalendarEditCreate'
+import TSMD_ClassCalendarCreate from './tsmd_classCalendarCreate'
 
 //import Apis
 import * as API from '../../apiUtility/calendarApi'
+
+//import config
+import {APP_URL} from '../../configuration/appConfig'
 
 class TSMD_EditClass extends Component {
 
@@ -21,7 +24,7 @@ class TSMD_EditClass extends Component {
         this.close = this.close.bind(this);
 
         this.state = {
-            stompClient2: null,
+            stompClient: null,
 
             basicInfo: null,
 
@@ -33,7 +36,7 @@ class TSMD_EditClass extends Component {
             availableWeeks: [],
         }
 
-        this.refreshCalendar = this.refreshCalendar.bind(this);
+        // this.refreshCalendar = this.refreshCalendar.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -44,42 +47,26 @@ class TSMD_EditClass extends Component {
             yearOfAdmissionId: nextProps.yearOfAdmissionId,
             majorId: nextProps.majorId
         }
-        this.setState({
-            basicInfo: basicInfo
-        })
+
         if (nextProps.classId != 0) {
+            var availableWeeks = [];
             API.getTermWeekTime(nextProps.termId, nextProps.yearId, (weekTime) => {
-                var availableWeeks = [];
                 for (var i = weekTime.startWeek; i <= weekTime.endWeek; i++) {
                     availableWeeks.push(i);
-                }
-                this.setState({
-                    availableWeeks: availableWeeks
-                })
+                };
+                API.getWeekCalendarOfClass(nextProps.classId, (calendars) => {
+                    this.setState({
+                        basicInfo: basicInfo,
+                        availableWeeks: availableWeeks,
+                        classId: nextProps.classId,
+                        className: nextProps.className,
+                        calendars: calendars
+                    });
+                }, (error) => {
+                    console.log(error);
+                });
             }, (error) => {
                 console.log(error)
-            });
-            API.getWeekCalendarOfClass(nextProps.classId, (calendars) => {
-                this.setState({
-                    classId: nextProps.classId,
-                    className: nextProps.className,
-                    calendars: calendars
-                });
-            }, (error) => {
-                console.log(error);
-            });
-        }
-
-    }
-
-    refreshCalendar(cl) {
-        if (cl.classId = this.state.classId) {
-            API.getWeekCalendarOfClass(this.props.classId, (calendars) => {
-                this.setState({
-                    calendars: calendars
-                });
-            }, (error) => {
-                console.log(error);
             });
         }
 
@@ -127,7 +114,6 @@ class TSMD_EditClass extends Component {
 
     componentDidMount() {
 
-        var refreshCalendars = (cl) => this.refreshCalendar(cl);
     }
 }
 
