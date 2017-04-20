@@ -67,3 +67,39 @@ export const deleteWeekCalendar = (calendarId, cb, fcb) => {
         })
     $.unblockUI();
 }
+
+export const getKhoas = (yearId, termId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/all-khoa-khoahoc/" + yearId + "/" + termId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data)
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
+
+export const openRegistering = (registerTimeId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/open-registering/" + registerTimeId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function () {
+            cb();
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
+
+export const closeRegistering = (registerTimeId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/close-registering/" + registerTimeId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function () {
+            cb();
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}

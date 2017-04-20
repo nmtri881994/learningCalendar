@@ -1,0 +1,15 @@
+.student-time{
+    clear: both;
+    width: 150px;
+    background:rgba(24,255,255,0.3);
+    box-sizing: border-box;
+    color: red;
+    position: fixed;
+    top: 42px;
+    right: 2px;
+    z-index: 2;
+    font-size: 17px;
+    border: 1px solid #00B8D4;
+    word-wrap: break-word;
+    padding: 2px;
+}

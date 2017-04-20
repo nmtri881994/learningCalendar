@@ -32,9 +32,9 @@ class TSMD_ShowAllClassesComponent extends Component {
             classes.map(cl => {
                 myTable.fnAddData([
                     index,
-                    cl.monHoc.maMonHoc+"."+this.state.khoa.maKhoa+"."+this.state.khoaHoc.nam+"."+cl.id,
+                    cl.monHoc.maMonHoc + "." + this.state.khoa.maKhoa + "." + this.state.khoaHoc.nam + "." + cl.id,
                     cl.monHoc.ten,
-                    cl.giaoVien.hoDem + " " +cl.giaoVien.ten,
+                    cl.giaoVien.hoDem + " " + cl.giaoVien.ten,
                     cl.soLuongToiDa,
                     cl.soTietLyThuyet,
                     cl.soTietThucHanh,
@@ -42,54 +42,52 @@ class TSMD_ShowAllClassesComponent extends Component {
                     cl.soTietLyThuyetMotTuan,
                     cl.soBuoiThucHanhMotTuan,
                     cl.soTietThucHanhMotTuan,
-                    '<i class="fa fa-cog arrange-class-icon cursor" aria-hidden="true" data-id="'+cl.id+'" data-name="'+cl.monHoc.ten+'"/>'
+                    '<i class="fa fa-cog arrange-class-icon cursor" aria-hidden="true" data-id="' + cl.id + '" data-name="' + cl.monHoc.ten + '"/>'
                 ]);
-                index ++;
+                index++;
             })
         }
 
 
         return (
-            <div>
-                <div className="data-table">
-                    <table id="myTable" className="display" cellSpacing="0">
-                        <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Mã lớp</th>
-                            <th>Môn học</th>
-                            <th>Giáo viên</th>
-                            <th>Số lượng tối đa</th>
-                            <th>Số tiết LT</th>
-                            <th>Số tiết TH</th>
-                            <th>Số buổi LT/tuần</th>
-                            <th>Số tiết LT/tuần</th>
-                            <th>Số buổi TH/tuần</th>
-                            <th>Số tiết TH/tuần</th>
-                            <th>Xếp lịch</th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>STT</th>
-                            <th>Mã lớp</th>
-                            <th>Môn học</th>
-                            <th>Giáo viên</th>
-                            <th>Số lượng tối đa</th>
-                            <th>Số tiết LT</th>
-                            <th>Số tiết TH</th>
-                            <th>Số buổi LT/tuần</th>
-                            <th>Số tiết LT/tuần</th>
-                            <th>Số buổi TH/tuần</th>
-                            <th>Số tiết TH/tuần</th>
-                            <th>Xếp lịch</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        {/*{tableData}*/}
-                        </tbody>
-                    </table>
-                </div>
+            <div className="data-table">
+                <table id="myTable" className="display" cellSpacing="0">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã lớp</th>
+                        <th>Môn học</th>
+                        <th>Giáo viên</th>
+                        <th>Số lượng tối đa</th>
+                        <th>Số tiết LT</th>
+                        <th>Số tiết TH</th>
+                        <th>Số buổi LT/tuần</th>
+                        <th>Số tiết LT/tuần</th>
+                        <th>Số buổi TH/tuần</th>
+                        <th>Số tiết TH/tuần</th>
+                        <th>Xếp lịch</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã lớp</th>
+                        <th>Môn học</th>
+                        <th>Giáo viên</th>
+                        <th>Số lượng tối đa</th>
+                        <th>Số tiết LT</th>
+                        <th>Số tiết TH</th>
+                        <th>Số buổi LT/tuần</th>
+                        <th>Số tiết LT/tuần</th>
+                        <th>Số buổi TH/tuần</th>
+                        <th>Số tiết TH/tuần</th>
+                        <th>Xếp lịch</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {/*{tableData}*/}
+                    </tbody>
+                </table>
             </div>
         );
     }
@@ -102,10 +100,10 @@ class TSMD_ShowAllClassesComponent extends Component {
         });
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         var triggerModal = (id, name) => this.props.triggerModal(id, name);
         $(document).ready(function () {
-            $('.arrange-class-icon').on('click', function(evt){
+            $('.arrange-class-icon').on('click', function (evt) {
                 triggerModal($(this).attr("data-id"), $(this).attr("data-name"));
             })
         })

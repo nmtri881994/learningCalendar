@@ -1,12 +1,24 @@
 import React, {Component} from 'react'
+
+//import components
 import Header from "../header"
 import Student_navSideBar from './student_navSideBar'
 import Footer from '../footer'
+import Student_Time from './student_time'
 
 //Import actions
 import {authenLogin2} from '../../action/loginAction'
 
+//import APIs
+import * as API from '../../apiUtility/userApi'
+
 class SV_MainComponent extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            accountName: ""
+        }
+    }
 
     componentWillMount() {
         authenLogin2(localStorage.getItem('role'));
@@ -17,6 +29,7 @@ class SV_MainComponent extends Component {
             <div id="page">
                 <div className="wrapper">
                     <Header currentUserName={this.props.currentUserName}/>
+                    <Student_Time/>
                     <div id="content">
                         <Student_navSideBar/>
                         <div className="page-panel">

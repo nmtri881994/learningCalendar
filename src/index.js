@@ -20,6 +20,7 @@ import {yearsNotEnd, semestersNotEnd} from './reducer/tsmdReducer'
 // import Login from './component/login'
 import CalendarNewStyle from './component/test/CalendarNewStyle'
 import SystemChat from './component/systemChat'
+import TSMD_OpenRegisteringTime from './component/tsmd/tsmd_openRegisteringTime'
 
 //Import container
 import LoginContainer from './container/loginContainer'
@@ -41,6 +42,8 @@ require("style-loader!css-loader!./css/calendar.css");
 require("style-loader!css-loader!./css/loginForm.css");
 require("style-loader!css-loader!./css/modal.css");
 require("style-loader!css-loader!./css/arrangeCalendar.css");
+require("style-loader!css-loader!./css/switch.css");
+require("style-loader!css-loader!./css/studentTime.css");
 // require("style-loader!css-loader!./css/googleForm.css");
 
 //Import JS
@@ -87,7 +90,7 @@ ReactDOM.render(
             </Route>
             <Route path="giaovu" component={TSMD_MainContainer}>
                 <Route path="sap-xep-tkb" component={TSMD_ArrangeCalendarContainer}/>
-                {/*<Route path="mo-dang-ky" component={}/>*/}
+                <Route path="mo-dang-ky" component={TSMD_OpenRegisteringTime}/>
             </Route>
         </Router>
     </Provider>,
