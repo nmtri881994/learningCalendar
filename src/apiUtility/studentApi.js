@@ -44,3 +44,30 @@ export const editCalendarStudentNote = (editStudentNote, currentDate, cb) =>{
             console.log(error);
         })
 }
+
+export const getStudentRegisterTimes = (cb, fcb) => {
+    axios(APP_URL + "/api/sinh-vien/register-times", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data)
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}
+
+export const checkCanRegister = (cb, fcb) => {
+    axios(APP_URL + "/api/sinh-vien/register-times", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            var canRegister = false;
+            for(var i = 0; i< response.data.length; i++){
+                if(response.data[i].status){
+                    canRegister = true;
+                    break;
+                }
+            }
+            cb(canRegister);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+}

@@ -9,7 +9,7 @@ import {syncHistoryWithStore, routerReducer} from 'react-router-redux'
 import {userLogined, loginMessage} from './reducer/loginReducer'
 import {testContent} from './reducer/testReducer'
 import {currentUserName} from './reducer/userReducer'
-import {studentWeekCalendar} from './reducer/studentReducer'
+import {studentWeekCalendar, canRegister} from './reducer/studentReducer'
 import {currentLearningYear, currentWeekNumber, currentDate} from './reducer/calendarReducer'
 import {teacherWeekCalendar, teacherEditLessonDetail} from './reducer/teacherReducer'
 import {allLessons} from './reducer/lessonReducers'
@@ -26,6 +26,7 @@ import TSMD_OpenRegisteringTime from './component/tsmd/tsmd_openRegisteringTime'
 import LoginContainer from './container/loginContainer'
 import Student_MainContainer from './container/student_mainContainer'
 import Student_WeekCalendarContainer from './container/student_weekCalendarContainer'
+import Student_RegisterSubjectClassContainer from './container/student_registerSubjectClassContainer'
 
 import Teacher_MainContainer from './container/teacher_mainContainer'
 import Teacher_WeekCalendarContainer from './container/teacher_weekCalendarContainer'
@@ -57,6 +58,7 @@ const store = createStore(
         testContent,
         currentUserName,
         studentWeekCalendar,
+        canRegister,
         currentLearningYear,
         currentWeekNumber,
         currentDate,
@@ -83,6 +85,7 @@ ReactDOM.render(
             <Route path="sinhvien" component={Student_MainContainer}>
                 <Route path="thoi-khoa-bieu-tuan" component={Student_WeekCalendarContainer}/>
                 <Route path="system-chat" component={SystemChat}/>
+                <Route path="dang-ky-hoc" component={Student_RegisterSubjectClassContainer}/>
             </Route>
             <Route path="giangvien" component={Teacher_MainContainer}>
                 <Route path="thoi-khoa-bieu-tuan" component={Teacher_WeekCalendarContainer}/>

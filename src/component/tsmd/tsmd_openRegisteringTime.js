@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react'
 
+
 //import APIs
 import * as API from '../../apiUtility/tsmdApi'
 
@@ -15,6 +16,8 @@ class TSMD_OpenRegisteringTime extends Component {
         super(props);
 
         this.state = {
+            stompClient: null,
+
             years: [],
             chosenYearId: 0,
             terms: [],

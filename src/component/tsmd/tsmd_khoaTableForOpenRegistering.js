@@ -3,6 +3,8 @@
  */
 import React, {Component} from 'react'
 import moment from 'moment'
+import SockJS from 'sockjs-client'
+import Stomp from 'stompjs'
 
 //import configs
 import {DATE_TIME_FORMAT_DISPLAY} from '../../configuration/appConfig'
@@ -13,11 +15,22 @@ import * as API from '../../apiUtility/tsmdApi'
 class TSMD_KhoaTableForOpenRegistering extends Component {
     constructor(props) {
         super(props);
+
+        this.state={
+            stompClient: null,
+
+            khoas: []
+        }
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.khoas.length != 0) {
             var khoas = nextProps.khoas;
+
+            this.setState({
+                khoas: khoas
+            })
+
             var myTable = $('#myTable').dataTable();
             myTable.fnClearTable();
 
@@ -86,14 +99,28 @@ class TSMD_KhoaTableForOpenRegistering extends Component {
     componentDidMount() {
         $(document).ready(function () {
             $('#myTable').DataTable();
-
         });
+
+        var socket = SockJS('http://localhost:8080/register'); // <3>
+        var stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe("/socket/register", function (message) {
+            });
+        });
+        this.setState({
+            stompClient: stompClient
+        })
     }
 
     openRegistering(registerTimeId, statusSwitch) {
         if (registerTimeId != 0) {
             API.openRegistering(registerTimeId, () => {
-                console.log(1);
+                var message = {
+                    type: 1,
+                    registerTimeId: registerTimeId
+                }
+
+                this.state.stompClient.send("/socket/register",{}, JSON.stringify(message))
             }, (error) => {
                 console.log(error);
             });
@@ -104,7 +131,12 @@ class TSMD_KhoaTableForOpenRegistering extends Component {
     closeRegistering(registerTimeId, statusSwitch) {
         if (registerTimeId != 0) {
             API.closeRegistering(registerTimeId, () => {
-                console.log(2);
+                var message = {
+                    type: 2,
+                    registerTimeId: registerTimeId
+                }
+
+                this.state.stompClient.send("/socket/register",{}, JSON.stringify(message))
             }, (error) => {
                 console.log(error);
             });

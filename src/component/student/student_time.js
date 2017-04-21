@@ -5,7 +5,7 @@ import React, {Component} from 'react'
 import moment from 'moment'
 
 //import APIs
-import * as API from '../../apiUtility/userApi'
+import * as API from '../../apiUtility/studentApi'
 
 class Student_Time extends Component {
     constructor(props) {
@@ -14,35 +14,52 @@ class Student_Time extends Component {
         this.state = {
             canRegister: false,
             registerTime: null,
-            timeLeft: ""
+            timeLeft: "",
+
+            intervalId: 0
         }
 
         this.refreshTimeLeft = this.refreshTimeLeft.bind(this);
     }
 
     componentWillMount() {
-        clearInterval(this.state.intervalId);
-        API.getStudentRegisterTimes((registerTimes) => {
-            for (var i = 0; i < registerTimes.length; i++) {
-                if (registerTimes[i].status) {
-                    var ms = moment(registerTimes[i].endTime).diff(moment());
-                    var d = moment.duration(ms);
-                    var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
-                    this.setState({
-                        canRegister: true,
-                        registerTime: registerTimes[i],
-                        timeLeft: s
-                    })
-                    break;
-                }
-            };
-
-        }, (error) => {
-            console.log(error);
-        })
     }
 
     componentWillReceiveProps(nextProps) {
+        var canRegister = nextProps.canRegister;
+        if(canRegister){
+            var intervalId = setInterval(this.refreshTimeLeft,1000);
+            this.setState({
+                intervalId: intervalId
+            })
+            alert(intervalId);
+            API.getStudentRegisterTimes((registerTimes) => {
+                for (var i = 0; i < registerTimes.length; i++) {
+                    if (registerTimes[i].status) {
+                        var ms = moment(registerTimes[i].endTime).diff(moment());
+                        var d = moment.duration(ms);
+                        var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+                        this.setState({
+                            canRegister: canRegister,
+                            registerTime: registerTimes[i],
+                            timeLeft: s
+                        })
+                        break;
+                    }
+                };
+
+            }, (error) => {
+                console.log(error);
+            })
+        }else{
+            alert(this.state.intervalId);
+            clearInterval(this.state.intervalId);
+            this.setState({
+                canRegister: false,
+                registerTime: null,
+                timeLeft: ""
+            })
+        }
     }
 
     render() {
@@ -58,6 +75,7 @@ class Student_Time extends Component {
     }
 
     refreshTimeLeft(){
+        console.log(1);
         if(this.state.registerTime && this.state.registerTime != null){
             var ms = moment(this.state.registerTime.endTime).diff(moment());
             var d = moment.duration(ms);
@@ -70,15 +88,9 @@ class Student_Time extends Component {
     }
 
     componentDidMount() {
-        // var refreshTimeLeft = () => this.refreshTimeLeft();
-        var intervalId = setInterval(this.refreshTimeLeft,1000);
-        this.setState({
-            intervalId: intervalId
-        })
     }
 
     componentDidUpdate() {
-
     }
 
 }

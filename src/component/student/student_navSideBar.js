@@ -28,31 +28,13 @@ class NavSideBar extends Component {
                                 </div>
                                 <div className="slide-bar-nav-inner-calendars">
                                     <div className="slide-bar-nav-inner-heading not-first-heading">
-                                        <strong>Thiết lập</strong>
+                                        <strong>Đăng ký</strong>
                                     </div>
                                     <ul className="calendars">
                                         <li>
-                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                            <a href="/sinhvien/dang-ky-hoc" className="slide-bar-nav-inner-item-link">
                                                 <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
-                                                <div className="slide-bar-nav-inner-item-title">1</div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" className="slide-bar-nav-inner-item-link">
-                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
-                                                <div className="slide-bar-nav-inner-item-title">2</div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" className="slide-bar-nav-inner-item-link">
-                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
-                                                <div className="slide-bar-nav-inner-item-title">3</div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" className="slide-bar-nav-inner-item-link">
-                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
-                                                <div className="slide-bar-nav-inner-item-title">4</div>
+                                                <div className="slide-bar-nav-inner-item-title">Đăng ký học</div>
                                             </a>
                                         </li>
                                     </ul>
