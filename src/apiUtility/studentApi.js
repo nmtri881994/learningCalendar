@@ -9,9 +9,9 @@ const BASE_URL = `${APP_URL}/api/sinhvien`;
 //import actions
 import {getCurrentWeekCalendar} from '../action/studentAction'
 
-export const getCalendarByWeek = (date, cb) =>{
+export const getCalendarByWeek = (date, cb) => {
     $.blockUI(loading);
-    axios(BASE_URL+"/calendar/week/"+date, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/calendar/week/" + date, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -21,9 +21,9 @@ export const getCalendarByWeek = (date, cb) =>{
     $.unblockUI();
 }
 
-export const getCalendarStudentNote = (lessonId, cb) =>{
+export const getCalendarStudentNote = (lessonId, cb) => {
     $.blockUI(loading);
-    axios(BASE_URL+"/calendar/note/"+lessonId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/calendar/note/" + lessonId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -33,8 +33,8 @@ export const getCalendarStudentNote = (lessonId, cb) =>{
     $.unblockUI();
 }
 
-export const editCalendarStudentNote = (editStudentNote, currentDate, cb) =>{
-    axios.post(BASE_URL+"/calendar/note/edit", editStudentNote,{headers: {Authorization: localStorage.getItem('token')}})
+export const editCalendarStudentNote = (editStudentNote, currentDate, cb) => {
+    axios.post(BASE_URL + "/calendar/note/edit", editStudentNote, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             getCurrentWeekCalendar(currentDate);
             var modal = $("#myModal");
@@ -59,15 +59,50 @@ export const checkCanRegister = (cb, fcb) => {
     axios(APP_URL + "/api/sinh-vien/register-times", {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             var canRegister = false;
-            for(var i = 0; i< response.data.length; i++){
-                if(response.data[i].status){
+            var registerTimeId = 0;
+            for (var i = 0; i < response.data.length; i++) {
+                if (response.data[i].status) {
                     canRegister = true;
+                    registerTimeId = response.data[i].id;
                     break;
                 }
             }
-            cb(canRegister);
+            cb({
+                canRegister: canRegister,
+                registerTimeId: registerTimeId
+            });
         })
         .catch(function (error) {
             console.log(error);
+        })
+}
+
+export const getRegisterTimeByRegisterTimeId = (registerTimeId, cb, fcb) => {
+    axios(APP_URL + "/api/sinhvien/calendar/register-time/" + registerTimeId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data)
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}
+
+export const getClassesCanRegister = (registerTimeId, cb, fcb) => {
+    axios(APP_URL + "/api/sinhvien/calendar/register/classes/" + registerTimeId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data)
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}
+
+export const getFacultyCode = (khoa_khoaHocId, cb, fcb) => {
+    axios(APP_URL + "/api/sinhvien/calendar/ma-khoa/" + khoa_khoaHocId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data)
+        })
+        .catch(function (error) {
+            fcb(error);
         })
 }

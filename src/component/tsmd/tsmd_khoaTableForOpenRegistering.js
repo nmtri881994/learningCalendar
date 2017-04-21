@@ -116,7 +116,7 @@ class TSMD_KhoaTableForOpenRegistering extends Component {
         if (registerTimeId != 0) {
             API.openRegistering(registerTimeId, () => {
                 var message = {
-                    type: 1,
+                    canRegister: true,
                     registerTimeId: registerTimeId
                 }
 
@@ -132,7 +132,7 @@ class TSMD_KhoaTableForOpenRegistering extends Component {
         if (registerTimeId != 0) {
             API.closeRegistering(registerTimeId, () => {
                 var message = {
-                    type: 2,
+                    canRegister: true,
                     registerTimeId: registerTimeId
                 }
 

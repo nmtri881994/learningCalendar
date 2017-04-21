@@ -103,15 +103,15 @@ class SV_MainComponent extends Component {
         );
     }
 
-    checkCanRegister(action) {
+    checkCanRegister(canRegister) {
         var registerTimes = this.state.registerTimes;
 
         for (var i = 0; i < registerTimes.length; i++) {
             if(registerTimes[i].id = action.registerTimeId){
-                if(action.type == 1){
-                    setCanRegister(true);
+                if(canRegister.canRegister){
+                    setCanRegister(canRegister);
                 }else{
-                    setCanRegister(false);
+                    setCanRegister(canRegister);
                 }
                 break;
             }

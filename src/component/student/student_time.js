@@ -27,32 +27,24 @@ class Student_Time extends Component {
 
     componentWillReceiveProps(nextProps) {
         var canRegister = nextProps.canRegister;
-        if(canRegister){
+        if(canRegister && canRegister.canRegister){
             var intervalId = setInterval(this.refreshTimeLeft,1000);
             this.setState({
                 intervalId: intervalId
             })
-            alert(intervalId);
-            API.getStudentRegisterTimes((registerTimes) => {
-                for (var i = 0; i < registerTimes.length; i++) {
-                    if (registerTimes[i].status) {
-                        var ms = moment(registerTimes[i].endTime).diff(moment());
-                        var d = moment.duration(ms);
-                        var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
-                        this.setState({
-                            canRegister: canRegister,
-                            registerTime: registerTimes[i],
-                            timeLeft: s
-                        })
-                        break;
-                    }
-                };
-
+            API.getRegisterTimeByRegisterTimeId(canRegister.registerTimeId ,(registerTime) => {
+                var ms = moment(registerTime.endTime).diff(moment());
+                var d = moment.duration(ms);
+                var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+                this.setState({
+                    canRegister: canRegister,
+                    registerTime: registerTime,
+                    timeLeft: s
+                })
             }, (error) => {
                 console.log(error);
             })
         }else{
-            alert(this.state.intervalId);
             clearInterval(this.state.intervalId);
             this.setState({
                 canRegister: false,
@@ -75,7 +67,6 @@ class Student_Time extends Component {
     }
 
     refreshTimeLeft(){
-        console.log(1);
         if(this.state.registerTime && this.state.registerTime != null){
             var ms = moment(this.state.registerTime.endTime).diff(moment());
             var d = moment.duration(ms);

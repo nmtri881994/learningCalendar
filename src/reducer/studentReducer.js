@@ -12,7 +12,7 @@ export const studentWeekCalendar = (state = null, action) => {
     }
 }
 
-export const canRegister = (state = false, action) => {
+export const canRegister = (state = null, action) => {
     switch (action.type){
         case CHECK_CAN_REGISTER:
             return action.canRegister;
