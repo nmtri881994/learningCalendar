@@ -39,6 +39,10 @@ class TSMD_KhoaTableForOpenRegistering extends Component {
                 var khoa_khoaHocs = khoa.khoa_khoaHocs;
                 khoa_khoaHocs.map(khoa_khoaHoc => {
                     var registerTime = khoa_khoaHoc.registerTimes[0];
+                    var disable = "";
+                    if(!registerTime){
+                        disable = "disabled = 'disabled'";
+                    }
                     var openning = false;
                     var id = 0;
                     if (registerTime) {
@@ -55,7 +59,7 @@ class TSMD_KhoaTableForOpenRegistering extends Component {
                         khoa_khoaHoc.khoaHoc.nam,
                         registerTime ? moment(registerTime.startTime).format(DATE_TIME_FORMAT_DISPLAY) : "chưa xác định",
                         registerTime ? moment(registerTime.endTime).format(DATE_TIME_FORMAT_DISPLAY) : "chưa xác định",
-                        '<label class="switch"> <input class="status-switch" data-id="' + id + '" type="checkbox" ' + checked + ' > <div class="slider round"></div> </label>'
+                        '<label class="switch"> <input '+disable+' class="status-switch" data-id="' + id + '" type="checkbox" ' + checked + ' > <div class="slider round"></div> </label>'
                     ]);
                     index++;
                 })
@@ -132,7 +136,7 @@ class TSMD_KhoaTableForOpenRegistering extends Component {
         if (registerTimeId != 0) {
             API.closeRegistering(registerTimeId, () => {
                 var message = {
-                    canRegister: true,
+                    canRegister: false,
                     registerTimeId: registerTimeId
                 }
 

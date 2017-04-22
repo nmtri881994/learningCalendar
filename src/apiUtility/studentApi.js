@@ -90,7 +90,34 @@ export const getRegisterTimeByRegisterTimeId = (registerTimeId, cb, fcb) => {
 export const getClassesCanRegister = (registerTimeId, cb, fcb) => {
     axios(APP_URL + "/api/sinhvien/calendar/register/classes/" + registerTimeId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
-            cb(response.data)
+            var classes = response.data;
+            var index = 1;
+            var classes1 = [];
+            classes.map(cl => {
+                getFacultyCode(cl.khoa_khoaHoc.id, (maKhoa) => {
+                    getClassCurrentQuantity(cl.id, (quantity) => {
+                        checkRegistered(cl.id, (registered) =>{
+                            classes1.push({
+                                class: cl,
+                                index: index,
+                                maKhoa: maKhoa,
+                                quantity: quantity,
+                                registered: registered
+                            });
+                            if (classes1.length == classes.length) {
+                                cb(classes1);
+                            }
+                        }, (error)=> {
+                            console.log(error);
+                        })
+                    }, (error) => {
+                        console.log(error);
+                    })
+                }, (error) => {
+                    console.log(error);
+                })
+                index++;
+            });
         })
         .catch(function (error) {
             fcb(error);
@@ -99,6 +126,47 @@ export const getClassesCanRegister = (registerTimeId, cb, fcb) => {
 
 export const getFacultyCode = (khoa_khoaHocId, cb, fcb) => {
     axios(APP_URL + "/api/sinhvien/calendar/ma-khoa/" + khoa_khoaHocId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data)
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}
+
+export const getClassCurrentQuantity = (classId, cb, fcb) => {
+    axios(APP_URL + "/api/sinhvien/calendar/register/" + classId + "/quantity", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data)
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}
+
+export const checkRegistered = (classId, cb, fcb) => {
+    axios(APP_URL + "/api/sinhvien/calendar/check-registered/" + classId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data)
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}
+
+
+export const registerClass = (classId, cb, fcb) => {
+    axios(APP_URL + "/api/sinhvien/calendar/register/" + classId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data)
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}
+
+export const cancelRegisterClass = (classId, cb, fcb) => {
+    axios(APP_URL + "/api/sinhvien/calendar/cancel-register/" + classId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data)
         })

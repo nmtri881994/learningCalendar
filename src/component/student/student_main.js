@@ -107,7 +107,7 @@ class SV_MainComponent extends Component {
         var registerTimes = this.state.registerTimes;
 
         for (var i = 0; i < registerTimes.length; i++) {
-            if(registerTimes[i].id = action.registerTimeId){
+            if(registerTimes[i].id = canRegister.registerTimeId){
                 if(canRegister.canRegister){
                     setCanRegister(canRegister);
                 }else{
