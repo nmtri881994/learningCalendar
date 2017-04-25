@@ -32,6 +32,10 @@ class Student_ShowAllRegisterClasses extends Component {
             myTable.fnClearTable();
             classes.map(cl => {
                 var class1 = cl.class;
+                var disabled = "";
+                if (cl.quantity >= class1.soLuongToiDa) {
+                    disabled = "disabled = 'disabled'"
+                }
                 myTable.fnAddData([
                     cl.index,
                     class1.monHoc.maMonHoc + "." + cl.maKhoa + "." + class1.khoa_khoaHoc.khoaHoc.nam + "." + class1.id,
@@ -41,7 +45,7 @@ class Student_ShowAllRegisterClasses extends Component {
                     class1.soTietLyThuyet,
                     class1.soTietThucHanh,
                     cl.quantity + "/" + class1.soLuongToiDa,
-                    cl.registered ? '<button class="cancel-register-btn" data-id="' + class1.id + '">Hủy</button>' : '<button class="register-btn" data-id="' + class1.id + '">Chọn</button>'
+                    cl.registered ? '<button class="cancel-register-btn" data-id="' + class1.id + '">Hủy</button>' : '<button ' + disabled + ' class="register-btn" data-id="' + class1.id + '">Chọn</button>'
                 ]);
             });
         }
@@ -105,13 +109,13 @@ class Student_ShowAllRegisterClasses extends Component {
 
     register(classId) {
         API.registerClass(classId, (result) => {
-            if(result == 1){
+            if (result == 1) {
                 var message = {
                     type: 1,
                     classId: classId
                 }
 
-                this.state.stompClient.send("/socket/student/register",{}, JSON.stringify(message))
+                this.state.stompClient.send("/socket/student/register", {}, JSON.stringify(message))
             }
         }, (error) => {
             console.log(error);
@@ -120,13 +124,13 @@ class Student_ShowAllRegisterClasses extends Component {
 
     cancelRegister(classId) {
         API.cancelRegisterClass(classId, (result) => {
-            if(result){
+            if (result) {
                 var message = {
                     type: 2,
                     classId: classId
                 }
 
-                this.state.stompClient.send("/socket/student/register",{}, JSON.stringify(message))
+                this.state.stompClient.send("/socket/student/register", {}, JSON.stringify(message))
             }
         }, (error) => {
             console.log(error);
