@@ -13,6 +13,9 @@ import * as API2 from '../../apiUtility/tsmdApi'
 //import config
 import {APP_URL} from '../../configuration/appConfig'
 
+//import component
+import Mini_Lessons from '../calendar/mini_lessons'
+
 class TSMD_ClassCalendarCreate extends Component {
     constructor(props) {
         super(props);
@@ -46,10 +49,11 @@ class TSMD_ClassCalendarCreate extends Component {
         this.handleWeekDayChange = this.handleWeekDayChange.bind(this);
         this.handleRoomTypeChange = this.handleRoomTypeChange.bind(this);
         this.handleRoomChange = this.handleRoomChange.bind(this);
-        this.handleStartLessonChange = this.handleStartLessonChange.bind(this);
-        this.handleEndLessonChange = this.handleEndLessonChange.bind(this);
         this.handleStartWeekChange = this.handleStartWeekChange.bind(this);
         this.handleEndWeekChange = this.handleEndWeekChange.bind(this);
+
+        this.choseLesson = this.choseLesson.bind(this);
+        this.resetLesson = this.resetLesson.bind(this);
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -104,12 +108,8 @@ class TSMD_ClassCalendarCreate extends Component {
                                 API.getAvailableLessons(classId, 0, chosenWeekDayId, chosenRoomId, availableWeeks[0], availableWeeks[0], (lessons) => {
                                         if (lessons.length != 0) {
                                             availableLessons = lessons;
-                                            chosenStartLessonId = lessons[0].id;
-                                            chosenEndLessonId = lessons[0].id;
                                         } else {
                                             availableLessons = [];
-                                            chosenStartLessonId = 0;
-                                            chosenEndLessonId = 0;
                                         }
                                         this.setState({
                                             errorMessage: "",
@@ -127,15 +127,7 @@ class TSMD_ClassCalendarCreate extends Component {
                                             rooms: rooms1,
                                             chosenRoomId: chosenRoomId,
                                             availableLessons: availableLessons,
-                                            chosenStartLessonId: chosenStartLessonId,
-                                            chosenEndLessonId: chosenEndLessonId
                                         });
-                                        if(lessons.length != 0){
-                                            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id, lessons);
-                                        }else{
-                                            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(0, []);
-
-                                        }
                                     }, (error) => {
                                         console.log(error);
                                     }
@@ -172,15 +164,13 @@ class TSMD_ClassCalendarCreate extends Component {
                 if (lessons.length != 0) {
                     this.setState({
                         availableLessons: lessons,
-                        chosenStartLessonId: lessons[0].id
+                        chosenStartLessonId: 0
                     });
-                    this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
                 } else {
                     this.setState({
                         availableLessons: [],
                         chosenStartLessonId: 0
                     });
-                    this.setAvailableEndLessonsCorresspondingToChosenStartLessons(0);
                 }
 
             }, (error) => {
@@ -205,15 +195,13 @@ class TSMD_ClassCalendarCreate extends Component {
                 if (lessons.length != 0) {
                     this.setState({
                         availableLessons: lessons,
-                        chosenStartLessonId: lessons[0].id
+                        chosenStartLessonId: 0
                     });
-                    this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
                 } else {
                     this.setState({
                         availableLessons: [],
                         chosenStartLessonId: 0
                     });
-                    this.setAvailableEndLessonsCorresspondingToChosenStartLessons(0);
                 }
 
             }, (error) => {
@@ -233,15 +221,13 @@ class TSMD_ClassCalendarCreate extends Component {
             if (lessons.length != 0) {
                 this.setState({
                     availableLessons: lessons,
-                    chosenStartLessonId: lessons[0].id
+                    chosenStartLessonId: 0
                 });
-                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
             } else {
                 this.setState({
                     availableLessons: [],
                     chosenStartLessonId: 0
                 });
-                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(0);
             }
 
         }, (error) => {
@@ -249,20 +235,6 @@ class TSMD_ClassCalendarCreate extends Component {
         })
     }
 
-    handleStartLessonChange(e) {
-        var chosenStartLessonId = e.target.value;
-        this.setState({
-            chosenStartLessonId: chosenStartLessonId
-        })
-        this.setAvailableEndLessonsCorresspondingToChosenStartLessons(chosenStartLessonId);
-    }
-
-    handleEndLessonChange(e) {
-        var chosenEndLessonId = e.target.value;
-        this.setState({
-            chosenEndLessonId: chosenEndLessonId
-        })
-    }
 
     handleStartWeekChange(e) {
         var availableWeeks = this.state.availableWeeks;
@@ -352,7 +324,7 @@ class TSMD_ClassCalendarCreate extends Component {
                 type: 1,
                 classId: this.state.classId
             }
-            this.state.stompClient.send("/socket/week-calendar/edit",{}, JSON.stringify(message))
+            this.state.stompClient.send("/socket/week-calendar/edit", {}, JSON.stringify(message))
 
             this.switchMode();
 
@@ -378,7 +350,6 @@ class TSMD_ClassCalendarCreate extends Component {
     setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonId, lessons) {
         if (startLessonId == 0) {
             this.setState({
-                chosenEndLessonId: 0,
                 availableEndLessons: [],
             })
         } else {
@@ -396,16 +367,10 @@ class TSMD_ClassCalendarCreate extends Component {
 
             for (var i = indexOfStartLesson; i < availableLessons.length; i++) {
                 if ((availableLessons[i].thuTu - startLesson.thuTu) == (i - indexOfStartLesson)) {
-                    availableEndLessons.push(availableLessons[i]);
+                    availableEndLessons.push(availableLessons[i].id);
                 } else {
                     break;
                 }
-            }
-
-            if(!this.checkExist(this.state.chosenEndLessonId, availableEndLessons)){
-                this.setState({
-                    chosenEndLessonId: availableEndLessons[0].id
-                })
             }
 
             this.setState({
@@ -417,19 +382,10 @@ class TSMD_ClassCalendarCreate extends Component {
     refreshLesson() {
         API.getAvailableLessons(this.state.classId, 0, this.state.chosenWeekDayId, this.state.chosenRoomId, this.state.chosenStartWeek, this.state.chosenEndWeek, (lessons) => {
             if (lessons.length != 0) {
-                var startLessonsId = this.state.chosenStartLessonId;
-                if(!this.checkExist(startLessonsId, lessons)){
-                    startLessonsId = lessons[0].id;
-                    this.setState({
-                        chosenStartLessonId: startLessonsId
-                    });
-                    this.setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonsId, lessons);
-                }else{
-                    this.setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonsId, lessons);
-                }
-
                 this.setState({
                     availableLessons: lessons,
+                    chosenStartLessonId: 0,
+                    chosenEndLessonId: 0
                 });
             } else {
                 this.setState({
@@ -437,7 +393,6 @@ class TSMD_ClassCalendarCreate extends Component {
                     chosenStartLessonId: 0,
                     chosenEndLessonId: 0
                 });
-                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(0);
             }
 
         }, (error) => {
@@ -445,16 +400,41 @@ class TSMD_ClassCalendarCreate extends Component {
         })
     }
 
-    checkExist(chosenId, lessons){
-        if(lessons){
-            for(var i = 0; i< lessons.length;i++){
-                if(chosenId == lessons[i].id){
-                    return true;
+
+    choseLesson(i) {
+        var availableLessons = this.state.availableLessons;
+        var availableEndLesson = this.state.availableEndLessons;
+        if (this.state.chosenStartLessonId == 0 || availableEndLesson.indexOf(i) == -1) {
+            this.setState({
+                chosenStartLessonId: i,
+                chosenEndLessonId: 0
+            })
+            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(i, availableLessons);
+        } else {
+            if (i >= this.state.chosenStartLessonId) {
+                if (i < this.state.chosenEndLessonId) {
+                    this.setState({
+                        chosenStartLessonId: i
+                    })
+                } else {
+                    this.setState({
+                        chosenEndLessonId: i
+                    })
                 }
+            } else {
+                this.setState({
+                    chosenStartLessonId: i
+                })
             }
         }
 
-        return false;
+    }
+
+    resetLesson(){
+        this.setState({
+            chosenStartLessonId: 0,
+            chosenEndLessonId: 0
+        })
     }
 
     render() {
@@ -504,21 +484,11 @@ class TSMD_ClassCalendarCreate extends Component {
                     {availableEndWeeks.map(week => <option key={week} value={week}>{week}</option>)}
                 </select>
                 <div className="edit-title">
-                    Từ tiết
+                    Tiết
                 </div>
-                <select id="start-lesson-selecbox" className="halfLength" onChange={this.handleStartLessonChange}
-                        value={this.state.chosenStartLessonId}>
-                    {availableLessons.map(availableLesson => <option key={availableLesson.id}
-                                                                     value={availableLesson.id}>{availableLesson.ten}</option>)}
-                </select>
-                <div className="edit-title">
-                    Tới tiết
-                </div>
-                <select id="end-lesson-selecbox" className="halfLength" onChange={this.handleEndLessonChange}
-                        value={this.state.chosenEndLessonId}>
-                    {availableEndLessons.map(availableEndLesson => <option key={availableEndLesson.id}
-                                                                           value={availableEndLesson.id}>{availableEndLesson.ten}</option>)}
-                </select>
+                <Mini_Lessons choseLesson={this.choseLesson} resetLesson={this.resetLesson} availableLessons={availableLessons}
+                              startLessonId={this.state.chosenStartLessonId}
+                              endLessonId={this.state.chosenEndLessonId}/>
                 <div className="action-corner">
                     <button onClick={this.handleSubmit}>OK</button>
                 </div>
@@ -530,7 +500,7 @@ class TSMD_ClassCalendarCreate extends Component {
     }
 
     componentDidMount() {
-        var socket = SockJS(APP_URL+"/week-calendar/edit");
+        var socket = SockJS(APP_URL + "/week-calendar/edit");
         var stompClient = Stomp.over(socket);
 
         var refresh = () => this.refreshLesson();

@@ -150,11 +150,9 @@ class TSMD_KhoaTableForOpenRegistering extends Component {
     componentDidUpdate() {
         var openRegistering = (registerTimeId) => this.openRegistering(registerTimeId);
         var closeRegistering = (registerTimeId) => this.closeRegistering(registerTimeId);
-
         $(document).ready(function () {
             $('.status-switch').on('click', function (evt) {
                 var attr = $(this).attr('checked');
-                var statusSwitch = this;
                 if (typeof attr !== typeof undefined && attr !== false) {
                     closeRegistering($(this).attr("data-id"), $(this));
                     $(this).removeAttr("checked");

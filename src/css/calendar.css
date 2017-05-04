@@ -207,3 +207,36 @@
 .edit-date-input{
 }
 
+.mini-lessons{
+    display: block;
+}
+
+.mini-lesson{
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    margin: 0 1px;
+    display: inline-block;
+    text-align: center;
+}
+
+.lesson-disabled{
+    pointer-events:none;
+    background-color: black;
+    opacity: 0.2;
+}
+
+.half-dim{
+    opacity: 0.5;
+}
+
+.lesson-chosen{
+    background-color: #90CAF9;
+}
+
+.reset-btn{
+    margin-top: -5px;
+    margin-left: 10px;
+    display: inline-block;
+    height: 20px;
+}

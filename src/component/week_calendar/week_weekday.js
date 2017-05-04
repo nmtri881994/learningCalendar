@@ -189,7 +189,7 @@ class Week_Weekday extends Component {
         var lessons = this.state.lessons;
         if (lessons.length == 0) {
             for (var i = 0; i < 10; i++) {
-                if (i < 6) {
+                if (i < 5) {
                     lessons.push(<Week_Lesson key={i}
                                               morning={true}
                                               haveClass={false}/>)
