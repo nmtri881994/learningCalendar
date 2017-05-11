@@ -1,0 +1,37 @@
+.conditions{
+    display: block;
+}
+.condition-group{
+    display: inline-block;
+    width: 530px;
+    margin: 0 20px;
+}
+.condition{
+    width: 520px;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    margin-bottom: 5px;
+}
+.condition-checkbox{
+    float: left;
+    width: 30px;
+    margin-right: 20px;
+}
+
+.condition-content{
+    float: left;
+    width: 380px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+.condition-value{
+    float: left;
+    width: 50px;
+}
+
+.condition-input{
+    border: 1px solid black;
+    width: 50px;
+}

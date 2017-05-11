@@ -33,6 +33,7 @@ import Teacher_WeekCalendarContainer from './container/teacher_weekCalendarConta
 
 import TSMD_MainContainer from './container/tsmd_mainContainer'
 import TSMD_ArrangeCalendarContainer from './container/tsmd_arrangeCalendarContainer'
+import TSMD_AutoArrangeCalendarContainer from './container/tsmd_autoArrangeCalendarContainer'
 //Import CSS
 require("style-loader!css-loader!./css/header.css");
 require("style-loader!css-loader!./css/body.css");
@@ -45,6 +46,8 @@ require("style-loader!css-loader!./css/modal.css");
 require("style-loader!css-loader!./css/arrangeCalendar.css");
 require("style-loader!css-loader!./css/switch.css");
 require("style-loader!css-loader!./css/studentTime.css");
+require("style-loader!css-loader!./css/styledCheckbox.css");
+require("style-loader!css-loader!./css/condition.css");
 // require("style-loader!css-loader!./css/googleForm.css");
 
 //Import JS
@@ -93,6 +96,7 @@ ReactDOM.render(
             </Route>
             <Route path="giaovu" component={TSMD_MainContainer}>
                 <Route path="sap-xep-tkb" component={TSMD_ArrangeCalendarContainer}/>
+                <Route path="sap-xep-tkb/tu-dong" component={TSMD_AutoArrangeCalendarContainer}/>
                 <Route path="mo-dang-ky" component={TSMD_OpenRegisteringTime}/>
             </Route>
         </Router>

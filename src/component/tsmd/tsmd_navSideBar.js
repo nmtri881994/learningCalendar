@@ -25,6 +25,12 @@ class TSMD_NavSideBar extends Component {
                                             </a>
                                         </li>
                                         <li>
+                                            <a href="/giaovu/sap-xep-tkb/tu-dong" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Sắp xếp thời khóa biểu tự động</div>
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a href="/giaovu/mo-dang-ky" className="slide-bar-nav-inner-item-link">
                                                 <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
                                                 <div className="slide-bar-nav-inner-item-title">Mở đăng ký</div>
