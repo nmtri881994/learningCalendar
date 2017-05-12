@@ -95,8 +95,20 @@ export const openRegistering = (registerTimeId, cb, fcb) => {
 export const closeRegistering = (registerTimeId, cb, fcb) => {
     $.blockUI(loading);
     axios(BASE_URL + "/close-registering/" + registerTimeId, {headers: {Authorization: localStorage.getItem('token')}})
-        .then(function () {
-            cb();
+        .then(function (response) {
+            cb(response);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
+
+export const autoCalendar = (setting, cb, fcb) => {
+    $.blockUI(loading);
+    axios.post(BASE_URL + "/generate-random-calendar/", setting,{headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
         })
         .catch(function (error) {
             fcb(error);

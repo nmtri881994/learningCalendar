@@ -8,8 +8,13 @@ class Tsmd_AutoCalendar_Condition extends Component{
         super(props);
 
         this.state={
-            content: ""
+            content: "",
+            disable: true,
+            value: 0
         }
+
+        this.onClickCheckbox = this.onClickCheckbox.bind(this);
+        this.onValueChange = this.onValueChange.bind(this);
     }
 
     componentWillMount(){
@@ -21,14 +26,31 @@ class Tsmd_AutoCalendar_Condition extends Component{
     componentWillReceiveProps(nextProps){
     }
 
+    onClickCheckbox(){
+        var dk = this.refs.check.checked
+        this.props.setDk(dk);
+        this.setState({
+            disable: !dk
+        })
+    }
+
+    onValueChange(e){
+        var value = e.target.value;
+        this.setState({
+            value: value
+        })
+
+        this.props.setValue(value);
+    }
+
     render(){
         return(<div className="condition">
             <div className="condition-checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" ref="check" onClick={this.onClickCheckbox}/>
             </div>
             <div className="condition-content">{this.state.content}</div>
             <div className="condition-value">
-                <input type="number"  className="condition-input"/>
+                <input type="number"  className="condition-input" value={this.state.value} onChange={this.onValueChange} disabled={this.state.disable}/>
             </div>
         </div>)
     }

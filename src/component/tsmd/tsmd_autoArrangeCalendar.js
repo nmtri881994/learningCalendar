@@ -27,9 +27,174 @@ class TSMD_AutoArrangeCalendar extends Component {
             years: [],
             chosenYearId: 0,
             terms: [],
-            chosenTermId: 0
-        }
+            chosenTermId: 0,
+            dk1: false,
+            dk1Value: 0,
+            dk2: false,
+            dk2Value: 0,
+            dk3: false,
+            dk3Value: 0,
+            dk4: false,
+            dk4Value: 0,
+            dk5: false,
+            dk5Value: 0,
+            dk6: false,
+            dk6Value: 0,
+            dk7: false,
+            dk7Value: 0,
+            dk8: false,
+            dk8Value: 0,
+            dk9: false,
+            dk9Value: 0,
 
+            mutate: 0,
+            parentPercentage: 0,
+            crossOverPercentage: 0,
+            mutatePercentage: 0,
+
+            numberOfGenerations: 0,
+            perfectAdaptationPoints: 0,
+
+            message: ""
+        }
+        this.setDk1 = this.setDk1.bind(this);
+        this.setDk1Value = this.setDk1Value.bind(this);
+
+        this.setDk2 = this.setDk2.bind(this);
+        this.setDk2Value = this.setDk2Value.bind(this);
+
+        this.setDk3 = this.setDk3.bind(this);
+        this.setDk3Value = this.setDk3Value.bind(this);
+
+        this.setDk4 = this.setDk4.bind(this);
+        this.setDk4Value = this.setDk4Value.bind(this);
+
+        this.setDk5 = this.setDk5.bind(this);
+        this.setDk5Value = this.setDk5Value.bind(this);
+
+        this.setDk6 = this.setDk6.bind(this);
+        this.setDk6Value = this.setDk6Value.bind(this);
+
+        this.setDk7 = this.setDk7.bind(this);
+        this.setDk7Value = this.setDk7Value.bind(this);
+
+        this.setDk8 = this.setDk8.bind(this);
+        this.setDk8Value = this.setDk8Value.bind(this);
+
+        this.setDk9 = this.setDk9.bind(this);
+        this.setDk9Value = this.setDk9Value.bind(this);
+
+        this.handleNumberOfGenerationsChange = this.handleNumberOfGenerationsChange.bind(this);
+        this.handlePerfectAdaptationPointsChange = this.handlePerfectAdaptationPointsChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    setDk1(bool) {
+        this.setState({
+            dk1: bool
+        })
+    }
+
+    setDk1Value(value) {
+        this.setState({
+            dk1Value: value
+        })
+    }
+
+    setDk2(bool) {
+        this.setState({
+            dk2: bool
+        })
+    }
+
+    setDk2Value(value) {
+        this.setState({
+            dk2Value: value
+        })
+    }
+
+    setDk3(bool) {
+        this.setState({
+            dk3: bool
+        })
+    }
+
+    setDk3Value(value) {
+        this.setState({
+            dk3Value: value
+        })
+    }
+
+    setDk4(bool) {
+        this.setState({
+            dk4: bool
+        })
+    }
+
+    setDk4Value(value) {
+        this.setState({
+            dk4Value: value
+        })
+    }
+
+    setDk5(bool) {
+        this.setState({
+            dk5: bool
+        })
+    }
+
+    setDk5Value(value) {
+        this.setState({
+            dk5Value: value
+        })
+    }
+
+    setDk6(bool) {
+        this.setState({
+            dk6: bool
+        })
+    }
+
+    setDk6Value(value) {
+        this.setState({
+            dk6Value: value
+        })
+    }
+
+    setDk7(bool) {
+        this.setState({
+            dk7: bool
+        })
+    }
+
+    setDk7Value(value) {
+        this.setState({
+            dk7Value: value
+        })
+    }
+
+    setDk8(bool) {
+        this.setState({
+            dk8: bool
+        })
+    }
+
+    setDk8Value(value) {
+        this.setState({
+            dk8Value: value
+        })
+    }
+
+    setDk9(bool) {
+        this.setState({
+            dk9: bool
+        })
+    }
+
+    setDk9Value(value) {
+        this.setState({
+            dk9Value: value
+        })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -74,6 +239,56 @@ class TSMD_AutoArrangeCalendar extends Component {
         });
     }
 
+    handleNumberOfGenerationsChange(e) {
+        this.setState({
+            numberOfGenerations: e.target.value
+        })
+    }
+
+
+    handlePerfectAdaptationPointsChange(e) {
+        this.setState({
+            perfectAdaptationPoints: e.target.value
+        })
+    }
+
+    handleSubmit() {
+        var setting = {
+            namHocId: this.state.chosenYearId,
+            kyHocId: this.state.chosenTermId,
+
+            dk1: this.state.dk1,
+            dk1Value: this.state.dk1Value,
+            dk2: this.state.dk1,
+            dk2Value: this.state.dk1Value,
+            dk3: this.state.dk1,
+            dk3Value: this.state.dk1Value,
+            dk4: this.state.dk1,
+            dk4Value: this.state.dk1Value,
+            dk5: this.state.dk1,
+            dk5Value: this.state.dk1Value,
+            dk6: this.state.dk1,
+            dk6Value: this.state.dk1Value,
+            dk7: this.state.dk1,
+            dk7Value: this.state.dk1Value,
+            dk8: this.state.dk1,
+            dk8Value: this.state.dk1Value,
+            dk9: this.state.dk1,
+            dk9Value: this.state.dk1Value,
+
+            soTheHe: this.state.numberOfGenerations,
+            diemThichNghiToiUu: this.state.perfectAdaptationPoints
+        }
+
+        API.autoCalendar(setting, (response) => {
+            this.setState({
+                message: response
+            })
+        }, (error) => {
+            console.log(error);
+        })
+    }
+
     render() {
         var years = this.state.years;
         var terms = this.state.terms;
@@ -116,56 +331,75 @@ class TSMD_AutoArrangeCalendar extends Component {
                         <div className="section-title margin-left-20">Điều kiện thích nghi</div>
                         <div className="conditions">
                             <div className="condition-group">
-                                <Tsmd_AutoCalendar_Condition content={dk1}/>
-                                <Tsmd_AutoCalendar_Condition content={dk2}/>
-                                <Tsmd_AutoCalendar_Condition content={dk3}/>
-                                <Tsmd_AutoCalendar_Condition content={dk4}/>
-                                <Tsmd_AutoCalendar_Condition content={dk5}/>
+                                <Tsmd_AutoCalendar_Condition setDk={this.setDk1} setValue={this.setDk1Value}
+                                                             content={dk1}/>
+                                <Tsmd_AutoCalendar_Condition setDk={this.setDk2} setValue={this.setDk2Value}
+                                                             content={dk2}/>
+                                <Tsmd_AutoCalendar_Condition setDk={this.setDk3} setValue={this.setDk3Value}
+                                                             content={dk3}/>
+                                <Tsmd_AutoCalendar_Condition setDk={this.setDk4} setValue={this.setDk4Value}
+                                                             content={dk4}/>
+                                <Tsmd_AutoCalendar_Condition setDk={this.setDk5} setValue={this.setDk5Value}
+                                                             content={dk5}/>
                             </div>
                             <div className="condition-group">
-                                <Tsmd_AutoCalendar_Condition content={dk6}/>
-                                <Tsmd_AutoCalendar_Condition content={dk7}/>
-                                <Tsmd_AutoCalendar_Condition content={dk8}/>
-                                <Tsmd_AutoCalendar_Condition content={dk9}/>
+                                <Tsmd_AutoCalendar_Condition setDk={this.setDk6} setValue={this.setDk6Value}
+                                                             content={dk6}/>
+                                <Tsmd_AutoCalendar_Condition setDk={this.setDk7} setValue={this.setDk7Value}
+                                                             content={dk7}/>
+                                <Tsmd_AutoCalendar_Condition setDk={this.setDk8} setValue={this.setDk8Value}
+                                                             content={dk8}/>
+                                <Tsmd_AutoCalendar_Condition setDk={this.setDk9} setValue={this.setDk9Value}
+                                                             content={dk9}/>
                             </div>
                         </div>
                     </div>
                     <div className="section">
                         <div className="section-title margin-left-20">Lai hóa</div>
                         <div className="margin-left-20">
-                            <input type="radio" name="lai-hoa" value="male"/> Lai hóa 1 điểm<br/>
-                            <input type="radio" name="lai-hoa" value="female"/> Lai hóa 2 điểm
+                            <input type="radio" name="lai-hoa" value="1" disabled="disabled"/> Lai hóa 1 điểm<br/>
+                            <input type="radio" name="lai-hoa" value="2" disabled="disabled"/> Lai hóa 2 điểm
                         </div>
                     </div>
                     <div className="section">
                         <div className="section-title margin-left-20">Đột biến</div>
                         <div className="margin-left-20">
                             <span>% gen đột biến của 1 cá thể</span>
-                            <input className="width-50 margin-left-5" type="number"/>
+                            <input className="width-50 margin-left-5" type="number" disabled="disabled"/>
                         </div>
                     </div>
                     <div className="section">
                         <div className="section-title margin-left-20">Điều kiện quần thể</div>
                         <div className="margin-left-20">
                             <span>% cá thế bố mẹ</span>
-                            <input className="width-50 margin-right-20 margin-left-5" type="number"/>
+                            <input className="width-50 margin-right-20 margin-left-5" type="number"
+                                   disabled="disabled"/>
                             <span>% cá thể lai hóa</span>
-                            <input className="width-50 margin-right-20 margin-left-5" type="number"/>
+                            <input className="width-50 margin-right-20 margin-left-5" type="number"
+                                   disabled="disabled"/>
                             <span>% cá thể đột biến</span>
-                            <input className="width-50 margin-left-5" type="number"/>
+                            <input className="width-50 margin-left-5" type="number" disabled="disabled"/>
                         </div>
                     </div>
                     <div className="section">
                         <div className="section-title margin-left-20">Chạy chương trình</div>
                         <div className="margin-left-20">
                             <span>Số thế hệ tối đa</span>
-                            <input className="width-50 margin-right-20 margin-left-5" type="number"/>
+                            <input className="width-50 margin-right-20 margin-left-5" type="number"
+                                   value={this.state.numberOfGenerations}
+                                   onChange={this.handleNumberOfGenerationsChange}/>
                             <span>Điểm thích nghi tối ưu</span>
-                            <input className="width-50 margin-left-5" type="number"/>
+                            <input className="width-50 margin-left-5" type="number"
+                                   value={this.state.perfectAdaptationPoints}
+                                   onChange={this.handlePerfectAdaptationPointsChange}/>
                         </div>
                     </div>
                     <div className="choose-condition-item">
-                        <button>OK</button>
+                        <button onClick={this.handleSubmit}>OK</button>
+                    </div>
+
+                    <div className="error-message margin-left-20">
+                        {this.state.message}
                     </div>
                 </div>
 
