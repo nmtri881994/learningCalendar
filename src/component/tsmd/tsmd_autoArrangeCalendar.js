@@ -253,6 +253,9 @@ class TSMD_AutoArrangeCalendar extends Component {
     }
 
     handleSubmit() {
+        this.setState({
+            message: ""
+        })
         var setting = {
             namHocId: this.state.chosenYearId,
             kyHocId: this.state.chosenTermId,
