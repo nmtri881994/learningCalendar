@@ -24,6 +24,8 @@ class TSMD_AutoArrangeCalendar extends Component {
         this.state = {
             stompClient: null,
 
+            conditions: [],
+
             years: [],
             chosenYearId: 0,
             terms: [],
@@ -215,6 +217,9 @@ class TSMD_AutoArrangeCalendar extends Component {
 
     componentWillMount() {
         getYearsNotEnd();
+        API.getAllConditions((conditions)=>{
+
+        }, )
     }
 
     handleYearChange(e) {
@@ -259,22 +264,22 @@ class TSMD_AutoArrangeCalendar extends Component {
 
             dk1: this.state.dk1,
             dk1Value: this.state.dk1Value,
-            dk2: this.state.dk1,
-            dk2Value: this.state.dk1Value,
-            dk3: this.state.dk1,
-            dk3Value: this.state.dk1Value,
-            dk4: this.state.dk1,
-            dk4Value: this.state.dk1Value,
-            dk5: this.state.dk1,
-            dk5Value: this.state.dk1Value,
-            dk6: this.state.dk1,
-            dk6Value: this.state.dk1Value,
-            dk7: this.state.dk1,
-            dk7Value: this.state.dk1Value,
-            dk8: this.state.dk1,
-            dk8Value: this.state.dk1Value,
-            dk9: this.state.dk1,
-            dk9Value: this.state.dk1Value,
+            dk2: this.state.dk2,
+            dk2Value: this.state.dk2Value,
+            dk3: this.state.dk3,
+            dk3Value: this.state.dk3Value,
+            dk4: this.state.dk4,
+            dk4Value: this.state.dk4Value,
+            dk5: this.state.dk5,
+            dk5Value: this.state.dk5Value,
+            dk6: this.state.dk6,
+            dk6Value: this.state.dk6Value,
+            dk7: this.state.dk7,
+            dk7Value: this.state.dk7Value,
+            dk8: this.state.dk8,
+            dk8Value: this.state.dk8Value,
+            dk9: this.state.dk9,
+            dk9Value: this.state.dk9Value,
 
             soTheHe: this.state.numberOfGenerations,
             diemThichNghiToiUu: this.state.perfectAdaptationPoints
