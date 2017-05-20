@@ -50,7 +50,7 @@ class Tsmd_AutoCalendar_Condition extends Component{
             </div>
             <div className="condition-content">{this.state.content}</div>
             <div className="condition-value">
-                <input type="number"  className="condition-input" value={this.state.value} onChange={this.onValueChange} disabled={this.state.disable}/>
+                <input type="number" className="width-50" value={this.state.value} onChange={this.onValueChange} disabled={this.state.disable}/>
             </div>
         </div>)
     }
