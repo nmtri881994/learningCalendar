@@ -24,6 +24,12 @@ class Student_ShowAllRegisterClasses extends Component {
 
     componentWillReceiveProps(nextProps) {
         var classes = nextProps.classes;
+        // var monRegistered = [];
+        // classes.map(cl => {
+        //     if(cl.registered){
+        //         monRegistered.push(cl.class.monHoc.id)
+        //     }
+        // })
         this.setState({
             message: ""
         })
@@ -36,6 +42,10 @@ class Student_ShowAllRegisterClasses extends Component {
                 if (cl.quantity >= class1.soLuongToiDa) {
                     disabled = "disabled = 'disabled'"
                 }
+
+                // if(monRegistered.indexOf(cl.class.monHoc.id)){
+                //     disabled = "disabled = 'disabled'"
+                // }
                 myTable.fnAddData([
                     cl.index,
                     class1.monHoc.maMonHoc + "." + cl.maKhoa + "." + class1.khoa_khoaHoc.khoaHoc.nam + "." + class1.id,

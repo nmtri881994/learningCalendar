@@ -46,7 +46,7 @@ class TSMD_ShowAllClassesComponent extends Component {
 
 
         return (
-            <div className="data-table">
+            <div className="data-table tsmd-class-calendar">
                 <table id="myTable" className="display" cellSpacing="0">
                     <thead>
                     <tr>

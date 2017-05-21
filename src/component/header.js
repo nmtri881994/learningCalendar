@@ -30,12 +30,12 @@ class Header extends Component {
                             <div className="header-logo">
                                 <img className="logo" src={"/"+require('../image/logo.png')} />
                             </div>
-                            <ul className="header-nav">
-                                <li className="header-nav-item">Menu 1</li>
-                                <li className="header-nav-item">Menu 2</li>
-                                <li className="header-nav-item">Menu 3</li>
-                                <li className="header-nav-item">Menu 4</li>
-                            </ul>
+                            {/*<ul className="header-nav">*/}
+                                {/*<li className="header-nav-item">Menu 1</li>*/}
+                                {/*<li className="header-nav-item">Menu 2</li>*/}
+                                {/*<li className="header-nav-item">Menu 3</li>*/}
+                                {/*<li className="header-nav-item">Menu 4</li>*/}
+                            {/*</ul>*/}
                         </div>
                         <div className="header-secondary-items">
                             <div className="header-user quit-button cursor" onClick={this.logOut}>Thoát</div>

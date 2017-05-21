@@ -24,7 +24,7 @@ class TSMD_KhoaTableForOpenRegistering extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.khoas.length != 0) {
+        if (nextProps.khoas.length != 0 || nextProps.khoas!=this.state.khoas) {
             var khoas = nextProps.khoas;
 
             this.setState({

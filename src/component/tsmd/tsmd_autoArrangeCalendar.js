@@ -57,7 +57,9 @@ class TSMD_AutoArrangeCalendar extends Component {
             numberOfGenerations: 0,
             perfectAdaptationPoints: 0,
 
-            message: ""
+            message: "",
+
+            generations: [],
         }
         this.setDk1 = this.setDk1.bind(this);
         this.setDk1Value = this.setDk1Value.bind(this);
@@ -88,7 +90,11 @@ class TSMD_AutoArrangeCalendar extends Component {
 
         this.handleNumberOfGenerationsChange = this.handleNumberOfGenerationsChange.bind(this);
         this.handlePerfectAdaptationPointsChange = this.handlePerfectAdaptationPointsChange.bind(this);
+        this.handleYearChange = this.handleYearChange.bind(this);
+        this.handleTermChange = this.handleTermChange.bind(this);
+
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDeleteCalendar = this.handleDeleteCalendar.bind(this);
     }
 
     setDk1(bool) {
@@ -217,14 +223,15 @@ class TSMD_AutoArrangeCalendar extends Component {
 
     componentWillMount() {
         getYearsNotEnd();
-        API.getAllConditions((conditions)=>{
+        API.getAllConditions((conditions) => {
 
-        }, )
+        },)
     }
 
     handleYearChange(e) {
         var chosenYearId = e.target.value;
         this.setState({
+            generations: [],
             chosenYearId: chosenYearId
         })
         API.getSemestersNotEndOfYear(e.target.value, (terms) => {
@@ -240,6 +247,7 @@ class TSMD_AutoArrangeCalendar extends Component {
     handleTermChange(e) {
         var chosenTermId = e.target.value;
         this.setState({
+            generations: [],
             chosenTermId: chosenTermId
         });
     }
@@ -259,7 +267,8 @@ class TSMD_AutoArrangeCalendar extends Component {
 
     handleSubmit() {
         this.setState({
-            message: ""
+            message: "",
+            generations: []
         })
         var setting = {
             namHocId: this.state.chosenYearId,
@@ -297,6 +306,14 @@ class TSMD_AutoArrangeCalendar extends Component {
         })
     }
 
+    handleDeleteCalendar(){
+        API.deleteAllCalendar(this.state.chosenTermId, this.state.chosenYearId, (response)=>{
+            console.log(response);
+        }, (error)=>{
+            console.log(error);
+        })
+    }
+
     render() {
         var years = this.state.years;
         var terms = this.state.terms;
@@ -310,6 +327,22 @@ class TSMD_AutoArrangeCalendar extends Component {
         var dk7 = "Lớp môn học không xung đột với lịch của lớp khác cùng khoa-khóa học-ngành";
         var dk8 = "Phòng học không có nhiều hơn 1 lớp trong cùng 1 khoảng thời gian";
         var dk9 = "1 khoa-khóa học-ngành không có nhiều hơn 3 lớp học cùng 1 khoảng thời gian";
+
+        var generations = this.state.generations;
+        // var myTable = $('#myTable').dataTable();
+        //
+
+        // myTable.fnClearTable();
+        // if (generations.length != 0) {
+        //     generations.map(gen => {
+        //         myTable.fnAddData([
+        //             gen.theHe,
+        //             gen.diemThichNghi
+        //         ]);
+        //     })
+        // }
+        //
+        // myTable.fnPageChange( 'last' );
 
         return (<div>
                 <div className="choose-condition">
@@ -334,6 +367,11 @@ class TSMD_AutoArrangeCalendar extends Component {
                             </select>
                         </div>
                     </div>
+
+                    <div className="choose-condition-item">
+                        <button onClick={this.handleDeleteCalendar}>Xóa tắt cả lịch học</button>
+                    </div>
+
                     <div className="section">
 
                         <div className="section-title margin-left-20">Điều kiện thích nghi</div>
@@ -362,33 +400,33 @@ class TSMD_AutoArrangeCalendar extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="section">
-                        <div className="section-title margin-left-20">Lai hóa</div>
-                        <div className="margin-left-20">
-                            <input type="radio" name="lai-hoa" value="1" disabled="disabled"/> Lai hóa 1 điểm<br/>
-                            <input type="radio" name="lai-hoa" value="2" disabled="disabled"/> Lai hóa 2 điểm
-                        </div>
-                    </div>
-                    <div className="section">
-                        <div className="section-title margin-left-20">Đột biến</div>
-                        <div className="margin-left-20">
-                            <span>% gen đột biến của 1 cá thể</span>
-                            <input className="width-50 margin-left-5" type="number" disabled="disabled"/>
-                        </div>
-                    </div>
-                    <div className="section">
-                        <div className="section-title margin-left-20">Điều kiện quần thể</div>
-                        <div className="margin-left-20">
-                            <span>% cá thế bố mẹ</span>
-                            <input className="width-50 margin-right-20 margin-left-5" type="number"
-                                   disabled="disabled"/>
-                            <span>% cá thể lai hóa</span>
-                            <input className="width-50 margin-right-20 margin-left-5" type="number"
-                                   disabled="disabled"/>
-                            <span>% cá thể đột biến</span>
-                            <input className="width-50 margin-left-5" type="number" disabled="disabled"/>
-                        </div>
-                    </div>
+                    {/*<div className="section">*/}
+                    {/*<div className="section-title margin-left-20">Lai hóa</div>*/}
+                    {/*<div className="margin-left-20">*/}
+                    {/*<input type="radio" name="lai-hoa" value="1" disabled="disabled"/> Lai hóa 1 điểm<br/>*/}
+                    {/*<input type="radio" name="lai-hoa" value="2" disabled="disabled"/> Lai hóa 2 điểm*/}
+                    {/*</div>*/}
+                    {/*</div>*/}
+                    {/*<div className="section">*/}
+                    {/*<div className="section-title margin-left-20">Đột biến</div>*/}
+                    {/*<div className="margin-left-20">*/}
+                    {/*<span>% gen đột biến của 1 cá thể</span>*/}
+                    {/*<input className="width-50 margin-left-5" type="number" disabled="disabled"/>*/}
+                    {/*</div>*/}
+                    {/*</div>*/}
+                    {/*<div className="section">*/}
+                    {/*<div className="section-title margin-left-20">Điều kiện quần thể</div>*/}
+                    {/*<div className="margin-left-20">*/}
+                    {/*<span>% cá thế bố mẹ</span>*/}
+                    {/*<input className="width-50 margin-right-20 margin-left-5" type="number"*/}
+                    {/*disabled="disabled"/>*/}
+                    {/*<span>% cá thể lai hóa</span>*/}
+                    {/*<input className="width-50 margin-right-20 margin-left-5" type="number"*/}
+                    {/*disabled="disabled"/>*/}
+                    {/*<span>% cá thể đột biến</span>*/}
+                    {/*<input className="width-50 margin-left-5" type="number" disabled="disabled"/>*/}
+                    {/*</div>*/}
+                    {/*</div>*/}
                     <div className="section">
                         <div className="section-title margin-left-20">Chạy chương trình</div>
                         <div className="margin-left-20">
@@ -403,11 +441,37 @@ class TSMD_AutoArrangeCalendar extends Component {
                         </div>
                     </div>
                     <div className="choose-condition-item">
-                        <button onClick={this.handleSubmit}>OK</button>
+                        <button onClick={this.handleSubmit}>Chạy</button>
                     </div>
 
                     <div className="error-message margin-left-20">
                         {this.state.message}
+                    </div>
+
+                    <div className="section">
+                        <div className="section-title margin-left-20">Bảng thế hệ</div>
+                        <div className="margin-left-20">
+                            <table className="flat-table">
+                                <thead>
+                                <tr>
+                                    <th>Thế hệ</th>
+                                    <th>Điểm thích nghi</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Thế hệ</th>
+                                    <th>Điểm thích nghi</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                {generations.map(gen => <tr key={gen.theHe}>
+                                    <td>{gen.theHe}</td>
+                                    <td>{gen.diemThichNghi}</td>
+                                </tr>)}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -415,41 +479,31 @@ class TSMD_AutoArrangeCalendar extends Component {
         )
     }
 
-    refreshCaledar(classId) {
-        var shoudldRefresh = false;
-        var classes = this.state.classes;
-        for (var i = 0; i < classes.length; i++) {
-            if (classes[i].id == classId) {
-                shoudldRefresh = true;
-                break;
-            }
-        }
-        if (shoudldRefresh) {
-            var state = this.state;
-            API2.getClasses(state.chosenYearId, state.chosenTermId, state.chosenFacultyId, state.chosenYearOfAdmissionId, state.chosenMajorId, (classes) => {
-                this.setState({
-                    classes: classes
-                });
-            }, (error) => {
-                console.log(error);
-            });
+    addGeneration(gen) {
+        if(gen.kyHocId == this.state.chosenTermId && gen.namHocId == this.state.chosenYearId){
+            var generations = this.state.generations;
+            generations.push(gen);
+
+            this.setState({
+                generations: generations
+            })
         }
     }
 
     componentDidMount() {
-        // var socket = SockJS(APP_URL + "/week-calendar/edit");
-        // var stompClient = Stomp.over(socket);
-        //
-        // var refresh = (classId) => this.refreshCaledar(classId);
-        //
-        // stompClient.connect({}, function (frame) {
-        //     stompClient.subscribe("/socket/week-calendar/edit", function (message) {
-        //         refresh(JSON.parse(message.body).classId);
-        //     });
-        // });
-        // this.setState({
-        //     stompClient: stompClient
-        // })
+        var socket = SockJS(APP_URL + "/calendar/auto-generate");
+        var stompClient = Stomp.over(socket);
+
+        var addGen = (gen) => this.addGeneration(gen);
+
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe("/socket/calendar/auto-generate", function (message) {
+                addGen(JSON.parse(message.body));
+            });
+        });
+        this.setState({
+            stompClient: stompClient
+        })
     }
 }
 

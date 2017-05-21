@@ -26,7 +26,7 @@ class Week_Calendar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.classes.length > 0){
+        if(nextProps.classes.length > 0 || nextProps.classes!=this.state.classes){
             var classes = nextProps.classes;
             this.setState({
                 classes: classes

@@ -118,3 +118,7 @@ button:focus {
 .width-50{
     width: 50px;
 }
+
+.generations-table{
+    width: 1200px;
+}

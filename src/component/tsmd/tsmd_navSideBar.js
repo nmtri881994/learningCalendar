@@ -42,7 +42,7 @@ class TSMD_NavSideBar extends Component {
                         </nav>
                     </div>
                     <div className="slide-bar-footer">
-                        aaaa
+
                     </div>
                 </div>
             </div>

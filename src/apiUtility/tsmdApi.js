@@ -127,3 +127,15 @@ export const getAllConditions = (cb, fcb) => {
         })
     $.unblockUI();
 }
+
+export const deleteAllCalendar = (semesterId, yearId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/delete-all-calendars/"+semesterId+"/"+yearId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}

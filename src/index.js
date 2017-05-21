@@ -50,6 +50,9 @@ require("style-loader!css-loader!./css/styledCheckbox.css");
 require("style-loader!css-loader!./css/condition.css");
 // require("style-loader!css-loader!./css/googleForm.css");
 
+//  Import SCSS
+require("!style-loader!css-loader!sass-loader!./css/table.scss");
+
 //Import JS
 // require("style-loader!./js/googleForm");
 // require("./../assets/loading");

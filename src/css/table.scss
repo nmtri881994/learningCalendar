@@ -1,0 +1,23 @@
+.flat-table {
+    display: block;
+    font-family: sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 115%;
+    overflow: auto;
+    max-height: 300px;
+    width: 580px;
+
+    th {
+        background-color: #1675b7;
+        color: white;
+        font-weight: normal;
+        padding: 5px 100px;
+        text-align: center;
+    }
+    td {
+        background-color: rgb(238, 238, 238);
+        color: rgb(111, 111, 111);
+        padding: 5px 100px;
+        text-align: center;
+    }
+}
