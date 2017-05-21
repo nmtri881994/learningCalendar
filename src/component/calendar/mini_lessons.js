@@ -12,7 +12,7 @@ class Mini_Lessons extends Component{
             minilessons: []
         }
 
-        this.choosetLesson = this.choosetLesson.bind(this);
+        this.chooseLesson = this.chooseLesson.bind(this);
         this.resetLesson = this.resetLesson.bind(this);
     }
 
@@ -41,12 +41,12 @@ class Mini_Lessons extends Component{
             var minilessons = [];
             for(var i = 1; i<=10; i++){
                 if(thuTu.indexOf(i) == -1){
-                    minilessons.push(<div key={i} onClick={this.choosetLesson.bind(null, i)} className="mini-lesson cursor lesson-disabled">{i}</div>)
+                    minilessons.push(<div key={i} onClick={this.chooseLesson.bind(null, i)} className="mini-lesson cursor lesson-disabled">{i}</div>)
                 }else{
                     if(chosenLessons.indexOf(i) == -1){
-                        minilessons.push(<div key={i} onClick={this.choosetLesson.bind(null, i)} className="mini-lesson cursor half-dim">{i}</div>)
+                        minilessons.push(<div key={i} onClick={this.chooseLesson.bind(null, i)} className="mini-lesson cursor half-dim">{i}</div>)
                     }else{
-                        minilessons.push(<div key={i} onClick={this.choosetLesson.bind(null, i)} className="mini-lesson cursor lesson-chosen">{i}</div>)
+                        minilessons.push(<div key={i} onClick={this.chooseLesson.bind(null, i)} className="mini-lesson cursor lesson-chosen">{i}</div>)
                     }
                 }
             }
@@ -54,10 +54,18 @@ class Mini_Lessons extends Component{
                 availableLessons: availableLessons,
                 minilessons: minilessons
             })
+        }else{
+            var minilessons = [];
+            for(var i = 1; i<10;i++){
+                minilessons.push(<div key={i} onClick={this.chooseLesson.bind(null, i)} className="mini-lesson cursor lesson-disabled">{i}</div>)
+            }
+            this.setState({
+                minilessons: minilessons
+            })
         }
     }
 
-    choosetLesson(i){
+    chooseLesson(i){
         this.props.choseLesson(i);
     }
 

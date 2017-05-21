@@ -14,7 +14,10 @@ class Student_Time extends Component {
         this.state = {
             canRegister: false,
             registerTime: null,
-            timeLeft: "",
+            daysLeft: 0,
+            hoursLeft: 0,
+            minsLeft: 0,
+            secondsLeft: 0,
 
             intervalId: 0
         }
@@ -27,19 +30,36 @@ class Student_Time extends Component {
 
     componentWillReceiveProps(nextProps) {
         var canRegister = nextProps.canRegister;
+        console.log(nextProps);
         if(canRegister && canRegister.canRegister){
             var intervalId = setInterval(this.refreshTimeLeft,1000);
             this.setState({
                 intervalId: intervalId
             })
             API.getRegisterTimeByRegisterTimeId(canRegister.registerTimeId ,(registerTime) => {
-                var ms = moment(registerTime.endTime).diff(moment());
-                var d = moment.duration(ms);
-                var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+
+                var seconds = moment(registerTime.endTime).diff(moment())/1000;
+                var days = Math.floor(seconds/86400);
+                seconds = seconds%86400;
+                var hours = Math.floor(seconds/3600);
+                seconds = seconds%3600;
+                var mins = Math.floor(seconds/60);
+                seconds = Math.floor(seconds%60);
+
+                this.setState({
+                    daysLeft: days,
+                    hoursLeft: hours,
+                    minsLeft: mins,
+                    secondsLeft: seconds
+                })
                 this.setState({
                     canRegister: canRegister,
                     registerTime: registerTime,
-                    timeLeft: s
+
+                    daysLeft: days,
+                    hoursLeft: hours,
+                    minsLeft: mins,
+                    secondsLeft: seconds
                 })
             }, (error) => {
                 console.log(error);
@@ -49,7 +69,6 @@ class Student_Time extends Component {
             this.setState({
                 canRegister: false,
                 registerTime: null,
-                timeLeft: ""
             })
         }
     }
@@ -58,7 +77,8 @@ class Student_Time extends Component {
         var content = "";
         if (this.state.canRegister) {
             content = <div className="student-time">
-                Thời gian đăng ký còn lại: {this.state.timeLeft}
+                <div>Thời gian đăng ký còn lại</div>
+                <div><center>{this.state.daysLeft} ngày {this.state.hoursLeft}h:{this.state.minsLeft}m:{this.state.secondsLeft}s</center></div>
             </div>
         }
         return (<div>
@@ -68,12 +88,19 @@ class Student_Time extends Component {
 
     refreshTimeLeft(){
         if(this.state.registerTime && this.state.registerTime != null){
-            var ms = moment(this.state.registerTime.endTime).diff(moment());
-            var d = moment.duration(ms);
-            var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+            var seconds = moment(this.state.registerTime.endTime).diff(moment())/1000;
+            var days = Math.floor(seconds/86400);
+            seconds = seconds%86400;
+            var hours = Math.floor(seconds/3600);
+            seconds = seconds%3600;
+            var mins = Math.floor(seconds/60);
+            seconds = Math.floor(seconds%60);
 
             this.setState({
-                timeLeft: s
+                daysLeft: days,
+                hoursLeft: hours,
+                minsLeft: mins,
+                secondsLeft: seconds
             })
         }
     }

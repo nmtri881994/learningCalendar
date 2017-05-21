@@ -10,6 +10,9 @@ import Stomp from 'stompjs'
 import * as API from '../../apiUtility/calendarApi'
 import * as API2 from '../../apiUtility/tsmdApi'
 
+//import Components
+import Mini_Lessons from './../calendar/mini_lessons'
+
 //import config
 import {APP_URL} from '../../configuration/appConfig'
 
@@ -45,10 +48,11 @@ class TSMD_ClassCalendarEdit extends Component {
         this.handleWeekDayChange = this.handleWeekDayChange.bind(this);
         this.handleRoomTypeChange = this.handleRoomTypeChange.bind(this);
         this.handleRoomChange = this.handleRoomChange.bind(this);
-        this.handleStartLessonChange = this.handleStartLessonChange.bind(this);
-        this.handleEndLessonChang = this.handleEndLessonChang.bind(this);
         this.handleStartWeekChange = this.handleStartWeekChange.bind(this);
         this.handleEndWeekChange = this.handleEndWeekChange.bind(this);
+
+        this.choseLesson = this.choseLesson.bind(this);
+        this.resetLesson = this.resetLesson.bind(this);
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -65,7 +69,6 @@ class TSMD_ClassCalendarEdit extends Component {
 
     helpRender(props) {
         if (props.classId != 0 && props.classId != this.state.classId) {
-            console.log(123);
             var calendar = props.calendar;
             var classId = props.classId
 
@@ -166,21 +169,22 @@ class TSMD_ClassCalendarEdit extends Component {
             for (var i = 0; i < availableLessons.length; i++) {
                 if (startLessonId == availableLessons[i].id) {
                     indexOfStartLesson = i;
-                    break
+                    break;
                 }
             }
             var startLesson = availableLessons[indexOfStartLesson];
 
             for (var i = indexOfStartLesson; i < availableLessons.length; i++) {
                 if ((availableLessons[i].thuTu - startLesson.thuTu) == (i - indexOfStartLesson)) {
-                    availableEndLessons.push(availableLessons[i]);
+                    availableEndLessons.push(availableLessons[i].thuTu);
                 } else {
                     break;
                 }
             }
-            if(!this.checkExist(this.state.chosenEndLessonId, availableEndLessons)){
+
+            if (!this.checkExist(this.state.chosenEndLessonId, availableEndLessons)) {
                 this.setState({
-                    chosenEndLessonId: availableEndLessons[0].id
+                    chosenEndLessonId: availableEndLessons[0]
                 })
             }
 
@@ -255,20 +259,6 @@ class TSMD_ClassCalendarEdit extends Component {
         })
     }
 
-    handleStartLessonChange(e) {
-        var chosenStartLessonId = e.target.value;
-        this.setState({
-            chosenStartLessonId: chosenStartLessonId
-        })
-        this.setAvailableEndLessonsCorresspondingToChosenStartLessons(chosenStartLessonId);
-    }
-
-    handleEndLessonChang(e) {
-        var chosenEndLessonId = e.target.value;
-        this.setState({
-            chosenEndLessonId: chosenEndLessonId
-        })
-    }
 
     handleStartWeekChange(e) {
         var availableWeeks = this.state.availableWeeks;
@@ -358,6 +348,46 @@ class TSMD_ClassCalendarEdit extends Component {
         })
     }
 
+    choseLesson(i) {
+        var availableLessons = this.state.availableLessons;
+        var availableEndLesson = this.state.availableEndLessons;
+        console.log(i);
+        console.log(availableLessons);
+        console.log(this.state.chosenStartLessonId)
+        console.log(this.state.chosenStartLessonId == 0 || availableEndLesson.indexOf(i) == -1)
+        if (this.state.chosenStartLessonId == 0 || availableEndLesson.indexOf(i) == -1) {
+            this.setState({
+                chosenStartLessonId: i,
+                chosenEndLessonId: 0
+            })
+            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(i, availableLessons);
+        } else {
+            if (i >= this.state.chosenStartLessonId) {
+                if (i < this.state.chosenEndLessonId) {
+                    this.setState({
+                        chosenStartLessonId: i
+                    })
+                } else {
+                    this.setState({
+                        chosenEndLessonId: i
+                    })
+                }
+            } else {
+                this.setState({
+                    chosenStartLessonId: i
+                })
+            }
+        }
+
+    }
+
+    resetLesson() {
+        this.setState({
+            chosenStartLessonId: 0,
+            chosenEndLessonId: 0
+        })
+    }
+
     render() {
         var calendar = this.state.calendar;
         var weekDays = this.state.weekDays;
@@ -405,21 +435,12 @@ class TSMD_ClassCalendarEdit extends Component {
                     {availableEndWeeks.map(week => <option key={week} value={week}>{week}</option>)}
                 </select>
                 <div className="edit-title">
-                    Từ tiết
+                    Chọn tiết
                 </div>
-                <select id="start-lesson-selecbox" className="halfLength" value={this.state.chosenStartLessonId}
-                        onChange={this.handleStartLessonChange}>
-                    {availableLessons.map(availableLesson => <option key={availableLesson.id}
-                                                                     value={availableLesson.id}>{availableLesson.ten}</option>)}
-                </select>
-                <div className="edit-title">
-                    Tới tiết
-                </div>
-                <select id="end-lesson-selecbox" className="halfLength" value={this.state.chosenEndLessonId}
-                        onChange={this.handleEndLessonChang}>
-                    {availableEndLessons.map(availableEndLesson => <option key={availableEndLesson.id}
-                                                                           value={availableEndLesson.id}>{availableEndLesson.ten}</option>)}
-                </select>
+                <Mini_Lessons choseLesson={this.choseLesson} resetLesson={this.resetLesson}
+                              availableLessons={availableLessons}
+                              startLessonId={this.state.chosenStartLessonId}
+                              endLessonId={this.state.chosenEndLessonId}/>
                 <div className="action-corner">
                     <button onClick={this.handleSubmit}>OK</button>
                     <button onClick={this.handleDelete}>Xóa</button>
@@ -440,13 +461,13 @@ class TSMD_ClassCalendarEdit extends Component {
             })
             API.getAvailableLessons(this.state.classId, this.state.calendar.id, this.state.chosenWeekDayId, this.state.chosenRoomId, this.state.chosenStartWeek, this.state.chosenEndWeek, (lessons) => {
                 var startLessonsId = this.state.chosenStartLessonId;
-                if(!this.checkExist(startLessonsId, lessons)){
+                if (!this.checkExist(startLessonsId, lessons)) {
                     startLessonsId = lessons[0].id;
                     this.setState({
                         chosenStartLessonId: startLessonsId
                     });
                     this.setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonsId, lessons);
-                }else{
+                } else {
                     this.setAvailableEndLessonsCorresspondingToChosenStartLessons(startLessonsId, lessons);
                 }
 
@@ -461,10 +482,10 @@ class TSMD_ClassCalendarEdit extends Component {
         }
     }
 
-    checkExist(chosenId, lessons){
-        if(lessons){
-            for(var i = 0; i< lessons.length;i++){
-                if(chosenId == lessons[i].id){
+    checkExist(chosenId, lessons) {
+        if (lessons) {
+            for (var i = 0; i < lessons.length; i++) {
+                if (chosenId == lessons[i]) {
                     return true;
                 }
             }

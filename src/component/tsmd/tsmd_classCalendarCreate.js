@@ -127,7 +127,12 @@ class TSMD_ClassCalendarCreate extends Component {
                                             rooms: rooms1,
                                             chosenRoomId: chosenRoomId,
                                             availableLessons: availableLessons,
+                                            chosenStartLessonId: availableLessons[0]
                                         });
+                                        if(availableLessons[0]){
+                                            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(availableLessons[0].id, lessons);
+
+                                        }
                                     }, (error) => {
                                         console.log(error);
                                     }
@@ -161,17 +166,11 @@ class TSMD_ClassCalendarCreate extends Component {
                 chosenRoomId: rooms[0].id
             });
             API.getAvailableLessons(this.state.classId, 0, this.state.chosenWeekDayId, this.state.chosenRoomId, this.state.chosenStartWeek, this.state.chosenEndWeek, (lessons) => {
-                if (lessons.length != 0) {
-                    this.setState({
-                        availableLessons: lessons,
-                        chosenStartLessonId: 0
-                    });
-                } else {
-                    this.setState({
-                        availableLessons: [],
-                        chosenStartLessonId: 0
-                    });
-                }
+                this.setState({
+                    availableLessons: lessons,
+                    chosenStartLessonId: lessons[0].id
+                });
+                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id, lessons);
 
             }, (error) => {
                 console.log(error);
@@ -192,17 +191,11 @@ class TSMD_ClassCalendarCreate extends Component {
                 chosenRoomId: rooms[0].id
             });
             API.getAvailableLessons(this.state.classId, 0, this.state.chosenWeekDayId, rooms[0].id, this.state.chosenStartWeek, this.state.chosenEndWeek, (lessons) => {
-                if (lessons.length != 0) {
-                    this.setState({
-                        availableLessons: lessons,
-                        chosenStartLessonId: 0
-                    });
-                } else {
-                    this.setState({
-                        availableLessons: [],
-                        chosenStartLessonId: 0
-                    });
-                }
+                this.setState({
+                    availableLessons: lessons,
+                    chosenStartLessonId: lessons[0].id
+                });
+                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id, lessons);
 
             }, (error) => {
                 console.log(error);
@@ -218,17 +211,11 @@ class TSMD_ClassCalendarCreate extends Component {
             chosenRoomId: chosenRoomId
         })
         API.getAvailableLessons(this.state.classId, 0, this.state.chosenWeekDayId, chosenRoomId, this.state.chosenStartWeek, this.state.chosenEndWeek, (lessons) => {
-            if (lessons.length != 0) {
-                this.setState({
-                    availableLessons: lessons,
-                    chosenStartLessonId: 0
-                });
-            } else {
-                this.setState({
-                    availableLessons: [],
-                    chosenStartLessonId: 0
-                });
-            }
+            this.setState({
+                availableLessons: lessons,
+                chosenStartLessonId: lessons[0].id
+            });
+            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id, lessons);
 
         }, (error) => {
             console.log(error);
@@ -250,19 +237,12 @@ class TSMD_ClassCalendarCreate extends Component {
             chosenEndWeek: availableEndWeeks[0]
         });
         API.getAvailableLessons(this.state.classId, 0, this.state.chosenWeekDayId, this.state.chosenRoomId, chosenStartWeek, availableEndWeeks[0], (lessons) => {
-            if (lessons.length != 0) {
-                this.setState({
-                    availableLessons: lessons,
-                    chosenStartLessonId: lessons[0].id
-                });
-                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
-            } else {
-                this.setState({
-                    availableLessons: [],
-                    chosenStartLessonId: 0
-                });
-                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(0);
-            }
+            this.setState({
+                availableLessons: lessons,
+                chosenStartLessonId: lessons[0].id,
+                chosenEndLessonId: lessons[0].id
+            });
+            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id, lessons);
 
         }, (error) => {
             console.log(error);
@@ -275,19 +255,12 @@ class TSMD_ClassCalendarCreate extends Component {
             chosenEndWeek: chosenEndWeek
         });
         API.getAvailableLessons(this.state.classId, 0, this.state.chosenWeekDayId, this.state.chosenRoomId, this.state.chosenStartWeek, chosenEndWeek, (lessons) => {
-            if (lessons.length != 0) {
-                this.setState({
-                    availableLessons: lessons,
-                    chosenStartLessonId: lessons[0].id
-                });
-                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id);
-            } else {
-                this.setState({
-                    availableLessons: [],
-                    chosenStartLessonId: 0
-                });
-                this.setAvailableEndLessonsCorresspondingToChosenStartLessons(0);
-            }
+            this.setState({
+                availableLessons: lessons,
+                chosenStartLessonId: lessons[0].id,
+                chosenEndLessonId: lessons[0].id
+            });
+            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(lessons[0].id, lessons);
 
         }, (error) => {
             console.log(error);
@@ -360,17 +333,23 @@ class TSMD_ClassCalendarCreate extends Component {
             for (var i = 0; i < availableLessons.length; i++) {
                 if (startLessonId == availableLessons[i].id) {
                     indexOfStartLesson = i;
-                    break
+                    break;
                 }
             }
             var startLesson = availableLessons[indexOfStartLesson];
 
             for (var i = indexOfStartLesson; i < availableLessons.length; i++) {
                 if ((availableLessons[i].thuTu - startLesson.thuTu) == (i - indexOfStartLesson)) {
-                    availableEndLessons.push(availableLessons[i].id);
+                    availableEndLessons.push(availableLessons[i].thuTu);
                 } else {
                     break;
                 }
+            }
+
+            if (!this.checkExist(this.state.chosenEndLessonId, availableEndLessons)) {
+                this.setState({
+                    chosenEndLessonId: availableEndLessons[0]
+                })
             }
 
             this.setState({
@@ -398,6 +377,17 @@ class TSMD_ClassCalendarCreate extends Component {
         }, (error) => {
             console.log(error);
         })
+    }
+
+    checkExist(chosenId, lessons) {
+        if (lessons) {
+            for (var i = 0; i < lessons.length; i++) {
+                if (chosenId == lessons[i]) {
+                    return true;
+                }
+            }
+        }
+
     }
 
 
@@ -430,7 +420,7 @@ class TSMD_ClassCalendarCreate extends Component {
 
     }
 
-    resetLesson(){
+    resetLesson() {
         this.setState({
             chosenStartLessonId: 0,
             chosenEndLessonId: 0
@@ -486,7 +476,8 @@ class TSMD_ClassCalendarCreate extends Component {
                 <div className="edit-title">
                     Tiết
                 </div>
-                <Mini_Lessons choseLesson={this.choseLesson} resetLesson={this.resetLesson} availableLessons={availableLessons}
+                <Mini_Lessons choseLesson={this.choseLesson} resetLesson={this.resetLesson}
+                              availableLessons={availableLessons}
                               startLessonId={this.state.chosenStartLessonId}
                               endLessonId={this.state.chosenEndLessonId}/>
                 <div className="action-corner">

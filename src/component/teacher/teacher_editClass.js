@@ -13,6 +13,9 @@ import {editLesson} from '../../action/teacherAction'
 //import Apis
 import * as API from '../../apiUtility/teacherApi'
 
+//import Components
+import Mini_Lessons from './../calendar/mini_lessons'
+
 class EditClass extends Component {
 
     constructor(props) {
@@ -54,11 +57,13 @@ class EditClass extends Component {
             error: ""
         }
 
-        this.handleStartLessonChange = this.handleStartLessonChange.bind(this);
-        this.handleEndLessonChange = this.handleEndLessonChange.bind(this);
         this.handleRoomChange = this.handleRoomChange.bind(this);
         this.handleTeacherMessageChange = this.handleTeacherMessageChange.bind(this);
         this.handleTeacherNoteChange = this.handleTeacherNoteChange.bind(this);
+
+        this.choseLesson = this.choseLesson.bind(this);
+        this.resetLesson = this.resetLesson.bind(this);
+
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -85,24 +90,6 @@ class EditClass extends Component {
     close() {
         var modal = $("#myModal")[0];
         modal.style.display = "none";
-    }
-
-    handleStartLessonChange(e) {
-        var lessonDetail = this.state.lessonDetail;
-        lessonDetail.tkb_tietDauTien.id = e.target.value;
-        this.setState({
-            lessonDetail: lessonDetail
-        })
-
-        this.setAvailableEndLessonsCorresspondingToChosenStartLessons(e.target.value);
-    }
-
-    handleEndLessonChange(e) {
-        var lessonDetail = this.state.lessonDetail;
-        lessonDetail.tkb_tietCuoiCung.id = e.target.value;
-        this.setState({
-            lessonDetail: lessonDetail
-        })
     }
 
     handleRoomChange(e) {
@@ -180,18 +167,34 @@ class EditClass extends Component {
 
         for (var i = indexOfStartLesson; i < availableLessons.length; i++) {
             if ((availableLessons[i].thuTu - startLesson.thuTu) == (i - indexOfStartLesson)) {
-                availableEndLessons.push(availableLessons[i]);
+                availableEndLessons.push(availableLessons[i].thuTu);
             } else {
                 break;
             }
         }
 
-        lessonDetail.tkb_tietCuoiCung.id = availableEndLessons[0].id;
+
+        if (!this.checkExist(this.state.lessonDetail.tkb_tietCuoiCung.id, availableEndLessons)) {
+            lessonDetail.tkb_tietCuoiCung.id = availableEndLessons[0];
+        }
+
+
 
         this.setState({
             lessonDetail: lessonDetail,
             availableEndLessons: availableEndLessons
         })
+
+    }
+
+    checkExist(chosenId, lessons) {
+        if (lessons) {
+            for (var i = 0; i < lessons.length; i++) {
+                if (chosenId == lessons[i]) {
+                    return true;
+                }
+            }
+        }
 
     }
 
@@ -225,6 +228,51 @@ class EditClass extends Component {
         }
         this.state.stompClient.send("/socket/calendar", {}, "edited");
         editLesson(this.state.lessonDetail, this.state.currentDate);
+    }
+
+    choseLesson(i) {
+
+        var lessonDetail = this.state.lessonDetail;
+
+        var availableLessons = this.state.availableLessons;
+        var availableEndLesson = this.state.availableEndLessons;
+        if (this.state.lessonDetail.tkb_tietDauTien.id == 0 || availableEndLesson.indexOf(i) == -1) {
+            lessonDetail.tkb_tietDauTien.id = i;
+            lessonDetail.tkb_tietCuoiCung.id=i;
+            this.setState({
+                lessonDetail: lessonDetail,
+            })
+            this.setAvailableEndLessonsCorresspondingToChosenStartLessons(i, availableLessons);
+        } else {
+            if (i >= this.state.lessonDetail.tkb_tietDauTien.id) {
+                if (i < this.state.chosenEndLessonId) {
+                    lessonDetail.tkb_tietDauTien.id = i;
+                    this.setState({
+                        lessonDetail: lessonDetail
+                    })
+                } else {
+                    lessonDetail.tkb_tietCuoiCung.id = i;
+                    this.setState({
+                        lessonDetail: lessonDetail
+                    })
+                }
+            } else {
+                lessonDetail.tkb_tietDauTien.id = i;
+                this.setState({
+                    lessonDetail: lessonDetail
+                })
+            }
+        }
+
+    }
+
+    resetLesson() {
+        var lessonDetail = this.state.lessonDetail;
+        lessonDetail.tkb_tietDauTien.id = 0;
+        lessonDetail.tkb_tietCuoiCung.id = 0;
+        this.setState({
+            lessonDetail: lessonDetail
+        })
     }
 
     render() {
@@ -266,29 +314,10 @@ class EditClass extends Component {
                             <div className="edit-title">
                                 Từ tiết
                             </div>
-                            <select id="start-lesson-selecbox" className="halfLength"
-                                    value={lessonDetail.tkb_tietDauTien.id} onChange={this.handleStartLessonChange}>
-                                {availableLessons ?
-                                    availableLessons.map(lesson =>
-                                        <option key={"start" + lesson.id} value={lesson.id}>{lesson.ten}</option>
-                                    )
-
-                                    : ""
-                                }
-                            </select>
-                            <div className="edit-title">
-                                Tới tiết
-                            </div>
-                            <select id="end-lesson-selecbox" className="halfLength"
-                                    value={lessonDetail.tkb_tietCuoiCung.id} onChange={this.handleEndLessonChange}>
-                                {availableEndLessons ?
-                                    availableEndLessons.map(lesson =>
-                                        <option key={"end" + lesson.id} value={lesson.id}>{lesson.ten}</option>
-                                    )
-
-                                    : ""
-                                }
-                            </select>
+                            <Mini_Lessons choseLesson={this.choseLesson} resetLesson={this.resetLesson}
+                                          availableLessons={availableLessons}
+                                          startLessonId={this.state.lessonDetail.tkb_tietDauTien.id}
+                                          endLessonId={this.state.lessonDetail.tkb_tietCuoiCung.id}/>
                         </div>
                         <div className="error-message">
                             {this.state.message}

@@ -38,10 +38,6 @@ class TSMD_ShowAllClassesComponent extends Component {
                     cl.soLuongToiDa,
                     cl.soTietLyThuyet,
                     cl.soTietThucHanh,
-                    cl.soBuoiLyThuyetMotTuan,
-                    cl.soTietLyThuyetMotTuan,
-                    cl.soBuoiThucHanhMotTuan,
-                    cl.soTietThucHanhMotTuan,
                     '<i class="fa fa-cog arrange-class-icon cursor" aria-hidden="true" data-id="' + cl.id + '" data-name="' + cl.monHoc.ten + '"/>'
                 ]);
                 index++;
@@ -61,10 +57,6 @@ class TSMD_ShowAllClassesComponent extends Component {
                         <th>Số lượng tối đa</th>
                         <th>Số tiết LT</th>
                         <th>Số tiết TH</th>
-                        <th>Số buổi LT/tuần</th>
-                        <th>Số tiết LT/tuần</th>
-                        <th>Số buổi TH/tuần</th>
-                        <th>Số tiết TH/tuần</th>
                         <th>Xếp lịch</th>
                     </tr>
                     </thead>
@@ -77,10 +69,6 @@ class TSMD_ShowAllClassesComponent extends Component {
                         <th>Số lượng tối đa</th>
                         <th>Số tiết LT</th>
                         <th>Số tiết TH</th>
-                        <th>Số buổi LT/tuần</th>
-                        <th>Số tiết LT/tuần</th>
-                        <th>Số buổi TH/tuần</th>
-                        <th>Số tiết TH/tuần</th>
                         <th>Xếp lịch</th>
                     </tr>
                     </tfoot>
