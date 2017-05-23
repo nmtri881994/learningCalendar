@@ -116,11 +116,11 @@ export const autoCalendar = (setting, cb, fcb) => {
     $.unblockUI();
 }
 
-export const getAllConditions = (cb, fcb) => {
+export const getConditions = (termId, yearId, cb, fcb) => {
     $.blockUI(loading);
-    axios(BASE_URL + "/generate-calendar/all-conditions", {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/generate-calendar/get-conditions/"+termId+"/"+yearId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
-            cb(response);
+            cb(response.data);
         })
         .catch(function (error) {
             fcb(error);

@@ -3,63 +3,85 @@
  */
 import React, {Component} from 'react'
 
-class Tsmd_AutoCalendar_Condition extends Component{
-    constructor(props){
+class Tsmd_AutoCalendar_Condition extends Component {
+    constructor(props) {
         super(props);
 
-        this.state={
+        this.state = {
+            id: 0,
             content: "",
             disable: true,
-            value: 0
+            value: 0,
+            min: 0,
+            max: 0,
+
+            message: ""
         }
 
         this.onClickCheckbox = this.onClickCheckbox.bind(this);
         this.onValueChange = this.onValueChange.bind(this);
     }
 
-    componentWillMount(){
+    componentWillMount() {
+        var condition = this.props.condition;
         this.setState({
-            content: this.props.content
+            id: condition.id,
+            content: condition.noiDung,
+            min: condition.minPoint,
+            max: condition.maxPoint
         })
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
     }
 
-    onClickCheckbox(){
+    onClickCheckbox() {
         var dk = this.refs.check.checked
-        this.props.setDk(dk);
+        this.props.setCondition(this.state.id, dk);
         this.setState({
             disable: !dk
         })
     }
 
-    onValueChange(e){
+    onValueChange(e) {
         var value = e.target.value;
+        var mess = "";
+        if(value<this.state.min || value>this.state.max){
+            mess = "Giá trị nhập vào nằm ngoài khoảng ["+this.state.min+","+this.state.max+"]"
+            this.props.setCanRun(false);
+        }else{
+            this.props.setCanRun(true);
+        }
         this.setState({
-            value: value
+            value: value,
+            message: mess
         })
 
-        this.props.setValue(value);
+        this.props.setConditionValue(this.state.id, value);
     }
 
-    render(){
-        return(<div className="condition">
-            <div className="condition-checkbox">
-                <input type="checkbox" ref="check" onClick={this.onClickCheckbox}/>
+    render() {
+        return (<div>
+            <div className="condition">
+                <div className="condition-checkbox">
+                    <input type="checkbox" ref="check" onClick={this.onClickCheckbox}/>
+                </div>
+                <div className="condition-content">{this.state.content}</div>
+                <div className="condition-value">
+                    <input type="number" className="width-50" value={this.state.value} onChange={this.onValueChange}
+                           disabled={this.state.disable}/>
+                </div>
+                <br/>
             </div>
-            <div className="condition-content">{this.state.content}</div>
-            <div className="condition-value">
-                <input type="number" className="width-50" value={this.state.value} onChange={this.onValueChange} disabled={this.state.disable}/>
-            </div>
+            <div className="error-message margin-left-20">{this.state.message}</div>
         </div>)
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
 
     }
 

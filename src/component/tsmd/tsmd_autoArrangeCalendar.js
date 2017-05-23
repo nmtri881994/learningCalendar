@@ -25,29 +25,12 @@ class TSMD_AutoArrangeCalendar extends Component {
             stompClient: null,
 
             conditions: [],
+            chosenConditions: [],
 
             years: [],
             chosenYearId: 0,
             terms: [],
             chosenTermId: 0,
-            dk1: false,
-            dk1Value: 0,
-            dk2: false,
-            dk2Value: 0,
-            dk3: false,
-            dk3Value: 0,
-            dk4: false,
-            dk4Value: 0,
-            dk5: false,
-            dk5Value: 0,
-            dk6: false,
-            dk6Value: 0,
-            dk7: false,
-            dk7Value: 0,
-            dk8: false,
-            dk8Value: 0,
-            dk9: false,
-            dk9Value: 0,
 
             mutate: 0,
             parentPercentage: 0,
@@ -60,161 +43,72 @@ class TSMD_AutoArrangeCalendar extends Component {
             message: "",
 
             generations: [],
+            canRun: true
         }
-        this.setDk1 = this.setDk1.bind(this);
-        this.setDk1Value = this.setDk1Value.bind(this);
-
-        this.setDk2 = this.setDk2.bind(this);
-        this.setDk2Value = this.setDk2Value.bind(this);
-
-        this.setDk3 = this.setDk3.bind(this);
-        this.setDk3Value = this.setDk3Value.bind(this);
-
-        this.setDk4 = this.setDk4.bind(this);
-        this.setDk4Value = this.setDk4Value.bind(this);
-
-        this.setDk5 = this.setDk5.bind(this);
-        this.setDk5Value = this.setDk5Value.bind(this);
-
-        this.setDk6 = this.setDk6.bind(this);
-        this.setDk6Value = this.setDk6Value.bind(this);
-
-        this.setDk7 = this.setDk7.bind(this);
-        this.setDk7Value = this.setDk7Value.bind(this);
-
-        this.setDk8 = this.setDk8.bind(this);
-        this.setDk8Value = this.setDk8Value.bind(this);
-
-        this.setDk9 = this.setDk9.bind(this);
-        this.setDk9Value = this.setDk9Value.bind(this);
 
         this.handleNumberOfGenerationsChange = this.handleNumberOfGenerationsChange.bind(this);
         this.handlePerfectAdaptationPointsChange = this.handlePerfectAdaptationPointsChange.bind(this);
         this.handleYearChange = this.handleYearChange.bind(this);
         this.handleTermChange = this.handleTermChange.bind(this);
 
+        this.setCondition = this.setCondition.bind(this);
+        this.setConditionValue = this.setConditionValue.bind(this);
+        this.setCanRun = this.setCanRun.bind(this);
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDeleteCalendar = this.handleDeleteCalendar.bind(this);
     }
 
-    setDk1(bool) {
+    setCondition(id, status) {
+        var chosenConditions = this.state.chosenConditions;
+        for (var i = 0; i < chosenConditions.length; i++) {
+            if (chosenConditions[i].id == id) {
+                chosenConditions[i].status = status;
+            }
+        }
+    }
+
+    setCanRun(bool) {
         this.setState({
-            dk1: bool
+            canRun: bool
         })
     }
 
-    setDk1Value(value) {
-        this.setState({
-            dk1Value: value
-        })
-    }
-
-    setDk2(bool) {
-        this.setState({
-            dk2: bool
-        })
-    }
-
-    setDk2Value(value) {
-        this.setState({
-            dk2Value: value
-        })
-    }
-
-    setDk3(bool) {
-        this.setState({
-            dk3: bool
-        })
-    }
-
-    setDk3Value(value) {
-        this.setState({
-            dk3Value: value
-        })
-    }
-
-    setDk4(bool) {
-        this.setState({
-            dk4: bool
-        })
-    }
-
-    setDk4Value(value) {
-        this.setState({
-            dk4Value: value
-        })
-    }
-
-    setDk5(bool) {
-        this.setState({
-            dk5: bool
-        })
-    }
-
-    setDk5Value(value) {
-        this.setState({
-            dk5Value: value
-        })
-    }
-
-    setDk6(bool) {
-        this.setState({
-            dk6: bool
-        })
-    }
-
-    setDk6Value(value) {
-        this.setState({
-            dk6Value: value
-        })
-    }
-
-    setDk7(bool) {
-        this.setState({
-            dk7: bool
-        })
-    }
-
-    setDk7Value(value) {
-        this.setState({
-            dk7Value: value
-        })
-    }
-
-    setDk8(bool) {
-        this.setState({
-            dk8: bool
-        })
-    }
-
-    setDk8Value(value) {
-        this.setState({
-            dk8Value: value
-        })
-    }
-
-    setDk9(bool) {
-        this.setState({
-            dk9: bool
-        })
-    }
-
-    setDk9Value(value) {
-        this.setState({
-            dk9Value: value
-        })
+    setConditionValue(id, value) {
+        var chosenConditions = this.state.chosenConditions;
+        for (var i = 0; i < chosenConditions.length; i++) {
+            if (chosenConditions[i].id == id) {
+                chosenConditions[i].value = value;
+            }
+        }
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            years: nextProps.years,
-            chosenYearId: nextProps.years[0].id,
-        });
+
         API.getSemestersNotEndOfYear(nextProps.years[0].id, (terms) => {
-            this.setState({
-                terms: terms,
-                chosenTermId: terms[0].id
-            });
+
+            API.getConditions(terms[0].id, nextProps.years[0].id, (conditions) => {
+                var chosenConditions = [];
+                conditions.map(cond => {
+                    chosenConditions.push({
+                        id: cond.id,
+                        status: false,
+                        value: 0,
+                    })
+                }, (error) => {
+                    console.log(error)
+                })
+                this.setState({
+                    years: nextProps.years,
+                    chosenYearId: nextProps.years[0].id,
+
+                    terms: terms,
+                    chosenTermId: terms[0].id,
+
+                    conditions: conditions,
+                    chosenConditions: chosenConditions
+                })
+            })
         }, (error) => {
             console.log(error)
         });
@@ -223,22 +117,34 @@ class TSMD_AutoArrangeCalendar extends Component {
 
     componentWillMount() {
         getYearsNotEnd();
-        API.getAllConditions((conditions) => {
 
-        },)
     }
 
     handleYearChange(e) {
         var chosenYearId = e.target.value;
-        this.setState({
-            generations: [],
-            chosenYearId: chosenYearId
-        })
         API.getSemestersNotEndOfYear(e.target.value, (terms) => {
-            this.setState({
-                terms: terms,
-                chosenTermId: terms[0].id
-            });
+            API.getConditions(terms[0].id, chosenYearId, (conditions) => {
+                var chosenConditions = [];
+                conditions.map(cond => {
+                    chosenConditions.push({
+                        id: cond.id,
+                        status: false,
+                        value: 0,
+                    })
+                }, (error) => {
+                    console.log(error)
+                })
+                this.setState({
+                    generations: [],
+                    chosenYearId: chosenYearId,
+
+                    terms: terms,
+                    chosenTermId: terms[0].id,
+
+                    conditions: conditions,
+                    chosenConditions: chosenConditions
+                })
+            })
         }, (error) => {
             console.log(error)
         });
@@ -246,10 +152,25 @@ class TSMD_AutoArrangeCalendar extends Component {
 
     handleTermChange(e) {
         var chosenTermId = e.target.value;
-        this.setState({
-            generations: [],
-            chosenTermId: chosenTermId
-        });
+        API.getConditions(chosenTermId, this.state.chosenYearId, (conditions) => {
+            var chosenConditions = [];
+            conditions.map(cond => {
+                chosenConditions.push({
+                    id: cond.id,
+                    status: false,
+                    value: 0,
+                })
+            }, (error) => {
+                console.log(error)
+            })
+            this.setState({
+                generations: [],
+                chosenTermId: chosenTermId,
+
+                conditions: conditions,
+                chosenConditions: chosenConditions
+            })
+        })
     }
 
     handleNumberOfGenerationsChange(e) {
@@ -270,46 +191,37 @@ class TSMD_AutoArrangeCalendar extends Component {
             message: "",
             generations: []
         })
-        var setting = {
-            namHocId: this.state.chosenYearId,
-            kyHocId: this.state.chosenTermId,
 
-            dk1: this.state.dk1,
-            dk1Value: this.state.dk1Value,
-            dk2: this.state.dk2,
-            dk2Value: this.state.dk2Value,
-            dk3: this.state.dk3,
-            dk3Value: this.state.dk3Value,
-            dk4: this.state.dk4,
-            dk4Value: this.state.dk4Value,
-            dk5: this.state.dk5,
-            dk5Value: this.state.dk5Value,
-            dk6: this.state.dk6,
-            dk6Value: this.state.dk6Value,
-            dk7: this.state.dk7,
-            dk7Value: this.state.dk7Value,
-            dk8: this.state.dk8,
-            dk8Value: this.state.dk8Value,
-            dk9: this.state.dk9,
-            dk9Value: this.state.dk9Value,
+        if(this.state.canRun){
+            var setting = {
+                namHocId: this.state.chosenYearId,
+                kyHocId: this.state.chosenTermId,
 
-            soTheHe: this.state.numberOfGenerations,
-            diemThichNghiToiUu: this.state.perfectAdaptationPoints
+                chosenConditions: this.state.chosenConditions,
+
+                soTheHe: this.state.numberOfGenerations,
+                diemThichNghiToiUu: this.state.perfectAdaptationPoints
+            }
+
+            API.autoCalendar(setting, (response) => {
+                this.setState({
+                    message: response
+                })
+            }, (error) => {
+                console.log(error);
+            })
+        }else{
+            this.setState({
+                message: "Giá trị của ít nhất 1 điều kiện chưa thỏa mãn"
+            })
         }
 
-        API.autoCalendar(setting, (response) => {
-            this.setState({
-                message: response
-            })
-        }, (error) => {
-            console.log(error);
-        })
     }
 
-    handleDeleteCalendar(){
-        API.deleteAllCalendar(this.state.chosenTermId, this.state.chosenYearId, (response)=>{
+    handleDeleteCalendar() {
+        API.deleteAllCalendar(this.state.chosenTermId, this.state.chosenYearId, (response) => {
             console.log(response);
-        }, (error)=>{
+        }, (error) => {
             console.log(error);
         })
     }
@@ -318,31 +230,28 @@ class TSMD_AutoArrangeCalendar extends Component {
         var years = this.state.years;
         var terms = this.state.terms;
 
-        var dk1 = "Giáo viên dạy không quá 8 giờ/ngày";
-        var dk2 = "Giáo viên dạy không quá 6 giờ lý thuyết/ngày";
-        var dk3 = "Giáo viên dạy không quá 30 giờ lý thuyết/tuần";
-        var dk4 = "Lớp môn học không xung đột với ngày nghỉ trong tuần của giáo viên";
-        var dk5 = "Các lịch của một lớp môn học không trùng thứ";
-        var dk6 = "Lớp môn học không xung đột với lịch của giáo viên";
-        var dk7 = "Lớp môn học không xung đột với lịch của lớp khác cùng khoa-khóa học-ngành";
-        var dk8 = "Phòng học không có nhiều hơn 1 lớp trong cùng 1 khoảng thời gian";
-        var dk9 = "1 khoa-khóa học-ngành không có nhiều hơn 3 lớp học cùng 1 khoảng thời gian";
+        var conditions = this.state.conditions;
+
+        var disableRun = "";
+        if (conditions.length == 0) {
+            disableRun = "disabled"
+        }
+
+        var optionalConditions = [];
+        var madatoryConditions = [];
+
+        conditions.map(cond => {
+            if (cond.batBuoc == 1) {
+                madatoryConditions.push(cond);
+            }
+            if (cond.batBuoc == 0) {
+                optionalConditions.push(cond);
+            }
+        })
+
+        console.log(optionalConditions, madatoryConditions);
 
         var generations = this.state.generations;
-        // var myTable = $('#myTable').dataTable();
-        //
-
-        // myTable.fnClearTable();
-        // if (generations.length != 0) {
-        //     generations.map(gen => {
-        //         myTable.fnAddData([
-        //             gen.theHe,
-        //             gen.diemThichNghi
-        //         ]);
-        //     })
-        // }
-        //
-        // myTable.fnPageChange( 'last' );
 
         return (<div>
                 <div className="choose-condition">
@@ -375,28 +284,26 @@ class TSMD_AutoArrangeCalendar extends Component {
                     <div className="section">
 
                         <div className="section-title margin-left-20">Điều kiện thích nghi</div>
+                        {conditions.length == 0 && this.state.years.length != 0 ?
+                            <div className="error-message margin-left-20">
+                                Thuật toán không thể chạy nếu chưa có điều kiện
+                            </div> : ""}
                         <div className="conditions">
                             <div className="condition-group">
-                                <Tsmd_AutoCalendar_Condition setDk={this.setDk1} setValue={this.setDk1Value}
-                                                             content={dk1}/>
-                                <Tsmd_AutoCalendar_Condition setDk={this.setDk2} setValue={this.setDk2Value}
-                                                             content={dk2}/>
-                                <Tsmd_AutoCalendar_Condition setDk={this.setDk3} setValue={this.setDk3Value}
-                                                             content={dk3}/>
-                                <Tsmd_AutoCalendar_Condition setDk={this.setDk4} setValue={this.setDk4Value}
-                                                             content={dk4}/>
-                                <Tsmd_AutoCalendar_Condition setDk={this.setDk5} setValue={this.setDk5Value}
-                                                             content={dk5}/>
+                                {optionalConditions.map(condition => <Tsmd_AutoCalendar_Condition key={condition.id}
+                                                                                                  condition={condition}
+                                                                                                  setCondition={this.setCondition}
+                                                                                                  setConditionValue={this.setConditionValue}
+                                                                                                  setCanRun={this.setCanRun}
+                                />)}
                             </div>
                             <div className="condition-group">
-                                <Tsmd_AutoCalendar_Condition setDk={this.setDk6} setValue={this.setDk6Value}
-                                                             content={dk6}/>
-                                <Tsmd_AutoCalendar_Condition setDk={this.setDk7} setValue={this.setDk7Value}
-                                                             content={dk7}/>
-                                <Tsmd_AutoCalendar_Condition setDk={this.setDk8} setValue={this.setDk8Value}
-                                                             content={dk8}/>
-                                <Tsmd_AutoCalendar_Condition setDk={this.setDk9} setValue={this.setDk9Value}
-                                                             content={dk9}/>
+                                {madatoryConditions.map(condition => <Tsmd_AutoCalendar_Condition key={condition.id}
+                                                                                                  condition={condition}
+                                                                                                  setCondition={this.setCondition}
+                                                                                                  setConditionValue={this.setConditionValue}
+                                                                                                  setCanRun={this.setCanRun}
+                                />)}
                             </div>
                         </div>
                     </div>
@@ -441,7 +348,7 @@ class TSMD_AutoArrangeCalendar extends Component {
                         </div>
                     </div>
                     <div className="choose-condition-item">
-                        <button onClick={this.handleSubmit}>Chạy</button>
+                        <button onClick={this.handleSubmit} disabled={disableRun}>Chạy</button>
                     </div>
 
                     <div className="error-message margin-left-20">
@@ -480,7 +387,7 @@ class TSMD_AutoArrangeCalendar extends Component {
     }
 
     addGeneration(gen) {
-        if(gen.kyHocId == this.state.chosenTermId && gen.namHocId == this.state.chosenYearId){
+        if (gen.kyHocId == this.state.chosenTermId && gen.namHocId == this.state.chosenYearId) {
             var generations = this.state.generations;
             generations.push(gen);
 

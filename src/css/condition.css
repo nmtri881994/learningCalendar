@@ -2,7 +2,7 @@
     display: block;
 }
 .condition-group{
-    display: inline-block;
+    display: inline-grid;
     width: 530px;
     margin: 0 20px;
 }
