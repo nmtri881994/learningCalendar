@@ -481,7 +481,7 @@ class TSMD_ClassCalendarCreate extends Component {
                               startLessonId={this.state.chosenStartLessonId}
                               endLessonId={this.state.chosenEndLessonId}/>
                 <div className="action-corner">
-                    <button onClick={this.handleSubmit}>OK</button>
+                    <button className="ok-button button-mini padding-top-bottom-3px" onClick={this.handleSubmit}>OK</button>
                 </div>
                 <div className="error-message">
                     {this.state.errorMessage}

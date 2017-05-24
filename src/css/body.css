@@ -122,3 +122,76 @@ button:focus {
 .generations-table{
     width: 1200px;
 }
+
+.ok-button{
+    transition: background-color 0.2s ease;
+    background-color: #2196F3;
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 5px 0;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.ok-button:hover{
+    background-color: white;
+    color: #2196F3;
+    border: 1px solid #2196F3;
+}
+
+.warning-button{
+    transition: background-color 0.2s ease;
+    background-color: #FF5722;
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 5px 0;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.warning-button:hover{
+    background-color: white;
+    color: #FF5722;
+    border: 1px solid #FF5722;
+
+}
+
+.delete-button{
+    transition: background-color 0.2s ease;
+    background-color: #607D8B;
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 5px 0;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.delete-button:hover{
+    background-color: white;
+    color: #607D8B;
+    border: 1px solid #607D8B;
+
+}
+
+.button-mini{
+    min-width: 50px;
+    max-width: 100px;
+}
+
+.button-medium{
+    min-width: 200px;
+}
+
+.button-large{
+    min-width: 300px;
+}
+
+.padding-top-bottom-3px{
+    padding: 3px 0;
+}

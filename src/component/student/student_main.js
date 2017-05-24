@@ -44,9 +44,9 @@ class SV_MainComponent extends Component {
             <div id="page">
                 <div className="wrapper">
                     <Header currentUserName={this.props.currentUserName}/>
-                    <Student_Time canRegister={this.props.canRegister}/>
+                    {/*<Student_Time canRegister={this.props.canRegister}/>*/}
                     <div id="content">
-                        <Student_navSideBar />
+                        <Student_navSideBar canRegister={this.props.canRegister}/>
                         <div className="page-panel">
                             <div className="page-panel-inner">
                                 <div className="page-panel-content">

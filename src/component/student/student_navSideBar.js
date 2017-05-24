@@ -4,6 +4,9 @@
 
 import React, {Component} from 'react';
 
+//import Components
+import Student_Time from './student_time'
+
 class NavSideBar extends Component {
     render() {
         return (
@@ -13,6 +16,7 @@ class NavSideBar extends Component {
                         <header></header>
                         <nav className="slide-bar-nav">
                             <div className="slide-bar-nav-inner">
+                                <Student_Time canRegister={this.props.canRegister}/>
                                 <div className="slide-bar-nav-inner-calendars">
                                     <div className="slide-bar-nav-inner-heading">
                                         <strong>Thời khóa biểu</strong>

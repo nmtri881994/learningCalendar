@@ -99,7 +99,7 @@ class TSMD_OpenRegisteringTime extends Component {
                     </select>
                 </div>
                 <div className="choose-condition-item">
-                    <button onClick={this.handleSubmit}>OK</button>
+                    <button className="ok-button button-mini" onClick={this.handleSubmit}>OK</button>
                 </div>
             </div>
             <div id="classes-table">

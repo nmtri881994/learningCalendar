@@ -442,8 +442,8 @@ class TSMD_ClassCalendarEdit extends Component {
                               startLessonId={this.state.chosenStartLessonId}
                               endLessonId={this.state.chosenEndLessonId}/>
                 <div className="action-corner">
-                    <button onClick={this.handleSubmit}>OK</button>
-                    <button onClick={this.handleDelete}>Xóa</button>
+                    <button className="ok-button button-mini padding-top-bottom-3px" onClick={this.handleSubmit}>OK</button>
+                    <button className="delete-button button-mini padding-top-bottom-3px" onClick={this.handleDelete}>Xóa</button>
                 </div>
                 <div className="error-message">
                 </div>

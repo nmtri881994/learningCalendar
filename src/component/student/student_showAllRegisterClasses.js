@@ -36,6 +36,7 @@ class Student_ShowAllRegisterClasses extends Component {
         if (classes.length > 0) {
             var myTable = $('#myTable').dataTable();
             myTable.fnClearTable();
+            var index = 1;
             classes.map(cl => {
                 var class1 = cl.class;
                 var disabled = "";
@@ -47,7 +48,7 @@ class Student_ShowAllRegisterClasses extends Component {
                 //     disabled = "disabled = 'disabled'"
                 // }
                 myTable.fnAddData([
-                    cl.index,
+                    index,
                     class1.monHoc.maMonHoc + "." + cl.maKhoa + "." + class1.khoa_khoaHoc.khoaHoc.nam + "." + class1.id,
                     class1.monHoc.ten,
                     class1.monHoc.soTinChi,
@@ -55,8 +56,9 @@ class Student_ShowAllRegisterClasses extends Component {
                     class1.soTietLyThuyet,
                     class1.soTietThucHanh,
                     cl.quantity + "/" + class1.soLuongToiDa,
-                    cl.registered ? '<button class="cancel-register-btn" data-id="' + class1.id + '">Hủy</button>' : '<button ' + disabled + ' class="register-btn" data-id="' + class1.id + '">Chọn</button>'
+                    cl.registered ? '<button class="delete-button button-mini" data-id="' + class1.id + '">Hủy</button>' : '<button ' + disabled + ' class="ok-button button-mini" data-id="' + class1.id + '">Chọn</button>'
                 ]);
+                index++;
             });
         }
 
@@ -152,10 +154,10 @@ class Student_ShowAllRegisterClasses extends Component {
         var register = (classId) => this.register(classId);
         var cancelRegister = (classId) => this.cancelRegister(classId);
         $(document).ready(function () {
-            $('.register-btn').on('click', function (evt) {
+            $('.ok-button').on('click', function (evt) {
                 register($(this).attr("data-id"));
             })
-            $('.cancel-register-btn').on('click', function (evt) {
+            $('.delete-button').on('click', function (evt) {
                 cancelRegister($(this).attr("data-id"));
             })
         })

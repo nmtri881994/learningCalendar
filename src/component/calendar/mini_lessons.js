@@ -76,7 +76,7 @@ class Mini_Lessons extends Component{
     render(){
         return(<div className="mini-lessons">
             {this.state.minilessons}
-            <button onClick={this.resetLesson} className="reset-btn">Reset</button>
+            <button onClick={this.resetLesson} className="warning-button button-mini padding-top-bottom-3px">Reset</button>
         </div>)
     }
 

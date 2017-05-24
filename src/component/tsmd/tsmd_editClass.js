@@ -104,7 +104,7 @@ class TSMD_EditClass extends Component {
                                                   classId={this.state.classId}/>
                     </div>
                     <div className="modal-footer text-center">
-                        <button id="edit-class-button">Lưu</button>
+                        {/*<button id="edit-class-button">Lưu</button>*/}
                     </div>
                 </div>
 

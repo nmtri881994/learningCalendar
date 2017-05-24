@@ -342,7 +342,7 @@ class EditClass extends Component {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button id="edit-class-button" onClick={this.handleSubmit}>Lưu</button>
+                        <button className="ok-button button-mini" onClick={this.handleSubmit}>Lưu</button>
                         {/*<button >Cancel</button>*/}
                     </div>
                 </div>

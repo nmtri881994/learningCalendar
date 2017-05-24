@@ -278,7 +278,7 @@ class TSMD_AutoArrangeCalendar extends Component {
                     </div>
 
                     <div className="choose-condition-item">
-                        <button onClick={this.handleDeleteCalendar}>Xóa tắt cả lịch học</button>
+                        <button className="warning-button button-medium" onClick={this.handleDeleteCalendar}>Xóa tất cả lịch học</button>
                     </div>
 
                     <div className="section">
@@ -348,7 +348,7 @@ class TSMD_AutoArrangeCalendar extends Component {
                         </div>
                     </div>
                     <div className="choose-condition-item">
-                        <button onClick={this.handleSubmit} disabled={disableRun}>Chạy</button>
+                        <button className="ok-button button-medium" onClick={this.handleSubmit} disabled={disableRun}>Bắt đầu</button>
                     </div>
 
                     <div className="error-message margin-left-20">

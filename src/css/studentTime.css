@@ -1,7 +1,7 @@
 .student-time{
     clear: both;
     /*width: 220px;*/
-    background:rgba(24,255,255,0.7);
+    background:#00afd1;
     box-sizing: border-box;
     color: red;
     position: fixed;
@@ -9,7 +9,40 @@
     right: 2px;
     z-index: 2;
     font-size: 17px;
-    border: 1px solid #00B8D4;
+    /*border: 1px solid #00B8D4;*/
     word-wrap: break-word;
     padding: 2px;
+    color: white;
+    border-radius: 10px;
+}
+
+.time-title{
+    background-color: #616161;
+    text-align: center;
+    color: white;
+    /*margin: -2px;*/
+    /*border-top-left-radius: 10px;*/
+}
+
+.time-content{
+    background-color: #00897b;
+    text-align: center;
+    color: white;
+}
+
+.time-item{
+    display: inline-grid;
+    margin: 5px 3px;
+}
+
+.time-number{
+    font-size: 30px;
+}
+
+.time-separator{
+    font-size: 30px;
+}
+
+.time-day{
+    margin-right: 15px;
 }

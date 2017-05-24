@@ -31,20 +31,20 @@ class Student_Time extends Component {
     componentWillReceiveProps(nextProps) {
         var canRegister = nextProps.canRegister;
         console.log(nextProps);
-        if(canRegister && canRegister.canRegister){
-            var intervalId = setInterval(this.refreshTimeLeft,1000);
+        if (canRegister && canRegister.canRegister) {
+            var intervalId = setInterval(this.refreshTimeLeft, 1000);
             this.setState({
                 intervalId: intervalId
             })
-            API.getRegisterTimeByRegisterTimeId(canRegister.registerTimeId ,(registerTime) => {
+            API.getRegisterTimeByRegisterTimeId(canRegister.registerTimeId, (registerTime) => {
 
-                var seconds = moment(registerTime.endTime).diff(moment())/1000;
-                var days = Math.floor(seconds/86400);
-                seconds = seconds%86400;
-                var hours = Math.floor(seconds/3600);
-                seconds = seconds%3600;
-                var mins = Math.floor(seconds/60);
-                seconds = Math.floor(seconds%60);
+                var seconds = moment(registerTime.endTime).diff(moment()) / 1000;
+                var days = Math.floor(seconds / 86400);
+                seconds = seconds % 86400;
+                var hours = Math.floor(seconds / 3600);
+                seconds = seconds % 3600;
+                var mins = Math.floor(seconds / 60);
+                seconds = Math.floor(seconds % 60);
 
                 this.setState({
                     daysLeft: days,
@@ -64,7 +64,7 @@ class Student_Time extends Component {
             }, (error) => {
                 console.log(error);
             })
-        }else{
+        } else {
             clearInterval(this.state.intervalId);
             this.setState({
                 canRegister: false,
@@ -76,9 +76,29 @@ class Student_Time extends Component {
     render() {
         var content = "";
         if (this.state.canRegister) {
-            content = <div className="student-time">
-                <div>Thời gian đăng ký còn lại</div>
-                <div><center>{this.state.daysLeft} ngày {this.state.hoursLeft}h:{this.state.minsLeft}m:{this.state.secondsLeft}s</center></div>
+            content = <div>
+                <div className="time-title">Thời gian đăng ký còn lại</div>
+                <div className="time-content">
+                    <div className="time-item time-day">
+                        <div className="time-number">{this.state.daysLeft}</div>
+                        <div className="time">ngày</div>
+                    </div>
+
+                    <div className="time-item">
+                        <div className="time-number">{this.state.hoursLeft<10?"0"+this.state.hoursLeft:this.state.hoursLeft}</div>
+                        <div className="time">giờ</div>
+                    </div>
+                    <span className="time-separator">:</span>
+                    <div className="time-item">
+                        <div className="time-number">{this.state.minsLeft<10?"0"+this.state.minsLeft:this.state.minsLeft}</div>
+                        <div className="time">phút</div>
+                    </div>
+                    <span className="time-separator">:</span>
+                    <div className="time-item">
+                        <div className="time-number">{this.state.secondsLeft<10?"0"+this.state.secondsLeft:this.state.secondsLeft}</div>
+                        <div className="time">giây</div>
+                    </div>
+                </div>
             </div>
         }
         return (<div>
@@ -86,15 +106,15 @@ class Student_Time extends Component {
         </div>)
     }
 
-    refreshTimeLeft(){
-        if(this.state.registerTime && this.state.registerTime != null){
-            var seconds = moment(this.state.registerTime.endTime).diff(moment())/1000;
-            var days = Math.floor(seconds/86400);
-            seconds = seconds%86400;
-            var hours = Math.floor(seconds/3600);
-            seconds = seconds%3600;
-            var mins = Math.floor(seconds/60);
-            seconds = Math.floor(seconds%60);
+    refreshTimeLeft() {
+        if (this.state.registerTime && this.state.registerTime != null) {
+            var seconds = moment(this.state.registerTime.endTime).diff(moment()) / 1000;
+            var days = Math.floor(seconds / 86400);
+            seconds = seconds % 86400;
+            var hours = Math.floor(seconds / 3600);
+            seconds = seconds % 3600;
+            var mins = Math.floor(seconds / 60);
+            seconds = Math.floor(seconds % 60);
 
             this.setState({
                 daysLeft: days,
