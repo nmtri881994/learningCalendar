@@ -127,7 +127,7 @@ class TSMD_ClassCalendarCreate extends Component {
                                             rooms: rooms1,
                                             chosenRoomId: chosenRoomId,
                                             availableLessons: availableLessons,
-                                            chosenStartLessonId: availableLessons[0]
+                                            chosenStartLessonId: availableLessons[0].id
                                         });
                                         if(availableLessons[0]){
                                             this.setAvailableEndLessonsCorresspondingToChosenStartLessons(availableLessons[0].id, lessons);

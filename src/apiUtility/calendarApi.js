@@ -173,3 +173,27 @@ export const getOne = (calendarId, cb, fcb) => {
         })
     $.unblockUI();
 }
+
+export const getClass = (classId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/tkb/" + classId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
+
+export const getClass2 = (lessonId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/tkb/lesson/" + lessonId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}

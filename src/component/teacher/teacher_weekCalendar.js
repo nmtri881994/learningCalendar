@@ -30,7 +30,7 @@ class Teacher_WeekCalendar extends Component {
             weekNumber: 0,
             currentDate: "",
             week: [],
-            editingLessonId: -1,
+            editingLessonId: 0,
             editingLessonDetail: null,
             editingLessonName: "",
             editingSubjectId: 0,

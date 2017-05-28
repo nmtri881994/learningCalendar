@@ -12,6 +12,7 @@ import {editLesson} from '../../action/teacherAction'
 
 //import Apis
 import * as API from '../../apiUtility/teacherApi'
+import * as API2 from '../../apiUtility/calendarApi'
 
 //import Components
 import Mini_Lessons from './../calendar/mini_lessons'
@@ -54,7 +55,9 @@ class EditClass extends Component {
             availableLessons: [],
             availableEndLessons: [],
             message: "",
-            error: ""
+            error: "",
+
+            cl: null
         }
 
         this.handleRoomChange = this.handleRoomChange.bind(this);
@@ -78,6 +81,17 @@ class EditClass extends Component {
             subjectRooms: nextProps.subjectRooms,
             currentDate: nextProps.currentDate
         })
+
+        if (nextProps.lessonId != 0) {
+            API2.getClass2(nextProps.lessonId, (cl) => {
+                this.setState({
+                    cl: cl
+                })
+            }, (error) => {
+                console.log(error);
+            })
+        }
+
         if (nextProps.lessonDetail) {
             this.getAvailableLessons(nextProps.lessonDetail.giangDuong.id, nextProps.lessonDetail.ngay, nextProps.lessonDetail.tkb_tietDauTien.id);
             this.setState({
@@ -179,7 +193,6 @@ class EditClass extends Component {
         }
 
 
-
         this.setState({
             lessonDetail: lessonDetail,
             availableEndLessons: availableEndLessons
@@ -238,7 +251,7 @@ class EditClass extends Component {
         var availableEndLesson = this.state.availableEndLessons;
         if (this.state.lessonDetail.tkb_tietDauTien.id == 0 || availableEndLesson.indexOf(i) == -1) {
             lessonDetail.tkb_tietDauTien.id = i;
-            lessonDetail.tkb_tietCuoiCung.id=i;
+            lessonDetail.tkb_tietCuoiCung.id = i;
             this.setState({
                 lessonDetail: lessonDetail,
             })
@@ -280,6 +293,36 @@ class EditClass extends Component {
         var subjectRooms = this.state.subjectRooms;
         var availableLessons = this.state.availableLessons;
         var availableEndLessons = this.state.availableEndLessons;
+
+        var cl = this.state.cl;
+        console.log(11111, cl);
+        var soTietLyThuyet = 0;
+        var soTietThucHanh = 0;
+        var soTiet;
+        if (cl) {
+            cl.tkb_lichHocTheoNgays.map(tkb => {
+                soTiet = tkb.tkb_tietCuoiCung.thuTu - tkb.tkb_tietDauTien.thuTu +1;
+                if(tkb.giangDuong.dayNha.id == 1){
+                    soTietLyThuyet += soTiet;
+                }
+                if(tkb.giangDuong.dayNha.id == 2){
+                    soTietThucHanh += soTietThucHanh;
+                }
+            })
+        }
+
+        var className = "";
+        if(cl){
+            if(soTietLyThuyet > cl.soTietLyThuyet || soTietThucHanh>cl.soTietThucHanh){
+                className="error-message";
+            }else if(soTietLyThuyet == cl.soTietLyThuyet && soTietThucHanh == cl.soTietThucHanh){
+                className="info-message";
+            }else{
+                className = "warning-message"
+            }
+        }
+
+
         return (<div>
             {/*<!-- The Modal -->*/}
             <div id="myModal" className="modal">
@@ -291,6 +334,7 @@ class EditClass extends Component {
                         {lessonDetail ? <h2>{this.state.lessonName}</h2> : ""}
                     </div>
                     <div className="modal-body">
+                        <div className={className}>Số tiết lý thuyết: {soTietLyThuyet}/{cl?cl.soTietLyThuyet:"0"} <span className="margin-right-20"></span>Số tiết thực hành: {soTietThucHanh}/{cl?cl.soTietThucHanh:"0"}</div>
                         <div className="field-section">
                             <div className="section-title">Thay đổi thời gian, địa điểm</div>
                             <div className="edit-title">
@@ -312,7 +356,7 @@ class EditClass extends Component {
                                 }
                             </select>
                             <div className="edit-title">
-                                Từ tiết
+                                Tiết
                             </div>
                             <Mini_Lessons choseLesson={this.choseLesson} resetLesson={this.resetLesson}
                                           availableLessons={availableLessons}

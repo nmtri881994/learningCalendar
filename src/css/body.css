@@ -37,6 +37,14 @@ li {
     color: red;
 }
 
+.info-message{
+    color: #2196F3;
+}
+
+.warning-message{
+    color: #FFC107;
+}
+
 #login-message{
     margin-top: 10px;
 }
