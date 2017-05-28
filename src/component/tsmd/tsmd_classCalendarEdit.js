@@ -308,7 +308,9 @@ class TSMD_ClassCalendarEdit extends Component {
         calendar.tkb_thu.id = this.state.chosenWeekDayId;
         calendar.tkb_tietDauTien.id = this.state.chosenStartLessonId;
         calendar.tkb_tietCuoiCung.id = this.state.chosenEndLessonId;
-
+        calendar.tuanBatDau = this.state.chosenStartWeek;
+        calendar.tuanKetThuc = this.state.chosenEndWeek;
+        console.log(11, calendar);
         var basicInfo = this.state.basicInfo;
 
         API2.updateWeekCalendar(calendar, basicInfo.yearId, basicInfo.termId, basicInfo.facultyId, basicInfo.yearOfAdmissionId, basicInfo.majorId, (newCalendar) => {
