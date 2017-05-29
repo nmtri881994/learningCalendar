@@ -14,6 +14,9 @@ import {getAllRoomsBySubject} from '../../action/subjectAction'
 import Weekday from '../calendar/weekday'
 import Teacher_editClass from './teacher_editClass'
 
+//import API
+import * as API from '../../apiUtility/calendarApi'
+
 class Teacher_WeekCalendar extends Component {
 
     constructor(props) {
@@ -35,10 +38,13 @@ class Teacher_WeekCalendar extends Component {
             editingLessonName: "",
             editingSubjectId: 0,
             allLessons: null,
-            editingSubjectRooms: []
+            editingSubjectRooms: [],
+            maxWeek: 0,
+            weeks: []
         }
         this.backOneWeek = this.backOneWeek.bind(this);
         this.forthOneWeek = this.forthOneWeek.bind(this);
+        this.handleWeekChange = this.handleWeekChange.bind(this);
         this.triggerModal = this.triggerModal.bind(this);
     }
 
@@ -72,6 +78,19 @@ class Teacher_WeekCalendar extends Component {
         getCurrentWeekCalendar(forthOneWeekDate);
         getLearningYear(forthOneWeekDate);
         getWeekNumber(forthOneWeekDate);
+    }
+
+    handleWeekChange(e){
+        var chosenWeek = e.target.value;
+        API.getFirstDateOfWeek(this.state.year.id, chosenWeek, (date)=>{
+            var currentDate = moment(date).format("YYYY-MM-DD");
+            setCurrentDate(currentDate);
+            getCurrentWeekCalendar(currentDate);
+            getLearningYear(currentDate);
+            getWeekNumber(currentDate);
+        }, (error)=>{
+            console.log(error);
+        })
     }
 
     componentWillMount() {
@@ -145,13 +164,26 @@ class Teacher_WeekCalendar extends Component {
         var week = [];
 
         var monDay = currentdate.add(-numberOfDate + 1, 'days');
-        week.push(monDay.format("YYYY-MM-DD"));
+        week.push(monDay.format("DD-MM-YYYY"));
 
 
         for (var i = 2; i <= 7; i++) {
-            week.push(monDay.add(1, 'days').format("YYYY-MM-DD"));
+            week.push(monDay.add(1, 'days').format("DD-MM-YYYY"));
         }
 
+        if (nextProps.year) {
+            var learningYearStartDate = moment(nextProps.year.ngayBatDau);
+            var learningYearEndDate = moment(nextProps.year.ngayKetThuc);
+            var maxWeek = Math.floor(learningYearEndDate.diff(learningYearStartDate, "days") / 7 + 1);
+            var weeks = [];
+            for (var i = 1; i <= maxWeek; i++) {
+                weeks.push(i);
+            }
+            this.setState({
+                maxWeek: maxWeek,
+                weeks: weeks
+            })
+        }
 
         this.setState({
             lopHocThu2s: lopHocThu2s,
@@ -178,7 +210,10 @@ class Teacher_WeekCalendar extends Component {
                 <div>
                     Năm học: {this.state.year != null ? this.state.year.name : ""} <br/>
                     <i className="fa fa-backward cursor" aria-hidden="true" onClick={this.backOneWeek}/>
-                    <span className="week-name">Tuần: {this.state.weekNumber}</span>
+                    <span className="week-name">Tuần: <select id="start-lesson-selecbox" className="button-mini" value={this.state.weekNumber}
+                                                              onChange={this.handleWeekChange}>
+                        {this.state.weeks.map(week => <option key={week} value={week}>{week}</option>)}
+                    </select></span>
                     <i className="fa fa-forward cursor" aria-hidden="true" onClick={this.forthOneWeek}/>
                 </div>
                 <div className="calendar">

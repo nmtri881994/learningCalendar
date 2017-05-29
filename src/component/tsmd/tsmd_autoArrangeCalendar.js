@@ -41,9 +41,10 @@ class TSMD_AutoArrangeCalendar extends Component {
             perfectAdaptationPoints: 0,
 
             message: "",
+            resetMessage: "",
 
             generations: [],
-            canRun: true
+            canRun: true,
         }
 
         this.handleNumberOfGenerationsChange = this.handleNumberOfGenerationsChange.bind(this);
@@ -142,7 +143,9 @@ class TSMD_AutoArrangeCalendar extends Component {
                     chosenTermId: terms[0].id,
 
                     conditions: conditions,
-                    chosenConditions: chosenConditions
+                    chosenConditions: chosenConditions,
+                    resetMessage: "",
+                    message: ""
                 })
             })
         }, (error) => {
@@ -168,7 +171,9 @@ class TSMD_AutoArrangeCalendar extends Component {
                 chosenTermId: chosenTermId,
 
                 conditions: conditions,
-                chosenConditions: chosenConditions
+                chosenConditions: chosenConditions,
+                resetMessage: "",
+                message: ""
             })
         })
     }
@@ -189,6 +194,7 @@ class TSMD_AutoArrangeCalendar extends Component {
     handleSubmit() {
         this.setState({
             message: "",
+            resetMessage: "",
             generations: []
         })
 
@@ -220,7 +226,9 @@ class TSMD_AutoArrangeCalendar extends Component {
 
     handleDeleteCalendar() {
         API.deleteAllCalendar(this.state.chosenTermId, this.state.chosenYearId, (response) => {
-            console.log(response);
+            this.setState({
+                resetMessage: response.data
+            })
         }, (error) => {
             console.log(error);
         })
@@ -280,6 +288,7 @@ class TSMD_AutoArrangeCalendar extends Component {
                     <div className="choose-condition-item">
                         <button className="warning-button button-medium" onClick={this.handleDeleteCalendar}>Xóa tất cả lịch học</button>
                     </div>
+                    <div className=" margin-left-20 info-message">{this.state.resetMessage}</div>
 
                     <div className="section">
 

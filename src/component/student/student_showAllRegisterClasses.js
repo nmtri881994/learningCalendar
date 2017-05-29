@@ -34,6 +34,10 @@ class Student_ShowAllRegisterClasses extends Component {
             message: ""
         })
         if (classes.length > 0) {
+            classes.sort(function (a,b) {
+                return a.class.id - b.class.id;
+            })
+            console.log(22222222, classes);
             var myTable = $('#myTable').dataTable();
             myTable.fnClearTable();
             var index = 1;

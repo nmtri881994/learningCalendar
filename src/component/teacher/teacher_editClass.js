@@ -295,7 +295,6 @@ class EditClass extends Component {
         var availableEndLessons = this.state.availableEndLessons;
 
         var cl = this.state.cl;
-        console.log(11111, cl);
         var soTietLyThuyet = 0;
         var soTietThucHanh = 0;
         var soTiet;

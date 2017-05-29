@@ -197,3 +197,15 @@ export const getClass2 = (lessonId, cb, fcb) => {
         })
     $.unblockUI();
 }
+
+export const getFirstDateOfWeek = (yearId, week, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/tkb/first-date-of-week/"+yearId+"/"+week, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
