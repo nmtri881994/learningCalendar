@@ -123,11 +123,11 @@ class SV_WeekCalendar extends Component {
 
         if (weekCalendar != null) {
             for (var i = 0; i < weekCalendar.length; i++) {
-                var subjectName = weekCalendar[i].monHoc.ten;
-                var subjectId = weekCalendar[i].monHoc.id;
+                var subjectName = weekCalendar[i].dmMonHoc.ten;
+                var subjectId = weekCalendar[i].dmMonHoc.id;
                 // console.log(subjectId);
                 var lichHocTheoNgays = weekCalendar[i].tkb_lichHocTheoNgays;
-                var teacherName = weekCalendar[i].giaoVien.hoDem + " " + weekCalendar[i].giaoVien.ten;
+                var teacherName = weekCalendar[i].dmNhanVien.hoDem + " " + weekCalendar[i].dmNhanVien.ten;
                 for (var j = 0; j < lichHocTheoNgays.length; j++) {
                     switch (lichHocTheoNgays[j].tkb_thu.ten) {
                         case "Thứ 2":

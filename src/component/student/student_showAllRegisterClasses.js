@@ -27,7 +27,7 @@ class Student_ShowAllRegisterClasses extends Component {
         // var monRegistered = [];
         // classes.map(cl => {
         //     if(cl.registered){
-        //         monRegistered.push(cl.class.monHoc.id)
+        //         monRegistered.push(cl.class.dmMonHoc.id)
         //     }
         // })
         this.setState({
@@ -48,15 +48,15 @@ class Student_ShowAllRegisterClasses extends Component {
                     disabled = "disabled = 'disabled'"
                 }
 
-                // if(monRegistered.indexOf(cl.class.monHoc.id)){
+                // if(monRegistered.indexOf(cl.class.dmMonHoc.id)){
                 //     disabled = "disabled = 'disabled'"
                 // }
                 myTable.fnAddData([
                     index,
-                    class1.monHoc.maMonHoc + "." + cl.maKhoa + "." + class1.khoa_khoaHoc.khoaHoc.nam + "." + class1.id,
-                    class1.monHoc.ten,
-                    class1.monHoc.soTinChi,
-                    class1.giaoVien.hoDem + " " + class1.giaoVien.ten,
+                    class1.dmMonHoc.maMonHoc + "." + cl.maKhoa + "." + class1.khoa_khoaHoc.khoaHoc.nam + "." + class1.id,
+                    class1.dmMonHoc.ten,
+                    class1.dmMonHoc.soTinChi,
+                    class1.dmNhanVien.hoDem + " " + class1.dmNhanVien.ten,
                     class1.soTietLyThuyet,
                     class1.soTietThucHanh,
                     cl.quantity + "/" + class1.soLuongToiDa,

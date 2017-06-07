@@ -5,8 +5,8 @@ class TSMD_ShowAllClassesComponent extends Component {
         super(props)
         this.state = {
             classes: [],
-            khoaId: 0,
-            khoaHocId: 0,
+            khoa: null,
+            khoaHoc: null,
             tableData: ""
         }
     }
@@ -32,13 +32,13 @@ class TSMD_ShowAllClassesComponent extends Component {
             classes.map(cl => {
                 myTable.fnAddData([
                     index,
-                    cl.monHoc.maMonHoc + "." + this.state.khoa.maKhoa + "." + this.state.khoaHoc.nam + "." + cl.id,
-                    cl.monHoc.ten,
-                    cl.giaoVien.hoDem + " " + cl.giaoVien.ten,
+                    cl.dmMonHoc.maMonHoc + "." + this.state.khoa.ma + "." + this.state.khoaHoc.nam + "." + cl.id,
+                    cl.dmMonHoc.ten,
+                    cl.dmNhanVien.hoDem + " " + cl.dmNhanVien.ten,
                     cl.soLuongToiDa,
                     cl.soTietLyThuyet,
                     cl.soTietThucHanh,
-                    '<i class="fa fa-cog arrange-class-icon cursor" aria-hidden="true" data-id="' + cl.id + '" data-name="' + cl.monHoc.ten + '"/>'
+                    '<i class="fa fa-cog arrange-class-icon cursor" aria-hidden="true" data-id="' + cl.id + '" data-name="' + cl.dmMonHoc.ten + '"/>'
                 ]);
                 index++;
             })

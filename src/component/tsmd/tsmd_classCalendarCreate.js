@@ -270,7 +270,7 @@ class TSMD_ClassCalendarCreate extends Component {
     handleSubmit() {
         var calendar = {
             id: 0,
-            giangDuong: {
+            dmGiangDuong: {
                 id: this.state.chosenRoomId
             },
             tkb_thu: {

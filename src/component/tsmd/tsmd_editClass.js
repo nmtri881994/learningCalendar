@@ -102,10 +102,10 @@ class TSMD_EditClass extends Component {
         calendars.map(calendar => {
             soTiet = calendar.tkb_tietCuoiCung.thuTu - calendar.tkb_tietDauTien.thuTu + 1;
             soTuan = calendar.tuanKetThuc - calendar.tuanBatDau + 1;
-            if (calendar.giangDuong.dayNha.id == 1) {
+            if (calendar.dmGiangDuong.dmLoaiPhong.id == 1) {
                 soTietLyThuyet += soTiet * soTuan;
             }
-            if (calendar.giangDuong.dayNha.id == 2) {
+            if (calendar.dmGiangDuong.dmLoaiPhong.id == 2) {
                 soTietThucHanh += soTiet * soTuan;
             }
         })

@@ -108,11 +108,11 @@ class TSMD_ClassCalendarEdit extends Component {
                 chosenWeekDayId = calendar.tkb_thu.id;
                 API.getRoomTypes((roomTypes) => {
                     roomTypes1 = roomTypes;
-                    chosenRoomTypeId = calendar.giangDuong.dayNha.id;
-                    API.getRooms(classId, calendar.giangDuong.dayNha.id, (rooms) => {
+                    chosenRoomTypeId = calendar.dmGiangDuong.dmLoaiPhong.id;
+                    API.getRooms(classId, calendar.dmGiangDuong.dmLoaiPhong.id, (rooms) => {
                         rooms1 = rooms;
-                        chosenRoomId = calendar.giangDuong.id;
-                        API.getAvailableLessons(classId, calendar.id, calendar.tkb_thu.id, calendar.giangDuong.id, startWeek, endWeek, (lessons) => {
+                        chosenRoomId = calendar.dmGiangDuong.id;
+                        API.getAvailableLessons(classId, calendar.id, calendar.tkb_thu.id, calendar.dmGiangDuong.id, startWeek, endWeek, (lessons) => {
                             availableLessons = lessons;
                             chosenStartLessonId = calendar.tkb_tietDauTien.id;
                             chosenEndLessonId = calendar.tkb_tietCuoiCung.id;
@@ -304,7 +304,7 @@ class TSMD_ClassCalendarEdit extends Component {
 
     handleSubmit() {
         var calendar = this.state.calendar;
-        calendar.giangDuong.id = this.state.chosenRoomId;
+        calendar.dmGiangDuong.id = this.state.chosenRoomId;
         calendar.tkb_thu.id = this.state.chosenWeekDayId;
         calendar.tkb_tietDauTien.id = this.state.chosenStartLessonId;
         calendar.tkb_tietCuoiCung.id = this.state.chosenEndLessonId;
@@ -400,7 +400,7 @@ class TSMD_ClassCalendarEdit extends Component {
         var availableEndWeeks = this.state.availableEndWeeks;
         return (<div className="class-week-calendar-time">
             <div className="week-calendar-time-summary" onClick={this.switchMode}>
-                {calendar ? calendar.tkb_thu.ten + " - " + calendar.giangDuong.ten + " - tuần " + calendar.tuanBatDau + " tới " + calendar.tuanKetThuc + " - " + calendar.tkb_tietDauTien.ten + " tới " + calendar.tkb_tietCuoiCung.ten : ""}
+                {calendar ? calendar.tkb_thu.ten + " - " + calendar.dmGiangDuong.ten + " - tuần " + calendar.tuanBatDau + " tới " + calendar.tuanKetThuc + " - " + calendar.tkb_tietDauTien.ten + " tới " + calendar.tkb_tietCuoiCung.ten : ""}
             </div>
             <div className="week-calendar-time-detail hide" ref="detail">
                 <div className="edit-title">

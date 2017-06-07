@@ -124,8 +124,8 @@ class Teacher_WeekCalendar extends Component {
         // console.log(weekCalendar);
         if (weekCalendar != null) {
             for (var i = 0; i < weekCalendar.length; i++) {
-                var subjectName = weekCalendar[i].monHoc.ten;
-                var subjectId = weekCalendar[i].monHoc.id;
+                var subjectName = weekCalendar[i].dmMonHoc.ten;
+                var subjectId = weekCalendar[i].dmMonHoc.id;
                 // console.log(subjectId);
                 var lichHocTheoNgays = weekCalendar[i].tkb_lichHocTheoNgays;
                 for (var j = 0; j < lichHocTheoNgays.length; j++) {

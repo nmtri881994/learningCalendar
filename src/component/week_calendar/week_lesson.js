@@ -55,10 +55,10 @@ class Week_Lesson extends Component {
         var startWeek=0;
         var endWeek = 0;
         if (lopHoc) {
-            type = lopHoc.giangDuong.dayNha.ten;
+            type = lopHoc.dmGiangDuong.dmLoaiPhong.ten;
             subjectName = lopHoc.maLopHoc;
-            room = lopHoc.giangDuong.ten;
-            teacherName = lopHoc.giaoVien.hoDem + " " +  lopHoc.giaoVien.ten;
+            room = lopHoc.dmGiangDuong.ten;
+            teacherName = lopHoc.dmNhanVien.hoDem + " " +  lopHoc.dmNhanVien.ten;
             var startLesson = this.getTietByTenTiet(lopHoc.tkb.tkb_tietDauTien.ten);
             var endLesson = this.getTietByTenTiet(lopHoc.tkb.tkb_tietCuoiCung.ten);
             numberOfLesson = endLesson - startLesson + 1;

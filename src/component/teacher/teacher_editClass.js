@@ -26,7 +26,7 @@ class EditClass extends Component {
         this.state = {
             lessonId: -1,
             lessonDetail: {
-                giangDuong: {
+                dmGiangDuong: {
                     id: 0
                 },
                 giaoVienNhan: "",
@@ -93,7 +93,7 @@ class EditClass extends Component {
         }
 
         if (nextProps.lessonDetail) {
-            this.getAvailableLessons(nextProps.lessonDetail.giangDuong.id, nextProps.lessonDetail.ngay, nextProps.lessonDetail.tkb_tietDauTien.id);
+            this.getAvailableLessons(nextProps.lessonDetail.dmGiangDuong.id, nextProps.lessonDetail.ngay, nextProps.lessonDetail.tkb_tietDauTien.id);
             this.setState({
                 lessonDetail: nextProps.lessonDetail,
                 dateChange: nextProps.lessonDetail.ngay
@@ -108,7 +108,7 @@ class EditClass extends Component {
 
     handleRoomChange(e) {
         var lessonDetail = this.state.lessonDetail;
-        lessonDetail.giangDuong.id = e.target.value;
+        lessonDetail.dmGiangDuong.id = e.target.value;
         this.setState({
             lessonDetail: lessonDetail
         })
@@ -121,7 +121,7 @@ class EditClass extends Component {
         if (roomId) {
             chosenRoomId = roomId;
         } else {
-            chosenRoomId = this.state.lessonDetail.giangDuong.id;
+            chosenRoomId = this.state.lessonDetail.dmGiangDuong.id;
         }
 
         var chosenDate;
@@ -301,10 +301,10 @@ class EditClass extends Component {
         if (cl) {
             cl.tkb_lichHocTheoNgays.map(tkb => {
                 soTiet = tkb.tkb_tietCuoiCung.thuTu - tkb.tkb_tietDauTien.thuTu +1;
-                if(tkb.giangDuong.dayNha.id == 1){
+                if(tkb.dmGiangDuong.dmLoaiPhong.id == 1){
                     soTietLyThuyet += soTiet;
                 }
-                if(tkb.giangDuong.dayNha.id == 2){
+                if(tkb.dmGiangDuong.dmLoaiPhong.id == 2){
                     soTietThucHanh += soTietThucHanh;
                 }
             })
@@ -344,7 +344,7 @@ class EditClass extends Component {
                             <div className="edit-title">
                                 Phòng
                             </div>
-                            <select className="halfLength" value={lessonDetail.giangDuong.id}
+                            <select className="halfLength" value={lessonDetail.dmGiangDuong.id}
                                     onChange={this.handleRoomChange}>
                                 {subjectRooms ?
                                     subjectRooms.map(room =>

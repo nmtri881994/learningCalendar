@@ -191,11 +191,11 @@ class Lesson extends Component {
             // console.log(lopHoc);
             lopHocDetail = lopHoc.lopHocDetail;
             subjectName = lopHoc.subjectName;
-            room = lopHocDetail.giangDuong.ten;
+            room = lopHocDetail.dmGiangDuong.ten;
             var startLesson = this.getTietByTenTiet(lopHocDetail.tkb_tietDauTien.ten);
             var endLesson = this.getTietByTenTiet(lopHocDetail.tkb_tietCuoiCung.ten);
             numberOfLesson = endLesson - startLesson + 1;
-            type = lopHocDetail.giangDuong.dayNha.ten;
+            type = lopHocDetail.dmGiangDuong.dmLoaiPhong.ten;
             teacherMess = lopHocDetail.giaoVienNhan;
             teacherName = lopHoc.teacherName;
             studentShowing = lopHoc.studentShowing;

@@ -47,25 +47,25 @@ class Week_Calendar extends Component {
                 cl.tkb_lichHocTheoTuans.map(tkb => {
                     switch (tkb.tkb_thu.ten) {
                         case "Thứ 2":
-                            lopHocThu2s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
+                            lopHocThu2s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
                             break;
                         case "Thứ 3":
-                            lopHocThu3s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
+                            lopHocThu3s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
                             break;
                         case "Thứ 4":
-                            lopHocThu4s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
+                            lopHocThu4s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
                             break;
                         case "Thứ 5":
-                            lopHocThu5s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
+                            lopHocThu5s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
                             break;
                         case "Thứ 6":
-                            lopHocThu6s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
+                            lopHocThu6s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
                             break;
                         case "Thứ 7":
-                            lopHocThu7s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
+                            lopHocThu7s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
                             break;
                         case "Chủ nhật":
-                            lopHocCNs.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.monHoc, cl.giaoVien, tkb));
+                            lopHocCNs.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
                             break;
                         default:
                             console.log(tkb.tkb_thu.ten);
@@ -85,12 +85,12 @@ class Week_Calendar extends Component {
         })
     }
 
-    getLopHoc(khoa, khoaHoc, classId, monHoc, giaoVien, tkb) {
+    getLopHoc(khoa, khoaHoc, classId, dmMonHoc, dmNhanVien, tkb) {
         return {
-            maLopHoc: monHoc.maMonHoc + "." + khoa.maKhoa + "." + khoaHoc.nam + "." + classId,
-            monHoc: monHoc,
-            giaoVien: giaoVien,
-            giangDuong: tkb.giangDuong,
+            maLopHoc: dmMonHoc.maMonHoc + "." + khoa.maKhoa + "." + khoaHoc.nam + "." + classId,
+            dmMonHoc: dmMonHoc,
+            dmNhanVien: dmNhanVien,
+            dmGiangDuong: tkb.dmGiangDuong,
             tkb: tkb
         }
     }

@@ -38,7 +38,7 @@ class Week_SubLesson extends Component {
 
         var lyThuyet = false;
         if(lesson){
-            if (lesson.giangDuong.dayNha.ten == "Dãy nhà lý thuyết") {
+            if (lesson.dmGiangDuong.dmLoaiPhong.ten == "Dãy nhà lý thuyết") {
                 lyThuyet = true;
             } else {
                 lyThuyet = false;
@@ -74,7 +74,7 @@ class Week_SubLesson extends Component {
                     {lesson.maLopHoc}
                 </div>
                 <div className="subject-detail">
-                    {lesson.giangDuong.maGiangDuong}<br/>
+                    {lesson.dmGiangDuong.maGiangDuong}<br/>
                     Tuần: {lesson.tkb.tuanBatDau}-{lesson.tkb.tuanKetThuc}
                 </div>
             </div> : ""}
