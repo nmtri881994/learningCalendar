@@ -36,9 +36,9 @@ class TSMD_KhoaTableForOpenRegistering extends Component {
 
             var index = 1;
             khoas.map(khoa => {
-                var khoa_khoaHocs = khoa.khoa_khoaHocs;
+                var khoa_khoaHocs = khoa.tkb_khoa_KhoaHocs;
                 khoa_khoaHocs.map(khoa_khoaHoc => {
-                    var registerTime = khoa_khoaHoc.registerTimes[0];
+                    var registerTime = khoa_khoaHoc.tkbThoiGianDangKies[0];
                     var disable = "";
                     if(!registerTime){
                         disable = "disabled = 'disabled'";
@@ -56,7 +56,7 @@ class TSMD_KhoaTableForOpenRegistering extends Component {
                     myTable.fnAddData([
                         index,
                         khoa.ten,
-                        khoa_khoaHoc.khoaHoc.nam,
+                        khoa_khoaHoc.tkb_khoaHoc.nam,
                         registerTime ? moment(registerTime.startTime).format(DATE_TIME_FORMAT_DISPLAY) : "chưa xác định",
                         registerTime ? moment(registerTime.endTime).format(DATE_TIME_FORMAT_DISPLAY) : "chưa xác định",
                         '<label class="switch"> <input '+disable+' class="status-switch" data-id="' + id + '" type="checkbox" ' + checked + ' > <div class="slider round"></div> </label>'

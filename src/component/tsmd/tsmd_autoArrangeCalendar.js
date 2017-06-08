@@ -87,7 +87,6 @@ class TSMD_AutoArrangeCalendar extends Component {
     componentWillReceiveProps(nextProps) {
 
         API.getSemestersNotEndOfYear(nextProps.years[0].id, (terms) => {
-
             API.getConditions(terms[0].id, nextProps.years[0].id, (conditions) => {
                 var chosenConditions = [];
                 conditions.map(cond => {
@@ -257,7 +256,6 @@ class TSMD_AutoArrangeCalendar extends Component {
             }
         })
 
-        console.log(optionalConditions, madatoryConditions);
 
         var generations = this.state.generations;
 

@@ -87,7 +87,7 @@ class Week_Calendar extends Component {
 
     getLopHoc(khoa, khoaHoc, classId, dmMonHoc, dmNhanVien, tkb) {
         return {
-            maLopHoc: dmMonHoc.maMonHoc + "." + khoa.maKhoa + "." + khoaHoc.nam + "." + classId,
+            maLopHoc: dmMonHoc.maMonHoc + "." + khoa.ma + "." + khoaHoc.nam + "." + classId,
             dmMonHoc: dmMonHoc,
             dmNhanVien: dmNhanVien,
             dmGiangDuong: tkb.dmGiangDuong,

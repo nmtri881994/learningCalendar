@@ -27,7 +27,7 @@ class Student_RegisteredClassCalendar extends Component {
             var khoa = {
                 maKhoa: classes[0].maKhoa
             }
-            var khoaHoc = classes[0].class.khoa_khoaHoc.khoaHoc;
+            var khoaHoc = classes[0].class.tkb_khoa_khoaHoc.tkb_khoaHoc;
             classes.map(cl => {
                 if (cl.registered) {
                     classes1.push(cl.class);

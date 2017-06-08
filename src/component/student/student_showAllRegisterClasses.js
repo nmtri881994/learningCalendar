@@ -42,6 +42,7 @@ class Student_ShowAllRegisterClasses extends Component {
             myTable.fnClearTable();
             var index = 1;
             classes.map(cl => {
+                console.log(1111111, cl);
                 var class1 = cl.class;
                 var disabled = "";
                 if (cl.quantity >= class1.soLuongToiDa) {
@@ -53,7 +54,7 @@ class Student_ShowAllRegisterClasses extends Component {
                 // }
                 myTable.fnAddData([
                     index,
-                    class1.dmMonHoc.maMonHoc + "." + cl.maKhoa + "." + class1.khoa_khoaHoc.khoaHoc.nam + "." + class1.id,
+                    class1.dmMonHoc.maMonHoc + "." + cl.maKhoa + "." + class1.tkb_khoa_khoaHoc.tkb_khoaHoc.nam + "." + class1.id,
                     class1.dmMonHoc.ten,
                     class1.dmMonHoc.soTinChi,
                     class1.dmNhanVien.hoDem + " " + class1.dmNhanVien.ten,

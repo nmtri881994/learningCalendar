@@ -94,7 +94,7 @@ export const getClassesCanRegister = (registerTimeId, cb, fcb) => {
             var index = 1;
             var classes1 = [];
             classes.map(cl => {
-                getFacultyCode(cl.khoa_khoaHoc.id, (maKhoa) => {
+                getFacultyCode(cl.tkb_khoa_khoaHoc.id, (maKhoa) => {
                     getClassCurrentQuantity(cl.id, (quantity) => {
                         checkRegistered(cl.id, (registered) =>{
                             classes1.push({
