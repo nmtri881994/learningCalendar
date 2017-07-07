@@ -52,42 +52,41 @@
     height: 408px;
 }
 
-.lesson-small{
+.lesson-small {
     float: left;
     width: 76px;
     display: inline-block;
     margin-right: 2px;
 }
 
-.lesson-tiny{
+.lesson-tiny {
     float: left;
     width: 50px;
     display: block;
     margin-right: 2px;
 }
 
-.lesson-column-final{
+.lesson-column-final {
     margin-right: 0;
 }
 
-.morning{
+.morning {
     overflow-y: auto;
     margin-bottom: 2px;
     background-color: #99B1Da;
 }
 
-.afternoon{
+.afternoon {
     overflow-y: auto;
     margin-bottom: 2px;
     background-color: #4DB6AC;
 }
 
-.sub-lesson-final{
+.sub-lesson-final {
     margin-bottom: 0px;
 }
 
-
-.lesson-container{
+.lesson-container {
     background-color: transparent;
 }
 
@@ -146,26 +145,31 @@
     }
 }
 
-.setting-icon{
+.setting-icon {
     font-size: 20px;
     float: right;
+    margin: 0 4px;
 }
 
-.lesson-actions-corner{
+.setting-icon:hover {
+    color: #FF9800;
+}
+
+.lesson-actions-corner {
     position: absolute;
     bottom: 0;
     width: 144px;
     height: 20px;
     padding: 5px;
-    background:rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     visibility: hidden;
 }
 
-.registered{
+.registered {
 
 }
 
-.note-content{
+.note-content {
     margin: 4px -2px;
     height: 50px;
     overflow-y: auto;
@@ -175,7 +179,7 @@
     border-radius: 5px;
 }
 
-.student-note-content{
+.student-note-content {
     margin: 4px -2px;
     height: 50px;
     overflow-y: auto;
@@ -185,7 +189,7 @@
     border-radius: 5px;
 }
 
-.teacher-note-content{
+.teacher-note-content {
     margin: 4px -2px;
     height: 50px;
     overflow-y: auto;
@@ -195,23 +199,23 @@
     border-radius: 5px;
 }
 
-.edit-title{
+.edit-title {
     font-weight: bold;
 }
 
-.edit-note-textArea{
+.edit-note-textArea {
     font-size: 15px;
     height: 100px;
 }
 
-.edit-date-input{
+.edit-date-input {
 }
 
-.mini-lessons{
+.mini-lessons {
     display: block;
 }
 
-.mini-lesson{
+.mini-lesson {
     width: 20px;
     height: 20px;
     border: 1px solid #ccc;
@@ -220,21 +224,21 @@
     text-align: center;
 }
 
-.lesson-disabled{
-    pointer-events:none;
+.lesson-disabled {
+    pointer-events: none;
     background-color: black;
     opacity: 0.2;
 }
 
-.half-dim{
+.half-dim {
     opacity: 0.5;
 }
 
-.lesson-chosen{
+.lesson-chosen {
     background-color: #90CAF9;
 }
 
-.reset-btn{
+.reset-btn {
     margin-top: -5px;
     margin-left: 10px;
     display: inline-block;

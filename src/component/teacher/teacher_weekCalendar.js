@@ -62,6 +62,10 @@ class Teacher_WeekCalendar extends Component {
         modal[0].style.display = "block";
     }
 
+    triggerCheckAttendanceModal(lessonId, lessonName){
+        
+    }
+
     backOneWeek() {
         var currentDate = moment(this.state.currentDate);
         var backOneWeekDate = currentDate.add(-7, 'days').format("YYYY-MM-DD");
@@ -105,7 +109,8 @@ class Teacher_WeekCalendar extends Component {
         return {
             subjectId: subjectId,
             subjectName: subjectName,
-            lopHocDetail: lichHocTheoNgay
+            lopHocDetail: lichHocTheoNgay,
+            studentShowing: false
         };
     }
 

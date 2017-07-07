@@ -49,8 +49,8 @@ class Lesson extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.lopHoc) {
-            if(nextProps.lopHoc.studentShowing){
-                API.getCalendarStudentNote(nextProps.lopHoc.lopHocDetail.id, (note)=>{
+            if (nextProps.lopHoc.studentShowing) {
+                API.getCalendarStudentNote(nextProps.lopHoc.lopHocDetail.id, (note) => {
                     this.setState({
                         studentNote: note
                     })
@@ -187,7 +187,7 @@ class Lesson extends Component {
         var studentShowing;
         var teacherNote = "";
         // console.log(lopHoc);
-        if(lopHoc){
+        if (lopHoc) {
             // console.log(lopHoc);
             lopHocDetail = lopHoc.lopHocDetail;
             subjectName = lopHoc.subjectName;
@@ -233,14 +233,14 @@ class Lesson extends Component {
                 {subjectName}
             </div>
             <div className="subject-detail">
-                {room?"Phòng học: "+room:""}<br/>
-                {studentShowing?"Giảng viên: "+teacherName: ""}
+                {room ? "Phòng học: " + room : ""}<br/>
+                {studentShowing ? "Giảng viên: " + teacherName : ""}
                 <div className="note-content">
                     {teacherMess}
                 </div>
-                {studentShowing?<div className="student-note-content">
+                {studentShowing ? <div className="student-note-content">
                         {this.state.studentNote}
-                    </div>: <div className="teacher-note-content">
+                    </div> : <div className="teacher-note-content">
                         {teacherNote}
                     </div>}
 
@@ -251,13 +251,15 @@ class Lesson extends Component {
             <div className={css}>
                 {subjectName ? classContent : ""}
                 {subjectName ? <div className="lesson-actions-corner">
-                    <i className="fa fa-cog setting-icon cursor" aria-hidden="true" onClick={this.triggetModal}/>
-                </div> : ""}
+                        <i className="fa fa-cog setting-icon cursor" aria-hidden="true" onClick={this.triggetModal}/>
+                        {!studentShowing ? <i className="fa fa-check-square setting-icon cursor" aria-hidden="true"
+                                             onClick={this.triggetModal}/> : ""}
+                    </div> : ""}
             </div>
         );
     }
 
-    componentDidMount(){
+    componentDidMount() {
         $(".lesson-morning").mouseenter(function () {
             $(this).children(".lesson-actions-corner").css("visibility", "visible");
         })
