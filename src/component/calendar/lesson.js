@@ -41,10 +41,15 @@ class Lesson extends Component {
         }
 
         this.triggetModal = this.triggetModal.bind(this);
+        this.triggerCheckAttendanceModal = this.triggerCheckAttendanceModal.bind(this);
     }
 
     triggetModal() {
         this.props.triggerModal(this.state.lessonId, this.state.lessonName, this.state.subjectId);
+    }
+
+    triggerCheckAttendanceModal(){
+        this.props.triggerCheckAttendanceModal(this.state.lessonId, this.state.lessonName);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -253,7 +258,7 @@ class Lesson extends Component {
                 {subjectName ? <div className="lesson-actions-corner">
                         <i className="fa fa-cog setting-icon cursor" aria-hidden="true" onClick={this.triggetModal}/>
                         {!studentShowing ? <i className="fa fa-check-square setting-icon cursor" aria-hidden="true"
-                                             onClick={this.triggetModal}/> : ""}
+                                             onClick={this.triggerCheckAttendanceModal}/> : ""}
                     </div> : ""}
             </div>
         );

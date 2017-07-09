@@ -91,9 +91,9 @@ class Weekday extends Component {
                     if (startLesson == i) {
                         var lopHoc = lopHocs[j];
                         if (i < 6) {
-                            lessons.push(<Lesson triggerModal={this.props.triggerModal} key={i} date={this.props.date} lopHoc={lopHoc} morning={trueVar} haveClass={trueVar}/>);
+                            lessons.push(<Lesson triggerModal={this.props.triggerModal} triggerCheckAttendanceModal={this.props.triggerCheckAttendanceModal} key={i} date={this.props.date} lopHoc={lopHoc} morning={trueVar} haveClass={trueVar}/>);
                         } else {
-                            lessons.push(<Lesson triggerModal={this.props.triggerModal} key={i} date={this.props.date} lopHoc={lopHoc} morning={falseVar} haveClass={trueVar}/>);
+                            lessons.push(<Lesson triggerModal={this.props.triggerModal} triggerCheckAttendanceModal={this.props.triggerCheckAttendanceModal} key={i} date={this.props.date} lopHoc={lopHoc} morning={falseVar} haveClass={trueVar}/>);
                         }
                     }
                 }

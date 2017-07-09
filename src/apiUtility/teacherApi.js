@@ -62,3 +62,39 @@ export const getAvailableLessonsOfRoomByDate = (lessonId, roomId, date, cb) => {
         })
     $.unblockUI();
 }
+
+export const getStudentsOfLesson = (lessonId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/calendar/students/" + lessonId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
+
+export const getLessonCheckAttendanceHistory = (lessonId, cb, fcb) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/calendar/diem-danh/" + lessonId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+    $.unblockUI();
+}
+
+export const updatePresentStatus = (lessonId, studentId, status) => {
+    $.blockUI(loading);
+    axios(BASE_URL + "/calendar/diem-danh/" + lessonId +"/"+studentId+"/"+status, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            console.log(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    $.unblockUI();
+}

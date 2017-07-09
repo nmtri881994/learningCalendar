@@ -13,6 +13,7 @@ import {getAllRoomsBySubject} from '../../action/subjectAction'
 //Import components
 import Weekday from '../calendar/weekday'
 import Teacher_editClass from './teacher_editClass'
+import Teacher_Check_Attendance from './teacher_check_attendance'
 
 //import API
 import * as API from '../../apiUtility/calendarApi'
@@ -46,6 +47,7 @@ class Teacher_WeekCalendar extends Component {
         this.forthOneWeek = this.forthOneWeek.bind(this);
         this.handleWeekChange = this.handleWeekChange.bind(this);
         this.triggerModal = this.triggerModal.bind(this);
+        this.triggerCheckAttendanceModal = this.triggerCheckAttendanceModal.bind(this);
     }
 
     triggerModal(lessonId, lessonName, subjectId) {
@@ -62,8 +64,14 @@ class Teacher_WeekCalendar extends Component {
         modal[0].style.display = "block";
     }
 
-    triggerCheckAttendanceModal(lessonId, lessonName){
-        
+    triggerCheckAttendanceModal(lessonId, lessonName) {
+        this.setState({
+            editingLessonId: lessonId,
+            editingLessonName: lessonName,
+        });
+
+        var modal = $("#myModal2");
+        modal[0].style.display = "block";
     }
 
     backOneWeek() {
@@ -84,15 +92,15 @@ class Teacher_WeekCalendar extends Component {
         getWeekNumber(forthOneWeekDate);
     }
 
-    handleWeekChange(e){
+    handleWeekChange(e) {
         var chosenWeek = e.target.value;
-        API.getFirstDateOfWeek(this.state.year.id, chosenWeek, (date)=>{
+        API.getFirstDateOfWeek(this.state.year.id, chosenWeek, (date) => {
             var currentDate = moment(date).format("YYYY-MM-DD");
             setCurrentDate(currentDate);
             getCurrentWeekCalendar(currentDate);
             getLearningYear(currentDate);
             getWeekNumber(currentDate);
-        }, (error)=>{
+        }, (error) => {
             console.log(error);
         })
     }
@@ -215,26 +223,27 @@ class Teacher_WeekCalendar extends Component {
                 <div>
                     Năm học: {this.state.year != null ? this.state.year.name : ""} <br/>
                     <i className="fa fa-backward cursor" aria-hidden="true" onClick={this.backOneWeek}/>
-                    <span className="week-name">Tuần: <select id="start-lesson-selecbox" className="button-mini" value={this.state.weekNumber}
+                    <span className="week-name">Tuần: <select id="start-lesson-selecbox" className="button-mini"
+                                                              value={this.state.weekNumber}
                                                               onChange={this.handleWeekChange}>
                         {this.state.weeks.map(week => <option key={week} value={week}>{week}</option>)}
                     </select></span>
                     <i className="fa fa-forward cursor" aria-hidden="true" onClick={this.forthOneWeek}/>
                 </div>
                 <div className="calendar">
-                    <Weekday name="Thứ 2" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu2s}
+                    <Weekday name="Thứ 2" triggerModal={this.triggerModal} triggerCheckAttendanceModal={this.triggerCheckAttendanceModal} lopHocs={this.state.lopHocThu2s}
                              date={this.state.week[0]}/>
-                    <Weekday name="Thứ 3" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu3s}
+                    <Weekday name="Thứ 3" triggerModal={this.triggerModal} triggerCheckAttendanceModal={this.triggerCheckAttendanceModal} lopHocs={this.state.lopHocThu3s}
                              date={this.state.week[1]}/>
-                    <Weekday name="Thứ 4" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu4s}
+                    <Weekday name="Thứ 4" triggerModal={this.triggerModal} triggerCheckAttendanceModal={this.triggerCheckAttendanceModal} lopHocs={this.state.lopHocThu4s}
                              date={this.state.week[2]}/>
-                    <Weekday name="Thứ 5" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu5s}
+                    <Weekday name="Thứ 5" triggerModal={this.triggerModal} triggerCheckAttendanceModal={this.triggerCheckAttendanceModal} lopHocs={this.state.lopHocThu5s}
                              date={this.state.week[3]}/>
-                    <Weekday name="Thứ 6" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu6s}
+                    <Weekday name="Thứ 6" triggerModal={this.triggerModal} triggerCheckAttendanceModal={this.triggerCheckAttendanceModal} lopHocs={this.state.lopHocThu6s}
                              date={this.state.week[4]}/>
-                    <Weekday name="Thứ 7" triggerModal={this.triggerModal} lopHocs={this.state.lopHocThu7s}
+                    <Weekday name="Thứ 7" triggerModal={this.triggerModal} triggerCheckAttendanceModal={this.triggerCheckAttendanceModal} lopHocs={this.state.lopHocThu7s}
                              date={this.state.week[5]}/>
-                    <Weekday name="Chủ nhật" triggerModal={this.triggerModal} lopHocs={this.state.lopHocCNs}
+                    <Weekday name="Chủ nhật" triggerModal={this.triggerModal} triggerCheckAttendanceModal={this.triggerCheckAttendanceModal} lopHocs={this.state.lopHocCNs}
                              date={this.state.week[6]}/>
                 </div>
                 <Teacher_editClass currentDate={this.state.currentDate} subjectRooms={this.state.editingSubjectRooms}
@@ -242,6 +251,8 @@ class Teacher_WeekCalendar extends Component {
                                    lessonName={this.state.editingLessonName}
                                    lessonDetail={this.state.editingLessonDetail} allLessons={this.state.allLessons}
                                    subjectId={this.state.editingSubjectId}/>
+                <Teacher_Check_Attendance lessonId={this.state.editingLessonId}
+                                          lessonName={this.state.editingLessonName}/>
             </div>
 
         );

@@ -32,6 +32,10 @@
     width: 500px;
 }
 
+.modal-medium{
+    width: 800px;
+}
+
 /* Add Animation */
 @-webkit-keyframes animatetop {
     from {
