@@ -174,3 +174,43 @@ export const cancelRegisterClass = (classId, cb, fcb) => {
             fcb(error);
         })
 }
+
+export const getCurrentSemesterCalendar = (cb, fcb) => {
+    axios(BASE_URL+"/calendar/current-week-calendar", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}
+
+export const getCurrentSemesterYear = (cb, fcb) => {
+    axios(BASE_URL+"/calendar/current-semester-year", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}
+
+// export const printCalendar = (cb, fcb) => {
+//     axios(BASE_URL+"/calendar/print", {headers: {Authorization: localStorage.getItem('token')}})
+//         .then(function (response) {
+//             console.log(response.data);
+//         })
+//         .catch(function (error) {
+//             fcb(error);
+//         })
+// }
+
+export const getStudentId = (cb, fcb) => {
+    axios(BASE_URL+"/get-student-id", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}

@@ -21,6 +21,8 @@ import {yearsNotEnd, semestersNotEnd} from './reducer/tsmdReducer'
 import CalendarNewStyle from './component/test/CalendarNewStyle'
 import SystemChat from './component/systemChat'
 import TSMD_OpenRegisteringTime from './component/tsmd/tsmd_openRegisteringTime'
+import Student_PrintCalendar from './component/student/student_printCalendar'
+import Teacher_PrintCalendar from './component/teacher/teacher_printCalendar'
 
 //Import container
 import LoginContainer from './container/loginContainer'
@@ -90,11 +92,13 @@ ReactDOM.render(
             <Route path="test-calendar" component={CalendarNewStyle}/>
             <Route path="sinhvien" component={Student_MainContainer}>
                 <Route path="thoi-khoa-bieu-tuan" component={Student_WeekCalendarContainer}/>
+                <Route path="in-thoi-khoa-bieu" component={Student_PrintCalendar}/>
                 <Route path="system-chat" component={SystemChat}/>
                 <Route path="dang-ky-hoc" component={Student_RegisterSubjectClassContainer}/>
             </Route>
             <Route path="giangvien" component={Teacher_MainContainer}>
                 <Route path="thoi-khoa-bieu-tuan" component={Teacher_WeekCalendarContainer}/>
+                <Route path="in-thoi-khoa-bieu" component={Teacher_PrintCalendar}/>
                 <Route path="system-chat" component={SystemChat}/>
             </Route>
             <Route path="giaovu" component={TSMD_MainContainer}>

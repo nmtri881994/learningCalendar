@@ -98,3 +98,33 @@ export const updatePresentStatus = (lessonId, studentId, status) => {
         })
     $.unblockUI();
 }
+
+export const getCurrentSemesterCalendar = (cb, fcb) => {
+    axios(BASE_URL+"/calendar/current-week-calendar", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}
+
+export const getCurrentSemesterYear = (cb, fcb) => {
+    axios(BASE_URL+"/calendar/current-semester-year", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}
+
+export const getTeacherId = (cb, fcb) => {
+    axios(BASE_URL+"/get-teacher-id", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}

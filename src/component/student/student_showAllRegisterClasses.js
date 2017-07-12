@@ -37,12 +37,10 @@ class Student_ShowAllRegisterClasses extends Component {
             classes.sort(function (a,b) {
                 return a.class.id - b.class.id;
             })
-            console.log(22222222, classes);
             var myTable = $('#myTable').dataTable();
             myTable.fnClearTable();
             var index = 1;
             classes.map(cl => {
-                console.log(1111111, cl);
                 var class1 = cl.class;
                 var disabled = "";
                 if (cl.quantity >= class1.soLuongToiDa) {

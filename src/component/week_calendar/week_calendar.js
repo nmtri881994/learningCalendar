@@ -28,12 +28,12 @@ class Week_Calendar extends Component {
     componentWillReceiveProps(nextProps) {
         if(nextProps.classes.length > 0 || nextProps.classes!=this.state.classes){
             var classes = nextProps.classes;
+            console.log(1111, classes);
             this.setState({
                 classes: classes
             })
 
             var khoa = nextProps.khoa;
-            var khoaHoc = nextProps.khoaHoc;
 
             var lopHocThu2s = [];
             var lopHocThu3s = [];
@@ -44,28 +44,29 @@ class Week_Calendar extends Component {
             var lopHocCNs = [];
 
             classes.map(cl => {
-                cl.tkb_lichHocTheoTuans.map(tkb => {
+                var khoaHoc  = cl.class.tkb_khoa_khoaHoc.tkb_khoaHoc;
+                cl.class.tkb_lichHocTheoTuans.map(tkb => {
                     switch (tkb.tkb_thu.ten) {
                         case "Thứ 2":
-                            lopHocThu2s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
+                            lopHocThu2s.push(this.getLopHoc(cl.maKhoa, khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
                             break;
                         case "Thứ 3":
-                            lopHocThu3s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
+                            lopHocThu3s.push(this.getLopHoc(cl.maKhoa, khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
                             break;
                         case "Thứ 4":
-                            lopHocThu4s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
+                            lopHocThu4s.push(this.getLopHoc(cl.maKhoa, khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
                             break;
                         case "Thứ 5":
-                            lopHocThu5s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
+                            lopHocThu5s.push(this.getLopHoc(cl.maKhoa, khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
                             break;
                         case "Thứ 6":
-                            lopHocThu6s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
+                            lopHocThu6s.push(this.getLopHoc(cl.maKhoa, khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
                             break;
                         case "Thứ 7":
-                            lopHocThu7s.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
+                            lopHocThu7s.push(this.getLopHoc(cl.maKhoa, khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
                             break;
                         case "Chủ nhật":
-                            lopHocCNs.push(this.getLopHoc(khoa, khoaHoc, cl.id, cl.dmMonHoc, cl.dmNhanVien, tkb));
+                            lopHocCNs.push(this.getLopHoc(cl.maKhoa, khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
                             break;
                         default:
                             console.log(tkb.tkb_thu.ten);
@@ -85,9 +86,9 @@ class Week_Calendar extends Component {
         })
     }
 
-    getLopHoc(khoa, khoaHoc, classId, dmMonHoc, dmNhanVien, tkb) {
+    getLopHoc(maKhoa, khoaHoc, classId, dmMonHoc, dmNhanVien, tkb) {
         return {
-            maLopHoc: dmMonHoc.maMonHoc + "." + khoa.ma + "." + khoaHoc.nam + "." + classId,
+            maLopHoc: dmMonHoc.maMonHoc + "." + maKhoa + "." + khoaHoc.nam + "." + classId,
             dmMonHoc: dmMonHoc,
             dmNhanVien: dmNhanVien,
             dmGiangDuong: tkb.dmGiangDuong,

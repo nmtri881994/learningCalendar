@@ -11,8 +11,6 @@ class Student_RegisteredClassCalendar extends Component {
         super(props);
         this.state = {
             classes: [],
-            khoa: null,
-            khoaHoc: null
         }
     }
 
@@ -24,26 +22,22 @@ class Student_RegisteredClassCalendar extends Component {
         var classes = nextProps.classes;
         if (classes.length > 0) {
             var classes1 = [];
-            var khoa = {
-                maKhoa: classes[0].maKhoa
-            }
-            var khoaHoc = classes[0].class.tkb_khoa_khoaHoc.tkb_khoaHoc;
+            console.log(classes);
+
             classes.map(cl => {
                 if (cl.registered) {
-                    classes1.push(cl.class);
+                    classes1.push(cl);
                 }
             })
             this.setState({
                 classes: classes1,
-                khoa: khoa,
-                khoaHoc: khoaHoc
             })
         }
     }
 
     render() {
         return (<div>
-            <Week_Calendar khoa={this.state.khoa} khoaHoc={this.state.khoaHoc} classes={this.state.classes}/>
+            <Week_Calendar classes={this.state.classes}/>
         </div>)
     }
 

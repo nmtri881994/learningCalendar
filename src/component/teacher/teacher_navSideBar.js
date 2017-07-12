@@ -25,6 +25,14 @@ class NavSideBar extends Component {
                                             </a>
                                         </li>
                                     </ul>
+                                    <ul className="calendars">
+                                        <li>
+                                            <a href="/giangvien/in-thoi-khoa-bieu" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">In lịch</div>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
                                 {/*<div className="slide-bar-nav-inner-calendars">*/}
                                     {/*<div className="slide-bar-nav-inner-heading not-first-heading">*/}

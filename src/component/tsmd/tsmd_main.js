@@ -24,7 +24,6 @@ class TSMD_Main extends Component {
                                 <div className="page-panel-content">
                                     {this.props.children}
                                 </div>
-
                             </div>
                         </div>
                     </div>
