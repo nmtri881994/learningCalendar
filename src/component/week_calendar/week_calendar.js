@@ -28,12 +28,11 @@ class Week_Calendar extends Component {
     componentWillReceiveProps(nextProps) {
         if(nextProps.classes.length > 0 || nextProps.classes!=this.state.classes){
             var classes = nextProps.classes;
-            console.log(1111, classes);
             this.setState({
                 classes: classes
             })
 
-            var khoa = nextProps.khoa;
+            // var khoa = nextProps.khoa;
 
             var lopHocThu2s = [];
             var lopHocThu3s = [];
@@ -88,7 +87,7 @@ class Week_Calendar extends Component {
 
     getLopHoc(maKhoa, khoaHoc, classId, dmMonHoc, dmNhanVien, tkb) {
         return {
-            maLopHoc: dmMonHoc.maMonHoc + "." + maKhoa + "." + khoaHoc.nam + "." + classId,
+            maLopHoc: dmMonHoc.maMonHoc + "." + khoaHoc.nam + "." + classId,
             dmMonHoc: dmMonHoc,
             dmNhanVien: dmNhanVien,
             dmGiangDuong: tkb.dmGiangDuong,

@@ -22,7 +22,6 @@ class Student_RegisteredClassCalendar extends Component {
         var classes = nextProps.classes;
         if (classes.length > 0) {
             var classes1 = [];
-            console.log(classes);
 
             classes.map(cl => {
                 if (cl.registered) {

@@ -352,10 +352,6 @@ class TSMD_ClassCalendarEdit extends Component {
     choseLesson(i) {
         var availableLessons = this.state.availableLessons;
         var availableEndLesson = this.state.availableEndLessons;
-        console.log(i);
-        console.log(availableLessons);
-        console.log(this.state.chosenStartLessonId)
-        console.log(this.state.chosenStartLessonId == 0 || availableEndLesson.indexOf(i) == -1)
         if (this.state.chosenStartLessonId == 0 || availableEndLesson.indexOf(i) == -1) {
             this.setState({
                 chosenStartLessonId: i,

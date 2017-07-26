@@ -30,7 +30,6 @@ class Student_Time extends Component {
 
     componentWillReceiveProps(nextProps) {
         var canRegister = nextProps.canRegister;
-        console.log(nextProps);
         if (canRegister && canRegister.canRegister) {
             var intervalId = setInterval(this.refreshTimeLeft, 1000);
             this.setState({

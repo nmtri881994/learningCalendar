@@ -38,6 +38,61 @@ class TSMD_NavSideBar extends Component {
                                         </li>
                                     </ul>
                                 </div>
+                                <div className="slide-bar-nav-inner-calendars">
+                                    <div className="slide-bar-nav-inner-heading not-first-heading">
+                                        <strong>Nhập dữ liệu</strong>
+                                    </div>
+                                    <ul className="calendars">
+                                        <li>
+                                            <a href="/giaovu/nhap-du-lieu/khoa" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Khoa</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Khóa học</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Lớp</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Giáo viên</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Sinh viên</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Lớp học phần</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Tiến độ</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Các điều kiện ràng buộc</div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </nav>
                     </div>

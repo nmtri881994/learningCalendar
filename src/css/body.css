@@ -185,7 +185,22 @@ button:focus {
     background-color: white;
     color: #607D8B;
     border: 1px solid #607D8B;
+}
 
+.delete-icon{
+    font-size: 20px;
+}
+
+.delete-icon:hover{
+    color: red;
+}
+
+.edit-icon{
+    font-size: 20px;
+}
+
+.edit-icon:hover{
+    color: #3F51B5
 }
 
 .button-mini{
@@ -203,4 +218,8 @@ button:focus {
 
 .padding-top-bottom-3px{
     padding: 3px 0;
+}
+
+.input-full-window{
+    width: 100%;
 }

@@ -92,6 +92,7 @@ class TSMD_ShowAllClassesComponent extends Component {
         var triggerModal = (id, name) => this.props.triggerModal(id, name);
         $(document).ready(function () {
             $('.arrange-class-icon').on('click', function (evt) {
+                alert(2);
                 triggerModal($(this).attr("data-id"), $(this).attr("data-name"));
             })
         })

@@ -38,6 +38,7 @@ class TSMD_ArrangeCalendar extends Component {
             majors: [],
             chosenMajorId: 0,
             classes: [],
+            classes1: [],
             editingClassId: 0,
             editingClassName: ""
         }
@@ -249,8 +250,16 @@ class TSMD_ArrangeCalendar extends Component {
     handleSubmit() {
         var state = this.state;
         API2.getClasses(state.chosenYearId, state.chosenTermId, state.chosenFacultyId, state.chosenYearOfAdmissionId, state.chosenMajorId, (classes) => {
+            console.log(2222222, classes);
+            let classes1 = [];
+            classes.map(cl => {
+                classes1.push({
+                    class: cl
+                })
+            })
             this.setState({
-                classes: classes
+                classes: classes,
+                classes1: classes1
             });
         }, (error) => {
             console.log(error);
@@ -334,11 +343,11 @@ class TSMD_ArrangeCalendar extends Component {
                     <span className="edit-title">
                         Ngành
                     </span>
-                    <select className="year-select-long" onChange={this.handleMajorChange}
-                            value={this.state.chosenMajorId}>
-                        {majors.map(major => <option key={major.id} value={major.id}>{major.ten}</option>)}
-                    </select>
-                </div> : ""}
+                        <select className="year-select-long" onChange={this.handleMajorChange}
+                                value={this.state.chosenMajorId}>
+                            {majors.map(major => <option key={major.id} value={major.id}>{major.ten}</option>)}
+                        </select>
+                    </div> : ""}
                 <div className="choose-condition-item">
                     <button className="ok-button button-mini" onClick={this.handleSubmit}>OK</button>
                 </div>
@@ -350,7 +359,7 @@ class TSMD_ArrangeCalendar extends Component {
             </div>
 
             <div id="classes-calendar">
-                <Week_Calendar khoa={chosenKhoa} khoaHoc={chosenYearOfAdmission} classes={this.state.classes}/>
+                <Week_Calendar khoa={chosenKhoa} khoaHoc={chosenYearOfAdmission} classes={this.state.classes1}/>
             </div>
             <TSMD_EditClass termId={this.state.chosenTermId} yearId={this.state.chosenYearId}
                             facultyId={this.state.chosenFacultyId}
@@ -372,8 +381,15 @@ class TSMD_ArrangeCalendar extends Component {
         if (shoudldRefresh) {
             var state = this.state;
             API2.getClasses(state.chosenYearId, state.chosenTermId, state.chosenFacultyId, state.chosenYearOfAdmissionId, state.chosenMajorId, (classes) => {
+                let classes1 = [];
+                classes.map(cl=>{
+                    classes1.push({
+                        class: cl
+                    })
+                })
                 this.setState({
-                    classes: classes
+                    classes: classes,
+                    classes1: classes1
                 });
             }, (error) => {
                 console.log(error);
