@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react'
 
-class TSMD_EditKhoa extends Component {
+class TSMD_EditGiangDuong extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -108,11 +108,10 @@ class TSMD_EditKhoa extends Component {
             <div className="modal-content modal-small">
                 <div className="modal-header text-center">
                     <span className="close" onClick={this.close}>&times;</span>
-                    <h3>Thay đổi thông tin khoa</h3>
+                    <h3>Thay đổi thông tin giảng đường</h3>
                 </div>
                 <div className="modal-body">
                     <div className="section">
-                        <div className="section-title margin-left-20">Nhập thông tin khoa</div>
                         <div>
                             <div className="edit-title">Mã giảng đường</div>
                             <input className="input-medium" value={this.state.room.maGiangDuong}
@@ -165,4 +164,4 @@ class TSMD_EditKhoa extends Component {
     }
 }
 
-export default TSMD_EditKhoa
+export default TSMD_EditGiangDuong

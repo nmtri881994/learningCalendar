@@ -8,7 +8,7 @@ import * as API from '../../../../apiUtility/inputDataApi'
 import TSMD_AllGiangDuongs from './tsmd_allGiangDuongs'
 import TSMD_EditGiangDuong from './tsmd_editGiangDuong'
 
-class TSMD_InputKhoa extends Component {
+class TSMD_InputGiangDuong extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -170,7 +170,7 @@ class TSMD_InputKhoa extends Component {
         return (
             <div>
                 <div className="section">
-                    <div className="section-title margin-left-20">Nhập thông tin khoa</div>
+                    <div className="section-title margin-left-20">Nhập thông tin giảng đường</div>
                     <div className="choose-condition-item">
                         <span className="edit-title">Mã giảng đường</span>
                         <input className="input-medium margin-left-20" value={this.state.roomCode}
@@ -208,7 +208,7 @@ class TSMD_InputKhoa extends Component {
 
                 </div>
                 <div className="section">
-                    <div className="section-title margin-left-20">Danh sách khoa</div>
+                    <div className="section-title margin-left-20">Danh sách giảng đường</div>
                     <div className="error-message margin-left-20">{this.state.errorMess}</div>
                     <div className="margin-left-20">
                         <TSMD_AllGiangDuongs _triggerModal={this._triggerModal} _deleteRoom={this._deleteRoom}
@@ -228,4 +228,4 @@ class TSMD_InputKhoa extends Component {
     }
 }
 
-export default TSMD_InputKhoa
+export default TSMD_InputGiangDuong

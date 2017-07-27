@@ -96,3 +96,42 @@ export const deleteRoom = (roomId, cb, fcb) => {
         })
 };
 
+export const getAllTerms = (cb, fcb) => {
+    axios(BASE_URL + "/all-khoa-hoc", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const insertTerm = (term, cb, fcb) => {
+    axios.post(BASE_URL + "/khoa-hoc", term, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const editTerm = (term, cb, fcb) => {
+    axios.post(BASE_URL + "/khoa-hoc/edit", term, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteTerm = (termId, cb, fcb) => {
+    axios(BASE_URL + "/khoa-hoc/delete/"+termId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
