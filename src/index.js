@@ -26,6 +26,7 @@ import Teacher_PrintCalendar from './component/teacher/teacher_printCalendar'
 import TSMD_InputKhoa from './component/tsmd/inputData/khoa/tsmd_inputKhoa'
 import TSMD_InputGiangDuong from './component/tsmd/inputData/giangDuong/tsmd_inputGiangDuong'
 import TSMD_InputKhoaHoc from './component/tsmd/inputData/khoaHoc/tsmd_inputKhoaHoc'
+import TSMD_InputNamHoc from './component/tsmd/inputData/namHoc/tsmd_inputNamHoc'
 
 //Import container
 import LoginContainer from './container/loginContainer'
@@ -111,6 +112,7 @@ ReactDOM.render(
                 <Route path="nhap-du-lieu/khoa" component={TSMD_InputKhoa}/>
                 <Route path="nhap-du-lieu/giang-duong" component={TSMD_InputGiangDuong}/>
                 <Route path="nhap-du-lieu/khoa-hoc" component={TSMD_InputKhoaHoc}/>
+                <Route path="nhap-du-lieu/nam-hoc" component={TSMD_InputNamHoc}/>
             </Route>
         </Router>
     </Provider>,

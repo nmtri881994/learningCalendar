@@ -96,6 +96,7 @@ export const deleteRoom = (roomId, cb, fcb) => {
         })
 };
 
+//terms
 export const getAllTerms = (cb, fcb) => {
     axios(BASE_URL + "/all-khoa-hoc", {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
@@ -128,6 +129,47 @@ export const editTerm = (term, cb, fcb) => {
 
 export const deleteTerm = (termId, cb, fcb) => {
     axios(BASE_URL + "/khoa-hoc/delete/"+termId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+//years
+export const getAllYears = (cb, fcb) => {
+    axios(BASE_URL + "/all-nam-hoc", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const insertYear = (year, cb, fcb) => {
+    axios.post(BASE_URL + "/nam-hoc", year, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const editYear = (year, cb, fcb) => {
+    axios.post(BASE_URL + "/nam-hoc/edit", year, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteYear = (yearId, cb, fcb) => {
+    axios(BASE_URL + "/nam-hoc/delete/"+yearId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
