@@ -24,6 +24,7 @@ import TSMD_OpenRegisteringTime from './component/tsmd/tsmd_openRegisteringTime'
 import Student_PrintCalendar from './component/student/student_printCalendar'
 import Teacher_PrintCalendar from './component/teacher/teacher_printCalendar'
 import TSMD_InputKhoa from './component/tsmd/inputData/khoa/tsmd_inputKhoa'
+import TSMD_InputGiangDuong from './component/tsmd/inputData/giangDuong/tsmd_inputGiangDuong'
 
 //Import container
 import LoginContainer from './container/loginContainer'
@@ -107,6 +108,7 @@ ReactDOM.render(
                 <Route path="sap-xep-tkb/tu-dong" component={TSMD_AutoArrangeCalendarContainer}/>
                 <Route path="mo-dang-ky" component={TSMD_OpenRegisteringTime}/>
                 <Route path="nhap-du-lieu/khoa" component={TSMD_InputKhoa}/>
+                <Route path="nhap-du-lieu/giang-duong" component={TSMD_InputGiangDuong}/>
             </Route>
         </Router>
     </Provider>,
