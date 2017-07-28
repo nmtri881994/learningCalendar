@@ -8,16 +8,25 @@ import * as API from '../../../../apiUtility/inputDataApi'
 import TSMD_AllKhoaHocs from './tsmd_allKhoaHocs'
 import TSMD_EditKhoaHoc from './tsmd_editKhoaHoc'
 
-class TSMD_InputKhoaHoc extends Component {
+class TSMD_InputKhoaKhoaHoc extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            terms: [],
-            year: 0,
+            khoas: [],
+            khoaId: 0,
+            khoaHocs: [],
+            khoaHocId: 0,
+            termYears: [],
+            kiPhanNganhId: 0,
+            kiBatDauId: 0,
+            kiKetThucId: 0,
             errorMess: "",
-            editingTerm: {
-                id: 0,
-                nam: 0
+            editingKhoaKhoaHoc: {
+                khoa: {},
+                tkb_khoaHoc: {},
+                kiPhanNganh: {},
+                kiBatDau: {},
+                kiKetThuc: {}
             }
         }
 
@@ -114,7 +123,7 @@ class TSMD_InputKhoaHoc extends Component {
         return (
             <div>
                 <div className="section">
-                    <div className="section-title margin-left-20">Nhập thông tin khóa học</div>
+                    <div className="section-title margin-left-20">Nhập thông tin khoa - khóa học</div>
                     <div className="choose-condition-item">
                         <span className="edit-title">Năm</span>
                         <input className="input-small margin-left-20" value={this.state.year}
@@ -127,13 +136,13 @@ class TSMD_InputKhoaHoc extends Component {
 
                 </div>
                 <div className="section">
-                    <div className="section-title margin-left-20">Danh sách khóa học</div>
+                    <div className="section-title margin-left-20">Danh sách khoa - khóa học</div>
                     <div className="error-message margin-left-20">{this.state.errorMess}</div>
                     <div className="margin-left-20">
-                        <TSMD_AllKhoaHocs _deleteTerm={this._deleteTerm} _triggerModal={this._triggerModal}
-                                          terms={this.state.terms}/>
+                        {/*<TSMD_AllKhoaHocs _deleteTerm={this._deleteTerm} _triggerModal={this._triggerModal}*/}
+                        {/*terms={this.state.terms}/>*/}
                     </div>
-                    <TSMD_EditKhoaHoc _editTerm={this._editTerm} term={this.state.editingTerm}/>
+                    {/*<TSMD_EditKhoaHoc _editTerm={this._editTerm} term={this.state.editingTerm}/>*/}
                 </div>
             </div>)
     }
@@ -146,4 +155,4 @@ class TSMD_InputKhoaHoc extends Component {
     }
 }
 
-export default TSMD_InputKhoaHoc
+export default TSMD_InputKhoaKhoaHoc

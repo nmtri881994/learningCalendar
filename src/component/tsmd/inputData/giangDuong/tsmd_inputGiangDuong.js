@@ -182,9 +182,9 @@ class TSMD_InputGiangDuong extends Component {
                                onChange={this._onRoomNameChange}/>
                     </div>
                     <div className="choose-condition-item">
-                    <span className="edit-title">
-                        Loại giảng đường
-                    </span>
+                        <span className="edit-title">
+                            Loại giảng đường
+                        </span>
                         <select className="input-medium margin-left-20" value={this.state.roomTypeId}
                                 onChange={this._onRoomTypeChange}>
                             {this.state.roomTypes.map(roomType => <option key={roomType.id}

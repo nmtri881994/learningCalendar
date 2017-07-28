@@ -177,3 +177,55 @@ export const deleteYear = (yearId, cb, fcb) => {
             fcb(error);
         })
 };
+
+//term - year
+export const getAllTerms1 = (cb, fcb) => {
+    axios(BASE_URL + "/all-ki-hoc", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const getAllTermYears = (cb, fcb) => {
+    axios(BASE_URL + "/all-ki-hoc-nam-hoc", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+
+export const insertTermYear = (termYear, cb, fcb) => {
+    axios.post(BASE_URL + "/ki-hoc-nam-hoc", termYear, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const editTermYear = (termYear, cb, fcb) => {
+    axios.post(BASE_URL + "/ki-hoc-nam-hoc/edit", termYear, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteTermYear = (termYearId, cb, fcb) => {
+    axios(BASE_URL + "/ki-hoc-nam-hoc/delete/"+termYearId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};

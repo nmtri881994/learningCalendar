@@ -3,12 +3,15 @@
  */
 import React, {Component} from 'react'
 
-class TSMD_AllGiangDuongs extends Component {
+//import APIs
+import * as API from '../../../../apiUtility/inputDataApi'
+
+class TSMD_AllKiHocNamHocs extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            rooms: []
+            termYears: []
         }
 
     }
@@ -18,26 +21,25 @@ class TSMD_AllGiangDuongs extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.rooms.length != 0 || nextProps.rooms != this.state.rooms) {
-            const rooms = nextProps.rooms;
+        if (nextProps.termYears.length != 0 || nextProps.termYears != this.state.termYears) {
+            const termYears = nextProps.termYears;
             this.setState({
-                rooms: rooms
+                termYears: termYears
             })
 
             var myTable = $('#myTable').dataTable();
             myTable.fnClearTable();
 
             var index = 1;
-            rooms.map(room => {
+            termYears.map(termYear => {
                 myTable.fnAddData([
                     index,
-                    room.maGiangDuong,
-                    room.ten,
-                    room.dmLoaiPhong.ten,
-                    room.tang,
-                    room.soLuong,
-                    '<i class="fa fa-pencil-square edit-icon cursor" name="edit" data-id="' + room.id + '"/>',
-                    '<i class="fa fa-trash delete-icon cursor" name="delete" data-id="' + room.id + '"/>'
+                    termYear.namHoc.name,
+                    termYear.kiHoc.ten,
+                    termYear.ngayBatDau,
+                    termYear.ngayKetThuc,
+                    '<i class="fa fa-pencil-square edit-icon cursor" name="edit" data-id="' + termYear.id + '"/>',
+                    '<i class="fa fa-trash delete-icon cursor" name="delete" data-id="' + termYear.id + '"/>'
                 ]);
                 index++;
             })
@@ -50,11 +52,10 @@ class TSMD_AllGiangDuongs extends Component {
                 <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Mã</th>
-                    <th>Tên</th>
-                    <th>Loại phòng</th>
-                    <th>Tầng</th>
-                    <th>Số lượng</th>
+                    <th>Năm học</th>
+                    <th>Kì học</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
                     <th>Sửa</th>
                     <th>Xóa</th>
                 </tr>
@@ -62,11 +63,10 @@ class TSMD_AllGiangDuongs extends Component {
                 <tfoot>
                 <tr>
                     <th>STT</th>
-                    <th>Mã</th>
-                    <th>Tên</th>
-                    <th>Loại phòng</th>
-                    <th>Tầng</th>
-                    <th>Số lượng</th>
+                    <th>Năm học</th>
+                    <th>Kì học</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
                     <th>Sửa</th>
                     <th>Xóa</th>
                 </tr>
@@ -81,11 +81,12 @@ class TSMD_AllGiangDuongs extends Component {
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
-        var _deleteRoom = (roomId) => this.props._deleteRoom(roomId);
-        var _triggerModal = (roomId) => this.props._triggerModal(roomId);
+        const _onDeleteTermYear = (id) => this.props._onDeleteTermYear(id);
+        const _triggerModal = (id) => this.props._triggerModal(id);
         $('#myTable tbody').on('click', 'i[name="delete"]', function () {
-            _deleteRoom($(this).attr("data-id"));
+            _onDeleteTermYear($(this).attr("data-id"));
         })
+
         $('#myTable tbody').on('click', 'i[name="edit"]', function () {
             _triggerModal($(this).attr("data-id"));
         })
@@ -96,4 +97,4 @@ class TSMD_AllGiangDuongs extends Component {
     }
 }
 
-export default TSMD_AllGiangDuongs
+export default TSMD_AllKiHocNamHocs

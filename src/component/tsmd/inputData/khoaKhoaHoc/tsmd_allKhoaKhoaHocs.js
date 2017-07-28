@@ -3,12 +3,15 @@
  */
 import React, {Component} from 'react'
 
-class TSMD_AllGiangDuongs extends Component {
+//import APIs
+import * as API from '../../../../apiUtility/inputDataApi'
+
+class TSMD_AllKhoaKhoaHocs extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            rooms: []
+            terms: []
         }
 
     }
@@ -18,26 +21,22 @@ class TSMD_AllGiangDuongs extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.rooms.length != 0 || nextProps.rooms != this.state.rooms) {
-            const rooms = nextProps.rooms;
+        if (nextProps.terms.length != 0 || nextProps.terms != this.state.terms) {
+            const terms = nextProps.terms;
             this.setState({
-                rooms: rooms
+                terms: terms
             })
 
             var myTable = $('#myTable').dataTable();
             myTable.fnClearTable();
 
             var index = 1;
-            rooms.map(room => {
+            terms.map(term => {
                 myTable.fnAddData([
                     index,
-                    room.maGiangDuong,
-                    room.ten,
-                    room.dmLoaiPhong.ten,
-                    room.tang,
-                    room.soLuong,
-                    '<i class="fa fa-pencil-square edit-icon cursor" name="edit" data-id="' + room.id + '"/>',
-                    '<i class="fa fa-trash delete-icon cursor" name="delete" data-id="' + room.id + '"/>'
+                    term.nam,
+                    '<i class="fa fa-pencil-square edit-icon cursor" name="edit" data-id="' + term.id + '"/>',
+                    '<i class="fa fa-trash delete-icon cursor" name="delete" data-id="' + term.id + '"/>'
                 ]);
                 index++;
             })
@@ -50,11 +49,7 @@ class TSMD_AllGiangDuongs extends Component {
                 <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Mã</th>
-                    <th>Tên</th>
-                    <th>Loại phòng</th>
-                    <th>Tầng</th>
-                    <th>Số lượng</th>
+                    <th>Năm</th>
                     <th>Sửa</th>
                     <th>Xóa</th>
                 </tr>
@@ -62,11 +57,7 @@ class TSMD_AllGiangDuongs extends Component {
                 <tfoot>
                 <tr>
                     <th>STT</th>
-                    <th>Mã</th>
-                    <th>Tên</th>
-                    <th>Loại phòng</th>
-                    <th>Tầng</th>
-                    <th>Số lượng</th>
+                    <th>Năm</th>
                     <th>Sửa</th>
                     <th>Xóa</th>
                 </tr>
@@ -81,11 +72,13 @@ class TSMD_AllGiangDuongs extends Component {
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
-        var _deleteRoom = (roomId) => this.props._deleteRoom(roomId);
-        var _triggerModal = (roomId) => this.props._triggerModal(roomId);
+
+        const _triggerModal = (id) => this.props._triggerModal(id);
+        const _deleteTerm = (id) => this.props._deleteTerm(id);
         $('#myTable tbody').on('click', 'i[name="delete"]', function () {
-            _deleteRoom($(this).attr("data-id"));
+            _deleteTerm($(this).attr("data-id"));
         })
+
         $('#myTable tbody').on('click', 'i[name="edit"]', function () {
             _triggerModal($(this).attr("data-id"));
         })
@@ -96,4 +89,4 @@ class TSMD_AllGiangDuongs extends Component {
     }
 }
 
-export default TSMD_AllGiangDuongs
+export default TSMD_AllKhoaKhoaHocs

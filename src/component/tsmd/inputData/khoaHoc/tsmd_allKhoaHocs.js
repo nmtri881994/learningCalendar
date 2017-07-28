@@ -35,8 +35,8 @@ class TSMD_AllKhoaHocs extends Component {
                 myTable.fnAddData([
                     index,
                     term.nam,
-                    '<i class="fa fa-pencil-square edit-icon cursor" data-id="' + term.id + '"/>',
-                    '<i class="fa fa-trash delete-icon cursor" data-id="' + term.id + '"/>'
+                    '<i class="fa fa-pencil-square edit-icon cursor" name="edit" data-id="' + term.id + '"/>',
+                    '<i class="fa fa-trash delete-icon cursor" name="delete" data-id="' + term.id + '"/>'
                 ]);
                 index++;
             })
@@ -72,19 +72,20 @@ class TSMD_AllKhoaHocs extends Component {
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
+
+        const _triggerModal = (id) => this.props._triggerModal(id);
+        const _deleteTerm = (id) => this.props._deleteTerm(id);
+        $('#myTable tbody').on('click', 'i[name="delete"]', function () {
+            _deleteTerm($(this).attr("data-id"));
+        })
+
+        $('#myTable tbody').on('click', 'i[name="edit"]', function () {
+            _triggerModal($(this).attr("data-id"));
+        })
     }
 
     componentDidUpdate() {
-        const _triggerModal = (id) => this.props._triggerModal(id);
-        const _deleteTerm = (id) => this.props._deleteTerm(id);
-        $(document).ready(function () {
-            $('.delete-icon').unbind('click').on('click', function (evt) {
-                _deleteTerm($(this).attr("data-id"))
-            });
-            $('.edit-icon').unbind('click').on('click', function (evt) {
-                _triggerModal($(this).attr("data-id"));
-            });
-        })
+
     }
 }
 

@@ -34,8 +34,8 @@ class TSMD_AllNamHocs extends Component {
                     year.name,
                     year.ngayBatDau,
                     year.ngayKetThuc,
-                    '<i class="fa fa-pencil-square edit-icon cursor" data-id="' + year.id + '"/>',
-                    '<i class="fa fa-trash delete-icon cursor" data-id="' + year.id + '"/>'
+                    '<i class="fa fa-pencil-square edit-icon cursor" name="edit" data-id="' + year.id + '"/>',
+                    '<i class="fa fa-trash delete-icon cursor" name="delete" data-id="' + year.id + '"/>'
                 ]);
                 index++;
             })
@@ -75,19 +75,20 @@ class TSMD_AllNamHocs extends Component {
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
+
+        const _triggerModal = (id) => this.props._triggerModal(id);
+        const _onDeleteYear = (id) => this.props._onDeleteYear(id);
+        $('#myTable tbody').on('click', 'i[name="delete"]', function () {
+            _onDeleteYear($(this).attr("data-id"));
+        })
+
+        $('#myTable tbody').on('click', 'i[name="edit"]', function () {
+            _triggerModal($(this).attr("data-id"));
+        })
     }
 
     componentDidUpdate() {
-        const _triggerModal = (id) => this.props._triggerModal(id);
-        const _onDeleteYear = (id) => this.props._onDeleteYear(id);
-        $(document).ready(function () {
-            $('.delete-icon').unbind('click').on('click', function (evt) {
-                _onDeleteYear($(this).attr("data-id"));
-            });
-            $('.edit-icon').unbind('click').on('click', function (evt) {
-                _triggerModal($(this).attr("data-id"));
-            });
-        })
+
     }
 }
 
