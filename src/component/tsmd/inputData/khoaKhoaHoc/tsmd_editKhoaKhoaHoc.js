@@ -7,14 +7,116 @@ class TSMD_EditKhoaKhoaHoc extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            term: {
-                id: 0,
-                nam: 0
-            }
+            khoaKhoaHoc: {
+                khoa: {
+                    id: 0,
+                    ma: "",
+                    ten: ""
+                },
+                tkb_khoaHoc: {
+                    id: 0,
+                    nam: 0
+                },
+                kiPhanNganh: {
+                    id: 0,
+                    kiHoc: {
+                        id: 0,
+                        ten: ""
+                    },
+                    namHoc: {
+                        id: 0,
+                        name: "",
+                        ngayBatDau: "",
+                        ngayKetThuc: ""
+                    },
+                    ngayBatDau: "",
+                    ngayKetThuc: ""
+                },
+                kiBatDau: {
+                    id: 0,
+                    kiHoc: {
+                        id: 0,
+                        ten: ""
+                    },
+                    namHoc: {
+                        id: 0,
+                        name: "",
+                        ngayBatDau: "",
+                        ngayKetThuc: ""
+                    },
+                    ngayBatDau: "",
+                    ngayKetThuc: ""
+                },
+                kiKetThuc: {
+                    id: 0,
+                    kiHoc: {
+                        id: 0,
+                        ten: ""
+                    },
+                    namHoc: {
+                        id: 0,
+                        name: "",
+                        ngayBatDau: "",
+                        ngayKetThuc: ""
+                    },
+                    ngayBatDau: "",
+                    ngayKetThuc: ""
+                }
+            },
+            khoas: [],
+            khoaHocs: [],
+            termYears: [],
         }
 
         this._onChangeYear = this._onChangeYear.bind(this);
         this._handleSubmit = this._handleSubmit.bind(this);
+
+        this._onKhoaChange = this._onKhoaChange.bind(this);
+        this._onKhoaHocChange = this._onKhoaHocChange.bind(this);
+        this._onKiBatDauChange = this._onKiBatDauChange.bind(this);
+        this._onKiKetThucChange = this._onKiKetThucChange.bind(this);
+        this._onKiPhanNganhChange = this._onKiPhanNganhChange.bind(this);
+    }
+
+
+    _onKhoaChange(e) {
+        let khoaKhoaHoc = this.state.khoaKhoaHoc;
+        khoaKhoaHoc.khoa.id = e.target.value;
+        this.setState({
+            khoaKhoaHoc: khoaKhoaHoc
+        })
+    }
+
+    _onKhoaHocChange(e) {
+        let khoaKhoaHoc = this.state.khoaKhoaHoc;
+        khoaKhoaHoc.tkb_khoaHoc.id = e.target.value;
+        this.setState({
+            khoaKhoaHoc: khoaKhoaHoc
+        })
+    }
+
+    _onKiBatDauChange(e) {
+        let khoaKhoaHoc = this.state.khoaKhoaHoc;
+        khoaKhoaHoc.kiBatDau.id = e.target.value;
+        this.setState({
+            khoaKhoaHoc: khoaKhoaHoc
+        })
+    }
+
+    _onKiKetThucChange(e) {
+        let khoaKhoaHoc = this.state.khoaKhoaHoc;
+        khoaKhoaHoc.kiKetThuc.id = e.target.value;
+        this.setState({
+            khoaKhoaHoc: khoaKhoaHoc
+        })
+    }
+
+    _onKiPhanNganhChange(e) {
+        let khoaKhoaHoc = this.state.khoaKhoaHoc;
+        khoaKhoaHoc.kiPhanNganh.id = e.target.value;
+        this.setState({
+            khoaKhoaHoc: khoaKhoaHoc
+        })
     }
 
     componentWillMount() {
@@ -23,7 +125,10 @@ class TSMD_EditKhoaKhoaHoc extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            term: nextProps.term
+            khoaKhoaHoc: nextProps.khoaKhoaHoc,
+            khoas: nextProps.khoas,
+            khoaHocs: nextProps.khoaHocs,
+            termYears: nextProps.termYears,
         })
 
     }
@@ -35,12 +140,12 @@ class TSMD_EditKhoaKhoaHoc extends Component {
 
 
     _handleSubmit() {
-        this.props._editTerm(this.state.term);
+        this.props._editKhoaKhoaHoc(this.state.khoaKhoaHoc);
         var modal = $("#myModal")[0];
         modal.style.display = "none";
     }
 
-    _onChangeYear(e){
+    _onChangeYear(e) {
         let term = this.state.term;
         term.nam = e.target.value;
         this.setState({
@@ -59,9 +164,46 @@ class TSMD_EditKhoaKhoaHoc extends Component {
                 </div>
                 <div className="modal-body">
                     <div className="section">
-                        <div>
-                            <div className="edit-title">Năm</div>
-                            <input className="input-large" value={this.state.term.nam} onChange={this._onChangeYear}/>
+                        <div className="">
+                            <div className="edit-title">Khoa</div>
+                            <select className="input-medium margin-left-20" value={this.state.khoaKhoaHoc.khoa.id}
+                                    onChange={this._onKhoaChange}>
+                                {this.state.khoas.map(khoa => <option key={khoa.id}
+                                                                      value={khoa.id}>{khoa.ten}</option>)}
+                            </select>
+                        </div>
+                        <div className="">
+                            <div className="edit-title">Khóa học</div>
+                            <select className="input-mini margin-left-20" value={this.state.khoaKhoaHoc.tkb_khoaHoc.id}
+                                    onChange={this._onKhoaHocChange}>
+                                {this.state.khoaHocs.map(khoaHoc => <option key={khoaHoc.id}
+                                                                            value={khoaHoc.id}>{khoaHoc.nam}</option>)}
+                            </select>
+                        </div>
+                        <div className="">
+                            <div className="edit-title">Kì bắt đầu</div>
+                            <select className="input-medium margin-left-20" value={this.state.khoaKhoaHoc.kiBatDau.id}
+                                    onChange={this._onKiBatDauChange}>
+                                {this.state.termYears.map(termYear => <option key={termYear.id} value={termYear.id}>
+                                    {termYear.namHoc.name + ' ' + termYear.kiHoc.ten}</option>)}
+                            </select>
+                        </div>
+                        <div className="">
+                            <div className="edit-title">Kì kết thúc</div>
+                            <select className="input-medium margin-left-20" value={this.state.khoaKhoaHoc.kiKetThuc.id}
+                                    onChange={this._onKiKetThucChange}>
+                                {this.state.termYears.map(termYear => <option key={termYear.id} value={termYear.id}>
+                                    {termYear.namHoc.name + ' ' + termYear.kiHoc.ten}</option>)}
+                            </select>
+                        </div>
+                        <div className="">
+                            <div className="edit-title">Kì phân ngành</div>
+                            <select className="input-medium margin-left-20"
+                                    value={this.state.khoaKhoaHoc.kiPhanNganh.id}
+                                    onChange={this._onKiPhanNganhChange}>
+                                {this.state.termYears.map(termYear => <option key={termYear.id} value={termYear.id}>
+                                    {termYear.namHoc.name + ' ' + termYear.kiHoc.ten}</option>)}
+                            </select>
                         </div>
                     </div>
 

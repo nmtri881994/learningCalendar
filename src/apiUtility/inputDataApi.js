@@ -229,3 +229,44 @@ export const deleteTermYear = (termYearId, cb, fcb) => {
             fcb(error);
         })
 };
+
+//khoa - khoa hoc
+export const getAllKhoaKhoaHocs = (cb, fcb) => {
+    axios(BASE_URL + "/all-khoa-khoa-hoc", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const insertKhoaKhoaHoc = (khoaKhoaHoc, cb, fcb) => {
+    axios.post(BASE_URL + "/khoa-khoa-hoc", khoaKhoaHoc, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const editKhoaKhoaHoc = (khoaKhoaHoc, cb, fcb) => {
+    axios.post(BASE_URL + "/khoa-khoa-hoc/edit", khoaKhoaHoc, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteKhoaKhoaHoc = (khoaKhoaHocId, cb, fcb) => {
+    axios(BASE_URL + "/khoa-khoa-hoc/delete/"+khoaKhoaHocId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};

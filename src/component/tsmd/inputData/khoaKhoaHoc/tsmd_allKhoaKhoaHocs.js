@@ -11,7 +11,7 @@ class TSMD_AllKhoaKhoaHocs extends Component {
         super(props);
 
         this.state = {
-            terms: []
+            khoaKhoaHocs: []
         }
 
     }
@@ -21,22 +21,26 @@ class TSMD_AllKhoaKhoaHocs extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.terms.length != 0 || nextProps.terms != this.state.terms) {
-            const terms = nextProps.terms;
+        if (nextProps.khoaKhoaHocs.length != 0 || nextProps.khoaKhoaHocs != this.state.khoaKhoaHocs) {
+            const khoaKhoaHocs = nextProps.khoaKhoaHocs;
             this.setState({
-                terms: terms
+                khoaKhoaHocs: khoaKhoaHocs
             })
 
             var myTable = $('#myTable').dataTable();
             myTable.fnClearTable();
 
             var index = 1;
-            terms.map(term => {
+            khoaKhoaHocs.map(khoaKhoaHoc => {
                 myTable.fnAddData([
                     index,
-                    term.nam,
-                    '<i class="fa fa-pencil-square edit-icon cursor" name="edit" data-id="' + term.id + '"/>',
-                    '<i class="fa fa-trash delete-icon cursor" name="delete" data-id="' + term.id + '"/>'
+                    khoaKhoaHoc.khoa.ten,
+                    khoaKhoaHoc.tkb_khoaHoc.nam,
+                    khoaKhoaHoc.kiBatDau.kiHoc.ten + ' '+khoaKhoaHoc.kiBatDau.namHoc.name,
+                    khoaKhoaHoc.kiKetThuc.kiHoc.ten + ' '+khoaKhoaHoc.kiKetThuc.namHoc.name,
+                    khoaKhoaHoc.kiPhanNganh.kiHoc.ten + ' '+khoaKhoaHoc.kiPhanNganh.namHoc.name,
+                    '<i class="fa fa-pencil-square edit-icon cursor" name="edit" data-id="' + khoaKhoaHoc.id + '"/>',
+                    '<i class="fa fa-trash delete-icon cursor" name="delete" data-id="' + khoaKhoaHoc.id + '"/>'
                 ]);
                 index++;
             })
@@ -49,7 +53,11 @@ class TSMD_AllKhoaKhoaHocs extends Component {
                 <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Năm</th>
+                    <th>Khoa</th>
+                    <th>Khóa học</th>
+                    <th>Kì bắt đầu</th>
+                    <th>Kì kết thúc</th>
+                    <th>Kì phân ngành</th>
                     <th>Sửa</th>
                     <th>Xóa</th>
                 </tr>
@@ -57,7 +65,11 @@ class TSMD_AllKhoaKhoaHocs extends Component {
                 <tfoot>
                 <tr>
                     <th>STT</th>
-                    <th>Năm</th>
+                    <th>Khoa</th>
+                    <th>Khóa học</th>
+                    <th>Kì bắt đầu</th>
+                    <th>Kì kết thúc</th>
+                    <th>Kì phân ngành</th>
                     <th>Sửa</th>
                     <th>Xóa</th>
                 </tr>
@@ -74,9 +86,9 @@ class TSMD_AllKhoaKhoaHocs extends Component {
         });
 
         const _triggerModal = (id) => this.props._triggerModal(id);
-        const _deleteTerm = (id) => this.props._deleteTerm(id);
+        const _deleteKhoaKhoaHoc = (id) => this.props._deleteKhoaKhoaHoc(id);
         $('#myTable tbody').on('click', 'i[name="delete"]', function () {
-            _deleteTerm($(this).attr("data-id"));
+            _deleteKhoaKhoaHoc($(this).attr("data-id"));
         })
 
         $('#myTable tbody').on('click', 'i[name="edit"]', function () {
