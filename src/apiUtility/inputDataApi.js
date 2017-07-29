@@ -311,3 +311,86 @@ export const deleteLopHoc = (lopHocId, cb, fcb) => {
             fcb(error);
         })
 };
+
+//nhan vien
+export const getAllNhanViens = (cb, fcb) => {
+    axios(BASE_URL + "/all-nhan-vien", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const insertNhanVien= (nhanVien, cb, fcb) => {
+    axios.post(BASE_URL + "/nhan-vien", nhanVien, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const editNhanVien = (nhanVien, cb, fcb) => {
+    axios.post(BASE_URL + "/nhan-vien/edit", nhanVien, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteNhanVien = (nhanVienId, cb, fcb) => {
+    axios(BASE_URL + "/nhan-vien/delete/"+nhanVienId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+//nhan vien - vai tro
+export const getAllNhanVienVaiTros = (cb, fcb) => {
+    axios(BASE_URL + "/all-nhan-vien-vai-tro", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const getAllVaiTros = (cb, fcb) => {
+    axios(BASE_URL + "/all-vai-tro", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const insertNhanVienVaiTro= (nhanVienVaiTro, cb, fcb) => {
+    axios.post(BASE_URL + "/nhan-vien-vai-tro", nhanVienVaiTro, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+
+export const deleteNhanVienVaiTro = (nhanVienVaiTroId, cb, fcb) => {
+    axios(BASE_URL + "/nhan-vien-vai-tro/delete/"+nhanVienVaiTroId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};

@@ -30,6 +30,7 @@ import TSMD_InputNamHoc from './component/tsmd/inputData/namHoc/tsmd_inputNamHoc
 import TSMD_InputKiHocNamHoc from './component/tsmd/inputData/kiHocNamHoc/tsmd_inputKiHocNamHoc'
 import TSMD_InputKhoaKhoaHoc from './component/tsmd/inputData/khoaKhoaHoc/tsmd_inputKhoaKhoaHoc'
 import TSMD_InputLopHoc from './component/tsmd/inputData/lopHoc/tsmd_inputLopHoc'
+import TSMD_InputNhanVien from './component/tsmd/inputData/nhanVien/tsmd_inputNhanVien'
 
 //Import container
 import LoginContainer from './container/loginContainer'
@@ -120,6 +121,7 @@ ReactDOM.render(
                 <Route path="nhap-du-lieu/khoa-khoa-hoc" component={TSMD_InputKhoaKhoaHoc}/>
                 <Route path="nhap-du-lieu/khoa-khoa-hoc" component={TSMD_InputKhoaKhoaHoc}/>
                 <Route path="nhap-du-lieu/lop-hoc" component={TSMD_InputLopHoc}/>
+                <Route path="nhap-du-lieu/nhan-vien" component={TSMD_InputNhanVien}/>
             </Route>
         </Router>
     </Provider>,
