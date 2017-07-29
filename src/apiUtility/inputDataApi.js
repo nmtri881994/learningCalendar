@@ -270,3 +270,44 @@ export const deleteKhoaKhoaHoc = (khoaKhoaHocId, cb, fcb) => {
             fcb(error);
         })
 };
+
+//lop hoc
+export const getAllLopHocs = (cb, fcb) => {
+    axios(BASE_URL + "/all-lop-hoc", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const insertLopHoc = (lopHoc, cb, fcb) => {
+    axios.post(BASE_URL + "/lop-hoc", lopHoc, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const editLopHoc = (lopHoc, cb, fcb) => {
+    axios.post(BASE_URL + "/lop-hoc/edit", lopHoc, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteLopHoc = (lopHocId, cb, fcb) => {
+    axios(BASE_URL + "/lop-hoc/delete/"+lopHocId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};

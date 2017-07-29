@@ -8,6 +8,7 @@ class TSMD_EditKhoaKhoaHoc extends Component {
         super(props);
         this.state = {
             khoaKhoaHoc: {
+                id: 0,
                 khoa: {
                     id: 0,
                     ma: "",

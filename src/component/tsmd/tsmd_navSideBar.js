@@ -74,7 +74,7 @@ class TSMD_NavSideBar extends Component {
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                            <a href="/giaovu/nhap-du-lieu/lop-hoc" className="slide-bar-nav-inner-item-link">
                                                 <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
                                                 <div className="slide-bar-nav-inner-item-title">Lớp</div>
                                             </a>

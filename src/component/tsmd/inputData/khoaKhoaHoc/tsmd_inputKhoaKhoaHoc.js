@@ -23,6 +23,7 @@ class TSMD_InputKhoaKhoaHoc extends Component {
             errorMess: "",
             khoaKhoaHocs: [],
             editingKhoaKhoaHoc: {
+                id: 0,
                 khoa: {
                     id: 0,
                     ma: "",
