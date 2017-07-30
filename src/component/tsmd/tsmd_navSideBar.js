@@ -62,6 +62,12 @@ class TSMD_NavSideBar extends Component {
                                             </a>
                                         </li>
                                         <li>
+                                            <a href="/giaovu/nhap-du-lieu/nganh" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Ngành</div>
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a href="/giaovu/nhap-du-lieu/nam-hoc" className="slide-bar-nav-inner-item-link">
                                                 <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
                                                 <div className="slide-bar-nav-inner-item-title">Năm học</div>

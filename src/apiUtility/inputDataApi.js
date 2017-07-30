@@ -404,3 +404,86 @@ export const deleteNhanVienVaiTro = (nhanVienVaiTroId, cb, fcb) => {
             fcb(error);
         })
 };
+
+
+//nhan vien
+export const getAllNganhs = (cb, fcb) => {
+    axios(BASE_URL + "/all-nganh", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const insertNganh= (nganh, cb, fcb) => {
+    axios.post(BASE_URL + "/nganh", nganh, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const editNganh = (nganh, cb, fcb) => {
+    axios.post(BASE_URL + "/nganh/edit", nganh, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteNganh = (nganhId, cb, fcb) => {
+    axios(BASE_URL + "/nganh/delete/"+nganhId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+//khoa - khoa hoc - nganh
+export const getAllKhoaKhoaHocNganhs = (cb, fcb) => {
+    axios(BASE_URL + "/all-khoa-khoa-hoc-nganh", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const insertKhoaKhoaHocNganh= (khoaKhoaHocNganh, cb, fcb) => {
+    axios.post(BASE_URL + "/khoa-khoa-hoc-nganh", khoaKhoaHocNganh, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const editKhoaKhoaHocNganh = (khoaKhoaHocNganh, cb, fcb) => {
+    axios.post(BASE_URL + "/khoa-khoa-hoc-nganh/edit", khoaKhoaHocNganh, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteKhoaKhoaHocNganh = (khoaKhoaHocNganhId, cb, fcb) => {
+    axios(BASE_URL + "/khoa-khoa-hoc-nganh/delete/"+khoaKhoaHocNganhId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
