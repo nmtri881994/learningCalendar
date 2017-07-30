@@ -374,6 +374,16 @@ export const getAllVaiTros = (cb, fcb) => {
         })
 };
 
+export const getAllTaiKhoanNhanViens = (cb, fcb) => {
+    axios(BASE_URL + "/all-tai-khoan-nhan-vien", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
 export const insertNhanVienVaiTro= (nhanVienVaiTro, cb, fcb) => {
     axios.post(BASE_URL + "/nhan-vien-vai-tro", nhanVienVaiTro, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
