@@ -7,6 +7,9 @@ import Stomp from 'stompjs'
 
 import {DATE_FORMAT_PICKER} from '../../configuration/appConfig'
 
+import {APP_URL} from '../../configuration/appConfig'
+
+
 //import actions
 import {editLesson} from '../../action/teacherAction'
 
@@ -415,7 +418,7 @@ class EditClass extends Component {
             getAvailableLessons();
         });
 
-        var socket = SockJS('http://localhost:8080/calendar'); // <3>
+        var socket = SockJS(`${APP_URL}/calendar`); // <3>
         var stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             stompClient.subscribe("/socket/calendar", function (message) {

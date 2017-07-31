@@ -5,6 +5,8 @@ import React, {Component} from 'react'
 import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 
+import {APP_URL} from '../../configuration/appConfig'
+
 //import APIs
 import * as API from '../../apiUtility/studentApi'
 
@@ -111,7 +113,8 @@ class Student_ShowAllRegisterClasses extends Component {
 
         });
 
-        var socket = SockJS('http://localhost:8080/student/register'); // <3>
+
+        var socket = SockJS(`${APP_URL}/student/register`); // <3>
         var stompClient = Stomp.over(socket);
         // stompClient.connect({}, function (frame) {
         //     stompClient.subscribe("/socket/student/register", function (message) {

@@ -6,6 +6,9 @@ import moment from 'moment'
 import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 
+import {APP_URL} from '../../configuration/appConfig'
+
+
 //import configs
 import {DATE_TIME_FORMAT_DISPLAY} from '../../configuration/appConfig'
 
@@ -105,7 +108,7 @@ class TSMD_KhoaTableForOpenRegistering extends Component {
             $('#myTable').DataTable();
         });
 
-        var socket = SockJS('http://localhost:8080/register'); // <3>
+        var socket = SockJS(`${APP_URL}/register`); // <3>
         var stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             stompClient.subscribe("/socket/register", function (message) {

@@ -3,6 +3,9 @@ import moment from 'moment'
 import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 
+import {APP_URL} from '../../configuration/appConfig'
+
+
 //Import actions
 import {getCurrentWeekCalendar} from '../../action/studentAction'
 import {getLearningYear, getWeekNumber, setCurrentDate} from '../../action/calendarAction'
@@ -238,7 +241,7 @@ class SV_WeekCalendar extends Component {
     }
 
     componentDidMount() {
-        var socket = SockJS('http://localhost:8080/calendar'); // <3>
+        var socket = SockJS(`${APP_URL}/calendar`); // <3>
         var stompClient = Stomp.over(socket);
         var refreshFunction = () => this.refreshCalendar();
         stompClient.connect({}, function (frame) {

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
+import {APP_URL} from '../../configuration/appConfig'
 
 //import components
 import Header from "../header"
@@ -119,7 +120,7 @@ class SV_MainComponent extends Component {
     }
 
     componentDidMount() {
-        var socket = SockJS('http://localhost:8080/register'); // <3>
+        var socket = SockJS(`${APP_URL}/register`); // <3>
         var stompClient = Stomp.over(socket);
         var checkCanRegister = (action) => this.checkCanRegister(action);
         stompClient.connect({}, function (frame) {
