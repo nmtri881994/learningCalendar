@@ -87,7 +87,7 @@ export const editRoom = (room, cb, fcb) => {
 };
 
 export const deleteRoom = (roomId, cb, fcb) => {
-    axios(BASE_URL + "/giang-duong/delete/"+roomId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/giang-duong/delete/" + roomId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -128,7 +128,7 @@ export const editTerm = (term, cb, fcb) => {
 };
 
 export const deleteTerm = (termId, cb, fcb) => {
-    axios(BASE_URL + "/khoa-hoc/delete/"+termId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/khoa-hoc/delete/" + termId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -169,7 +169,7 @@ export const editYear = (year, cb, fcb) => {
 };
 
 export const deleteYear = (yearId, cb, fcb) => {
-    axios(BASE_URL + "/nam-hoc/delete/"+yearId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/nam-hoc/delete/" + yearId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -221,7 +221,7 @@ export const editTermYear = (termYear, cb, fcb) => {
 };
 
 export const deleteTermYear = (termYearId, cb, fcb) => {
-    axios(BASE_URL + "/ki-hoc-nam-hoc/delete/"+termYearId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/ki-hoc-nam-hoc/delete/" + termYearId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -262,7 +262,7 @@ export const editKhoaKhoaHoc = (khoaKhoaHoc, cb, fcb) => {
 };
 
 export const deleteKhoaKhoaHoc = (khoaKhoaHocId, cb, fcb) => {
-    axios(BASE_URL + "/khoa-khoa-hoc/delete/"+khoaKhoaHocId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/khoa-khoa-hoc/delete/" + khoaKhoaHocId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -303,7 +303,7 @@ export const editLopHoc = (lopHoc, cb, fcb) => {
 };
 
 export const deleteLopHoc = (lopHocId, cb, fcb) => {
-    axios(BASE_URL + "/lop-hoc/delete/"+lopHocId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/lop-hoc/delete/" + lopHocId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -323,7 +323,7 @@ export const getAllNhanViens = (cb, fcb) => {
         })
 };
 
-export const insertNhanVien= (nhanVien, cb, fcb) => {
+export const insertNhanVien = (nhanVien, cb, fcb) => {
     axios.post(BASE_URL + "/nhan-vien", nhanVien, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
@@ -344,7 +344,7 @@ export const editNhanVien = (nhanVien, cb, fcb) => {
 };
 
 export const deleteNhanVien = (nhanVienId, cb, fcb) => {
-    axios(BASE_URL + "/nhan-vien/delete/"+nhanVienId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/nhan-vien/delete/" + nhanVienId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -384,7 +384,7 @@ export const getAllTaiKhoanNhanViens = (cb, fcb) => {
         })
 };
 
-export const insertNhanVienVaiTro= (nhanVienVaiTro, cb, fcb) => {
+export const insertNhanVienVaiTro = (nhanVienVaiTro, cb, fcb) => {
     axios.post(BASE_URL + "/nhan-vien-vai-tro", nhanVienVaiTro, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
@@ -396,7 +396,7 @@ export const insertNhanVienVaiTro= (nhanVienVaiTro, cb, fcb) => {
 
 
 export const deleteNhanVienVaiTro = (nhanVienVaiTroId, cb, fcb) => {
-    axios(BASE_URL + "/nhan-vien-vai-tro/delete/"+nhanVienVaiTroId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/nhan-vien-vai-tro/delete/" + nhanVienVaiTroId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -417,7 +417,7 @@ export const getAllNganhs = (cb, fcb) => {
         })
 };
 
-export const insertNganh= (nganh, cb, fcb) => {
+export const insertNganh = (nganh, cb, fcb) => {
     axios.post(BASE_URL + "/nganh", nganh, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
@@ -438,7 +438,7 @@ export const editNganh = (nganh, cb, fcb) => {
 };
 
 export const deleteNganh = (nganhId, cb, fcb) => {
-    axios(BASE_URL + "/nganh/delete/"+nganhId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/nganh/delete/" + nganhId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -458,7 +458,7 @@ export const getAllKhoaKhoaHocNganhs = (cb, fcb) => {
         })
 };
 
-export const insertKhoaKhoaHocNganh= (khoaKhoaHocNganh, cb, fcb) => {
+export const insertKhoaKhoaHocNganh = (khoaKhoaHocNganh, cb, fcb) => {
     axios.post(BASE_URL + "/khoa-khoa-hoc-nganh", khoaKhoaHocNganh, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
@@ -479,7 +479,7 @@ export const editKhoaKhoaHocNganh = (khoaKhoaHocNganh, cb, fcb) => {
 };
 
 export const deleteKhoaKhoaHocNganh = (khoaKhoaHocNganhId, cb, fcb) => {
-    axios(BASE_URL + "/khoa-khoa-hoc-nganh/delete/"+khoaKhoaHocNganhId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/khoa-khoa-hoc-nganh/delete/" + khoaKhoaHocNganhId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -487,3 +487,128 @@ export const deleteKhoaKhoaHocNganh = (khoaKhoaHocNganhId, cb, fcb) => {
             fcb(error);
         })
 };
+
+//Sinh viên
+export const getAllSinhViens = (cb, fcb) => {
+    axios(BASE_URL + "/all-sinh-vien", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const insertSinhVien = (sinhVien, cb, fcb) => {
+    axios.post(BASE_URL + "/sinh-vien", sinhVien, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const editSinhVien = (sinhVien, cb, fcb) => {
+    axios.post(BASE_URL + "/sinh-vien/edit", sinhVien, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteSinhVien = (sinhVienId, cb, fcb) => {
+    axios(BASE_URL + "/sinh-vien/delete/" + sinhVienId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const getAllLopHocByKhoaAndKhoaHoc = (khoaId, khoaHocId, cb, fcb) => {
+    axios(BASE_URL + "/all-lop-hoc/" + khoaId + "/" + khoaHocId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+}
+
+//Sinh viên
+export const getAllMonHocs = (cb, fcb) => {
+    axios(BASE_URL + "/all-mon-hoc", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const insertMonHoc = (monHoc, cb, fcb) => {
+    axios.post(BASE_URL + "/mon-hoc", monHoc, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const editMonHoc = (monHoc, cb, fcb) => {
+    axios.post(BASE_URL + "/mon-hoc/edit", monHoc, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteMonHoc = (monHocId, cb, fcb) => {
+    axios(BASE_URL + "/mon-hoc/delete/" + monHocId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+//Sinh viên - nganh
+
+export const editSinhVienNganh = (sinhVienId, nganhId, cb, fcb) => {
+    axios(BASE_URL + "/sinh-vien-nganh/edit/"+sinhVienId+"/"+nganhId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteSinhVienNganh = (sinhVienId, cb, fcb) => {
+    axios(BASE_URL + "/sinh-vien-nganh/delete-nganh/" + sinhVienId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const getAllNganhOfSinhVien = (sinhVienId, cb, fcb) => {
+    axios(BASE_URL + "/sinh-vien-nganh/get-all-nganh-of-sinh-vien/" + sinhVienId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+

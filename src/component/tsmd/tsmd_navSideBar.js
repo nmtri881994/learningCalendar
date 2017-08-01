@@ -104,9 +104,15 @@ class TSMD_NavSideBar extends Component {
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                            <a href="/giaovu/nhap-du-lieu/sinh-vien" className="slide-bar-nav-inner-item-link">
                                                 <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
                                                 <div className="slide-bar-nav-inner-item-title">Sinh viên</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/giaovu/nhap-du-lieu/sinh-vien-nganh" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Sinh viên - ngành</div>
                                             </a>
                                         </li>
                                         <li>
@@ -116,7 +122,7 @@ class TSMD_NavSideBar extends Component {
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                            <a href="/giaovu/nhap-du-lieu/mon-hoc" className="slide-bar-nav-inner-item-link">
                                                 <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
                                                 <div className="slide-bar-nav-inner-item-title">Môn học</div>
                                             </a>
@@ -124,7 +130,19 @@ class TSMD_NavSideBar extends Component {
                                         <li>
                                             <a href="#" className="slide-bar-nav-inner-item-link">
                                                 <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Môn học - Giảng đường</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
                                                 <div className="slide-bar-nav-inner-item-title">Lớp học phần</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Lớp học phần - Sinh viên</div>
                                             </a>
                                         </li>
                                         <li>
