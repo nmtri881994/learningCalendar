@@ -44,6 +44,18 @@ class TSMD_NavSideBar extends Component {
                                     </div>
                                     <ul className="calendars">
                                         <li>
+                                            <a href="/giaovu/nhap-du-lieu/nam-hoc" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Năm học</div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/giaovu/nhap-du-lieu/ki-hoc-nam-hoc" className="slide-bar-nav-inner-item-link">
+                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+                                                <div className="slide-bar-nav-inner-item-title">Kì học - Năm học</div>
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a href="/giaovu/nhap-du-lieu/khoa" className="slide-bar-nav-inner-item-link">
                                                 <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
                                                 <div className="slide-bar-nav-inner-item-title">Khoa</div>
@@ -74,18 +86,6 @@ class TSMD_NavSideBar extends Component {
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/giaovu/nhap-du-lieu/nam-hoc" className="slide-bar-nav-inner-item-link">
-                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
-                                                <div className="slide-bar-nav-inner-item-title">Năm học</div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/giaovu/nhap-du-lieu/ki-hoc-nam-hoc" className="slide-bar-nav-inner-item-link">
-                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
-                                                <div className="slide-bar-nav-inner-item-title">Kì học - Năm học</div>
-                                            </a>
-                                        </li>
-                                        <li>
                                             <a href="/giaovu/nhap-du-lieu/lop-hoc" className="slide-bar-nav-inner-item-link">
                                                 <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
                                                 <div className="slide-bar-nav-inner-item-title">Lớp</div>
@@ -110,12 +110,6 @@ class TSMD_NavSideBar extends Component {
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/giaovu/nhap-du-lieu/sinh-vien-nganh" className="slide-bar-nav-inner-item-link">
-                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
-                                                <div className="slide-bar-nav-inner-item-title">Sinh viên - ngành</div>
-                                            </a>
-                                        </li>
-                                        <li>
                                             <a href="/giaovu/nhap-du-lieu/giang-duong" className="slide-bar-nav-inner-item-link">
                                                 <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
                                                 <div className="slide-bar-nav-inner-item-title">Giảng đường</div>
@@ -128,7 +122,7 @@ class TSMD_NavSideBar extends Component {
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" className="slide-bar-nav-inner-item-link">
+                                            <a href="/giaovu/nhap-du-lieu/mon-hoc-giang-duong" className="slide-bar-nav-inner-item-link">
                                                 <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
                                                 <div className="slide-bar-nav-inner-item-title">Môn học - Giảng đường</div>
                                             </a>
@@ -149,12 +143,6 @@ class TSMD_NavSideBar extends Component {
                                             <a href="#" className="slide-bar-nav-inner-item-link">
                                                 <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
                                                 <div className="slide-bar-nav-inner-item-title">Tiến độ</div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" className="slide-bar-nav-inner-item-link">
-                                                <div className="slide-bar-nav-inner-item-icon"><i className="fa fa-pencil-square-o" aria-hidden="true"></i></div>
-                                                <div className="slide-bar-nav-inner-item-title">Các điều kiện ràng buộc</div>
                                             </a>
                                         </li>
                                     </ul>

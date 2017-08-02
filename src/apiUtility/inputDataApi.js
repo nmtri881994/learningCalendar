@@ -612,3 +612,37 @@ export const getAllNganhOfSinhVien = (sinhVienId, cb, fcb) => {
         })
 };
 
+//Mon hoc giang duong
+
+export const getAllMonHocGiangDUong = (cb, fcb) => {
+    axios(BASE_URL + "/all-mon-hoc-giang-duong", {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const insertMHGD = (monHocId, giangDuongId, cb, fcb) => {
+    axios(BASE_URL + "/mon-hoc-giang-duong/" + monHocId+"/"+giangDuongId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteMHGD = (monHocGiangDuongId, cb, fcb) => {
+    axios(BASE_URL + "/mon-hoc-giang-duong/delete/" + monHocGiangDuongId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+
+

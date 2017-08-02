@@ -7,6 +7,7 @@ import * as API from '../../../../apiUtility/inputDataApi'
 //import components
 import TSMD_AllSinhViens from './tsmd_allSinhViens'
 import TSMD_EditSinhVien from './tsmd_editSinhVien'
+import TSMD_ChonNganhChoSinhVien from './tsmd_chonNganhChoSinhVien'
 
 class TSMD_InputSinhVien extends Component {
     constructor(props) {
@@ -40,12 +41,16 @@ class TSMD_InputSinhVien extends Component {
                     ten: ""
                 }
             },
+            editingSinhVienId: 0
         }
 
         this._triggerModal = this._triggerModal.bind(this);
         this._handleSubmit = this._handleSubmit.bind(this);
         this._onDeleteSinhVien = this._onDeleteSinhVien.bind(this);
         this._onEditSinhVien = this._onEditSinhVien.bind(this);
+        this._onChonNganh = this._onChonNganh.bind(this);
+        this._triggerModal2 = this._triggerModal2.bind(this);
+        this._onBoNganhSinhVien = this._onBoNganhSinhVien.bind(this);
 
         this._onMaSinhVienChange = this._onMaSinhVienChange.bind(this);
         this._onHoDemChange = this._onHoDemChange.bind(this);
@@ -128,6 +133,14 @@ class TSMD_InputSinhVien extends Component {
         modal[0].style.display = "block";
     }
 
+    _triggerModal2(id){
+        this.setState({
+            editingSinhVienId: id
+        })
+        var modal = $("#myModal1");
+        modal[0].style.display = "block";
+    }
+
     _onDeleteSinhVien(id) {
         API.deleteSinhVien(id, (sinhViens) => {
             if (sinhViens.status == 422) {
@@ -157,6 +170,26 @@ class TSMD_InputSinhVien extends Component {
                     errorMess: "Mã sinh viên vừa edit bị trùng"
                 })
             }
+            console.log(error);
+        })
+    }
+
+    _onChonNganh(sinhVienId, nganhId) {
+        API.editSinhVienNganh(sinhVienId, nganhId, (sinhViens) => {
+            this.setState({
+                sinhViens: sinhViens
+            })
+        }, (error) => {
+            console.log(error);
+        })
+    }
+
+    _onBoNganhSinhVien(sinhVienId){
+        API.deleteSinhVienNganh(sinhVienId, (sinhViens)=>{
+            this.setState({
+                sinhViens: sinhViens
+            })
+        }, (error) => {
             console.log(error);
         })
     }
@@ -286,11 +319,12 @@ class TSMD_InputSinhVien extends Component {
                     <div className="section-title margin-left-20">Danh sách sinh viên</div>
                     <div className="error-message margin-left-20">{this.state.errorMess}</div>
                     <div className="margin-left-20">
-                        <TSMD_AllSinhViens _onDeleteSinhVien={this._onDeleteSinhVien} _triggerModal={this._triggerModal}
-                                           sinhViens={this.state.sinhViens}/>
+                        <TSMD_AllSinhViens _onDeleteSinhVien={this._onDeleteSinhVien} _onBoNganhSinhVien={this._onBoNganhSinhVien}
+                                           _triggerModal2={this._triggerModal2} _triggerModal={this._triggerModal} sinhViens={this.state.sinhViens}/>
                     </div>
                     <TSMD_EditSinhVien _onEditSinhVien={this._onEditSinhVien} sinhVien={this.state.editingSinhVien}
                                        khoas={this.state.khoas} khoaHocs={this.state.khoaHocs}/>
+                    <TSMD_ChonNganhChoSinhVien editingSinhVienId={this.state.editingSinhVienId} _onChonNganh={this._onChonNganh} />
                 </div>
             </div>)
     }

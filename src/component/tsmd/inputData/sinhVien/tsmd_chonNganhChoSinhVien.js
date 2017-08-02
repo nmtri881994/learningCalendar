@@ -4,7 +4,7 @@
 import React, {Component} from 'react'
 import * as API from '../../../../apiUtility/inputDataApi'
 
-class TSMD_EditSinhVienNganh extends Component {
+class TSMD_ChonNganhChoSinhVien extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,14 +38,14 @@ class TSMD_EditSinhVienNganh extends Component {
     }
 
     close() {
-        var modal = $("#myModal")[0];
+        var modal = $("#myModal1")[0];
         modal.style.display = "none";
     }
 
 
     _handleSubmit() {
         this.props._onChonNganh(this.state.sinhVienId, this.state.nganhId);
-        var modal = $("#myModal")[0];
+        var modal = $("#myModal1")[0];
         modal.style.display = "none";
     }
 
@@ -56,7 +56,7 @@ class TSMD_EditSinhVienNganh extends Component {
     }
 
     render() {
-        return (<div id="myModal" className="modal">
+        return (<div id="myModal1" className="modal">
 
             {/*<!-- Modal content -->*/}
             <div className="modal-content modal-small">
@@ -97,4 +97,4 @@ class TSMD_EditSinhVienNganh extends Component {
     }
 }
 
-export default TSMD_EditSinhVienNganh
+export default TSMD_ChonNganhChoSinhVien
