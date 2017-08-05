@@ -644,5 +644,49 @@ export const deleteMHGD = (monHocGiangDuongId, cb, fcb) => {
         })
 };
 
+//Lớp môn học
+
+export const getAllLopMonHocs = (namHocId, kiHocId, khoaId, khoaHocId, nganhId,cb, fcb) => {
+    axios(BASE_URL + "/all-lop-mon-hoc/"+namHocId+"/"+kiHocId+"/"+khoaId+"/"+khoaHocId+"/"+nganhId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const insertLopMonHoc = (lopMonHoc, cb, fcb) => {
+    axios.post(BASE_URL + "/lop-mon-hoc/", lopMonHoc,{headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const editLopMonHoc = (lopMonHoc, cb, fcb) => {
+    axios.post(BASE_URL + "/lop-mon-hoc/edit", lopMonHoc,{headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+export const deleteLopMonHoc = (lopMonHocID, cb, fcb) => {
+    axios(BASE_URL + "/lop-mon-hoc/delete/" + lopMonHocID, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
+
+
+
 
 

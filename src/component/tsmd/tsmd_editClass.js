@@ -63,8 +63,7 @@ class TSMD_EditClass extends Component {
             API.getTermWeekTime(nextProps.termId, nextProps.yearId, (weekTime) => {
                 for (var i = weekTime.startWeek; i <= weekTime.endWeek; i++) {
                     availableWeeks.push(i);
-                }
-                ;
+                };
                 API.getWeekCalendarOfClass(nextProps.classId, (calendars) => {
                     this.setState({
                         basicInfo: basicInfo,
