@@ -38,7 +38,7 @@ class Week_SubLesson extends Component {
 
         var lyThuyet = false;
         if(lesson){
-            if (lesson.dmGiangDuong.dmLoaiPhong.ten == "Dãy nhà lý thuyết") {
+            if (lesson.dmGiangDuong.dmLoaiPhong.ten == "Phòng lý thuyết") {
                 lyThuyet = true;
             } else {
                 lyThuyet = false;

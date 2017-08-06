@@ -250,7 +250,6 @@ class TSMD_ArrangeCalendar extends Component {
     handleSubmit() {
         var state = this.state;
         API2.getClasses(state.chosenYearId, state.chosenTermId, state.chosenFacultyId, state.chosenYearOfAdmissionId, state.chosenMajorId, (classes) => {
-            console.log(2222222, classes);
             let classes1 = [];
             classes.map(cl => {
                 classes1.push({

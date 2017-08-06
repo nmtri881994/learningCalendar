@@ -268,7 +268,7 @@ class TSMD_InputLopMonHoc extends Component {
         API3.deleteLopMonHoc(id, (lopMonHocs)=>{
             if(lopMonHocs.status == 422){
                 this.setState({
-                    errorMess: "Không thể xóa lớp môn học này vì đã tồn tại sinh viên"
+                    errorMess: "Không thể xóa lớp môn học này vì đã tồn tại sinh viên hoặc lịch học"
                 })
             }else{
                 this.setState({

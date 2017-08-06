@@ -82,10 +82,10 @@ class Week_Lesson extends Component {
             css += " lesson-" + numberOfLesson;
         }
 
-        if (type == "Dãy nhà thực hành") {
+        if (type == "Phòng thực hành") {
             subjectNameCss += "subject-name" + " thuc-hanh";
         }
-        if (type == "Dãy nhà lý thuyết") {
+        if (type == "Phòng lý thuyết") {
             subjectNameCss += "subject-name" + " ly-thuyet";
         }
 

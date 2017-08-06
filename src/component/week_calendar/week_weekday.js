@@ -94,7 +94,6 @@ class Week_Weekday extends Component {
                                         var startLessonOfContainer = lopHoc1.tkb.tkb_tietDauTien.thuTu;
                                         var endLessonOfContainer = lopHoc1.tkb.tkb_tietCuoiCung.thuTu;
 
-
                                         for (var m = 0; m < lopHocs.length; m++) {
                                             if (lopHoc1 != lopHocs[m]) {
                                                 var condition1 = lopHocs[m].tkb.tkb_tietCuoiCung.thuTu < startLesson1;

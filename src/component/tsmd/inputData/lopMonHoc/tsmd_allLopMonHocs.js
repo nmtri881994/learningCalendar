@@ -36,9 +36,6 @@ class TSMD_AllLopMonHocs extends Component {
                     index,
                     cl.dmMonHoc.maMonHoc + " " + cl.dmMonHoc.ten,
                     cl.dmNhanVien.maNhanVien + " " + cl.dmNhanVien.hoDem + " " + cl.dmNhanVien.ten,
-                    cl.tkb_kiHoc_namHoc.kiHoc.ten + " " + cl.tkb_kiHoc_namHoc.namHoc.name,
-                    cl.tkb_khoa_khoaHoc.khoa.ten + " " + cl.tkb_khoa_khoaHoc.tkb_khoaHoc.nam,
-                    cl.dmNganh?cl.dmNganh.ten:"Null",
                     cl.soTietLyThuyet,
                     cl.soTietThucHanh,
                     cl.soLuongToiDa,
@@ -60,9 +57,6 @@ class TSMD_AllLopMonHocs extends Component {
                     <th>STT</th>
                     <th>Môn học</th>
                     <th>Giảng viên</th>
-                    <th>Kì học - năm học</th>
-                    <th>Khoa - Khóa học</th>
-                    <th>Ngành</th>
                     <th>Số tiết lý thuyết</th>
                     <th>Số tiết thực hành</th>
                     <th>Số lượng sinh viên tối đa</th>
@@ -77,9 +71,6 @@ class TSMD_AllLopMonHocs extends Component {
                     <th>STT</th>
                     <th>Môn học</th>
                     <th>Giảng viên</th>
-                    <th>Kì học - năm học</th>
-                    <th>Khoa - Khóa học</th>
-                    <th>Ngành</th>
                     <th>Số tiết lý thuyết</th>
                     <th>Số tiết thực hành</th>
                     <th>Số lượng sinh viên tối đa</th>

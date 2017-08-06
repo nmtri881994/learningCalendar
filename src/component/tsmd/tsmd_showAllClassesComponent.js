@@ -32,7 +32,7 @@ class TSMD_ShowAllClassesComponent extends Component {
             classes.map(cl => {
                 myTable.fnAddData([
                     index,
-                    cl.dmMonHoc.maMonHoc + "." + this.state.khoa.ma + "." + this.state.khoaHoc.nam + "." + cl.id,
+                    cl.dmMonHoc.maMonHoc + "." + this.state.khoaHoc.nam + "." + cl.id,
                     cl.dmMonHoc.ten,
                     cl.dmNhanVien.hoDem + " " + cl.dmNhanVien.ten,
                     cl.soLuongToiDa,
@@ -92,7 +92,6 @@ class TSMD_ShowAllClassesComponent extends Component {
         var triggerModal = (id, name) => this.props.triggerModal(id, name);
         $(document).ready(function () {
             $('.arrange-class-icon').on('click', function (evt) {
-                alert(2);
                 triggerModal($(this).attr("data-id"), $(this).attr("data-name"));
             })
         })
