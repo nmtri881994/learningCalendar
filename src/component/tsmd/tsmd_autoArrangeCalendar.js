@@ -209,9 +209,41 @@ class TSMD_AutoArrangeCalendar extends Component {
             }
 
             API.autoCalendar(setting, (response) => {
-                this.setState({
-                    message: response
-                })
+                if(response.constructor === Array){
+                    const lopMonHocViPhams = response;
+                    console.log(response);
+
+                    var myTable = $('#myTable').dataTable();
+                    myTable.fnClearTable();
+
+                    var index = 1;
+                    lopMonHocViPhams.map(lopMonHocViPham => {
+
+                        let lichHoc = "";
+                        lopMonHocViPham.tkb_lichHocTheoTuans.map(lich=>{
+                            lichHoc+=lich.dmGiangDuong.maGiangDuong+" "+lich.tkb_thu.ten+" "+lich.tkb_tietDauTien.ten+"-"+
+                                lich.tkb_tietCuoiCung.ten+", "
+                        })
+
+                        let viPhamString = "";
+                        lopMonHocViPham.viPhams.map(viPham=>{
+                            viPhamString+="ĐK "+viPham.dkNumber+"-"+viPham.diem+", ";
+                        })
+                        myTable.fnAddData([
+                            lopMonHocViPham.lopMonHoc.id,
+                            lopMonHocViPham.lopMonHoc.dmMonHoc.maMonHoc+" "+lopMonHocViPham.lopMonHoc.dmMonHoc.ten,
+                            lopMonHocViPham.lopMonHoc.tkb_khoa_khoaHoc.khoa.ten +"-"+lopMonHocViPham.lopMonHoc.tkb_khoa_khoaHoc.tkb_khoaHoc.nam+"-"+lopMonHocViPham.lopMonHoc.dmNganh.ten,
+                            lopMonHocViPham.lopMonHoc.dmNhanVien.maNhanVien+" "+lopMonHocViPham.lopMonHoc.dmNhanVien.hoDem+" "+lopMonHocViPham.lopMonHoc.dmNhanVien.ten,
+                            lichHoc,
+                            viPhamString
+                        ]);
+                        index++;
+                    })
+                }else{
+                    this.setState({
+                        message: response
+                    })
+                }
             }, (error) => {
                 console.log(error);
             })
@@ -387,6 +419,36 @@ class TSMD_AutoArrangeCalendar extends Component {
                             </table>
                         </div>
                     </div>
+
+                    <div className="section">
+                        <div className="section-title margin-left-20">Bảng vi phạm</div>
+                        <div className="data-table margin-left-20">
+                            <table id="myTable" className="display" cellSpacing="0">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Lớp môn học</th>
+                                    <th>Khoa - Khóa học - Ngành</th>
+                                    <th>Giảng viên</th>
+                                    <th>Lịch học</th>
+                                    <th>Vi phạm</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Lớp môn học</th>
+                                    <th>Khoa - Khóa học - Ngành</th>
+                                    <th>Giảng viên</th>
+                                    <th>Lịch học</th>
+                                    <th>Vi phạm</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -405,6 +467,11 @@ class TSMD_AutoArrangeCalendar extends Component {
     }
 
     componentDidMount() {
+
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+
         var socket = SockJS(APP_URL + "/calendar/auto-generate");
         var stompClient = Stomp.over(socket);
 
