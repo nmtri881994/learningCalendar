@@ -26,72 +26,63 @@ class Week_Calendar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.classes.length > 0 || nextProps.classes!=this.state.classes){
-            var classes = nextProps.classes;
+        if (nextProps.classes.length > 0 || nextProps.classes != this.state.classes) {
+            const classes = nextProps.classes;
             this.setState({
                 classes: classes
             })
 
             // var khoa = nextProps.khoa;
-
-            var lopHocThu2s = [];
-            var lopHocThu3s = [];
-            var lopHocThu4s = [];
-            var lopHocThu5s = [];
-            var lopHocThu6s = [];
-            var lopHocThu7s = [];
-            var lopHocCNs = [];
-
-
+            let lopHocThu2s = [];
+            let lopHocThu3s = [];
+            let lopHocThu4s = [];
+            let lopHocThu5s = [];
+            let lopHocThu6s = [];
+            let lopHocThu7s = [];
+            let lopHocCNs = [];
             classes.map(cl => {
-                var khoaHoc  = cl.class.tkb_khoa_khoaHoc.tkb_khoaHoc;
+                var khoaHoc = cl.class.tkb_khoa_khoaHoc.tkb_khoaHoc;
                 cl.class.tkb_lichHocTheoTuans.map(tkb => {
                     switch (tkb.tkb_thu.ten) {
                         case "Thứ 2":
-                            lopHocThu2s.push(this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
+                            lopHocThu2s = [...lopHocThu2s, this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb)];
                             break;
                         case "Thứ 3":
-                            lopHocThu3s.push(this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
+                            lopHocThu3s = [...lopHocThu3s, this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb)];
                             break;
                         case "Thứ 4":
-                            lopHocThu4s.push(this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
+                            lopHocThu4s = [...lopHocThu4s, this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb)];
                             break;
                         case "Thứ 5":
-                            lopHocThu5s.push(this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
+                            lopHocThu5s = [...lopHocThu5s, this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb)];
                             break;
                         case "Thứ 6":
-                            lopHocThu6s.push(this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
+                            lopHocThu6s = [...lopHocThu6s, this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb)];
                             break;
                         case "Thứ 7":
-                            lopHocThu7s.push(this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
+                            lopHocThu7s = [...lopHocThu7s, this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb)];
                             break;
                         case "Chủ nhật":
-                            lopHocCNs.push(this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb));
+                            lopHocCNs = [...lopHocCNs, this.getLopHoc(khoaHoc, cl.class.id, cl.class.dmMonHoc, cl.class.dmNhanVien, tkb)];
                             break;
                         default:
                             console.log(tkb.tkb_thu.ten);
                     }
                 })
+            });
+
+            this.setState({
+                lopHocThu2s: lopHocThu2s,
+                lopHocThu3s: lopHocThu3s,
+                lopHocThu4s: lopHocThu4s,
+                lopHocThu5s: lopHocThu5s,
+                lopHocThu6s: lopHocThu6s,
+                lopHocThu7s: lopHocThu7s,
+                lopHocCNs: lopHocCNs
             })
         }
-        //
-        // console.log(lopHocThu2s);
-        // console.log(lopHocThu3s);
-        // console.log(lopHocThu4s);
-        // console.log(lopHocThu5s);
-        // console.log(lopHocThu6s);
-        // console.log(lopHocThu7s);
-        // console.log(lopHocCNs);
 
-        this.setState({
-            lopHocThu2s: lopHocThu2s,
-            lopHocThu3s: lopHocThu3s,
-            lopHocThu4s: lopHocThu4s,
-            lopHocThu5s: lopHocThu5s,
-            lopHocThu6s: lopHocThu6s,
-            lopHocThu7s: lopHocThu7s,
-            lopHocCNs: lopHocCNs
-        })
+
     }
 
     getLopHoc(khoaHoc, classId, dmMonHoc, dmNhanVien, tkb) {

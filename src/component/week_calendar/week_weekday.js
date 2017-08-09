@@ -46,6 +46,7 @@ class Week_Weekday extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.lopHocs) {
             var lopHocs = nextProps.lopHocs;
+
             var notFreeLessons = [];
             var freeLessons = [];
             for (var i = 0; i < lopHocs.length; i++) {
