@@ -583,7 +583,7 @@ export const deleteMonHoc = (monHocId, cb, fcb) => {
 //Sinh viên - nganh
 
 export const editSinhVienNganh = (sinhVienId, nganhId, cb, fcb) => {
-    axios(BASE_URL + "/sinh-vien-nganh/edit/"+sinhVienId+"/"+nganhId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/sinh-vien-nganh/edit/" + sinhVienId + "/" + nganhId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -625,7 +625,7 @@ export const getAllMonHocGiangDUong = (cb, fcb) => {
 };
 
 export const insertMHGD = (monHocId, giangDuongId, cb, fcb) => {
-    axios(BASE_URL + "/mon-hoc-giang-duong/" + monHocId+"/"+giangDuongId, {headers: {Authorization: localStorage.getItem('token')}})
+    axios(BASE_URL + "/mon-hoc-giang-duong/" + monHocId + "/" + giangDuongId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -646,8 +646,8 @@ export const deleteMHGD = (monHocGiangDuongId, cb, fcb) => {
 
 //Lớp môn học
 
-export const getAllLopMonHocs = (namHocId, kiHocId, khoaId, khoaHocId, nganhId,cb, fcb) => {
-    axios(BASE_URL + "/all-lop-mon-hoc/"+namHocId+"/"+kiHocId+"/"+khoaId+"/"+khoaHocId+"/"+nganhId, {headers: {Authorization: localStorage.getItem('token')}})
+export const getAllLopMonHocs = (namHocId, kiHocId, khoaId, khoaHocId, nganhId, cb, fcb) => {
+    axios(BASE_URL + "/all-lop-mon-hoc/" + namHocId + "/" + kiHocId + "/" + khoaId + "/" + khoaHocId + "/" + nganhId, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -657,7 +657,7 @@ export const getAllLopMonHocs = (namHocId, kiHocId, khoaId, khoaHocId, nganhId,c
 };
 
 export const insertLopMonHoc = (lopMonHoc, cb, fcb) => {
-    axios.post(BASE_URL + "/lop-mon-hoc/", lopMonHoc,{headers: {Authorization: localStorage.getItem('token')}})
+    axios.post(BASE_URL + "/lop-mon-hoc/", lopMonHoc, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -667,7 +667,7 @@ export const insertLopMonHoc = (lopMonHoc, cb, fcb) => {
 };
 
 export const editLopMonHoc = (lopMonHoc, cb, fcb) => {
-    axios.post(BASE_URL + "/lop-mon-hoc/edit", lopMonHoc,{headers: {Authorization: localStorage.getItem('token')}})
+    axios.post(BASE_URL + "/lop-mon-hoc/edit", lopMonHoc, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })
@@ -686,7 +686,52 @@ export const deleteLopMonHoc = (lopMonHocID, cb, fcb) => {
         })
 };
 
+export const khoaKhoaHocAddNhom = (khoaKhoaHocId, groupNumber, cb, fcb) => {
+    axios(BASE_URL + "/khoa-khoa-hoc/add-group/" + khoaKhoaHocId + "/" + groupNumber, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
 
+export const khoaKhoaHocNganhAddNhom = (khoaKhoaHocId, groupNumber, cb, fcb) => {
+    axios(BASE_URL + "/khoa-khoa-hoc-nganh/add-group/" + khoaKhoaHocId + "/" + groupNumber, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
 
+export const deleteNhom = (khoaKhoaHocId, khoaKhoaHocNganhId, groupId, cb, fcb) => {
+    axios(BASE_URL + "/nhom/delete/" + khoaKhoaHocId + "/" + khoaKhoaHocNganhId + "/" + groupId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
 
+export const getNhomOfKhoaKhoaHoc = (khoaKhoaHocId, cb, fcb) => {
+    axios(BASE_URL + "/nhom/get-nhom-cua-khoa-khoa-hoc/"+khoaKhoaHocId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};
 
+export const getNhomOfKhoaKhoaHocNganh = (khoaKhoaHocNganhId, cb, fcb) => {
+    axios(BASE_URL + "/nhom/get-nhom-cua-khoa-khoa-hoc-nganh/"+khoaKhoaHocNganhId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};

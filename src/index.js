@@ -93,7 +93,6 @@ const store = createStore(
         semestersNotEnd,
         routing: routerReducer
     }),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
 export const dispatch = store.dispatch;

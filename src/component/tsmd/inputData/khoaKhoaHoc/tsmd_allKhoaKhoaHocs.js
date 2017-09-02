@@ -32,6 +32,11 @@ class TSMD_AllKhoaKhoaHocs extends Component {
 
             var index = 1;
             khoaKhoaHocs.map(khoaKhoaHoc => {
+                let nhom = "";
+                console.log(khoaKhoaHoc);
+                khoaKhoaHoc.tkb_khoa_khoaHoc_nganh_nhoms.map(group=>{
+                    nhom+= group.nhom+" ";
+                })
                 myTable.fnAddData([
                     index,
                     khoaKhoaHoc.khoa.ten,
@@ -39,6 +44,8 @@ class TSMD_AllKhoaKhoaHocs extends Component {
                     khoaKhoaHoc.kiBatDau.kiHoc.ten + ' '+khoaKhoaHoc.kiBatDau.namHoc.name,
                     khoaKhoaHoc.kiKetThuc.kiHoc.ten + ' '+khoaKhoaHoc.kiKetThuc.namHoc.name,
                     khoaKhoaHoc.kiPhanNganh.kiHoc.ten + ' '+khoaKhoaHoc.kiPhanNganh.namHoc.name,
+                    nhom,
+                    '<i class="fa fa-pencil-square edit-icon cursor" name="add" data-id="' + khoaKhoaHoc.id + '"/>',
                     '<i class="fa fa-pencil-square edit-icon cursor" name="edit" data-id="' + khoaKhoaHoc.id + '"/>',
                     '<i class="fa fa-trash delete-icon cursor" name="delete" data-id="' + khoaKhoaHoc.id + '"/>'
                 ]);
@@ -58,6 +65,8 @@ class TSMD_AllKhoaKhoaHocs extends Component {
                     <th>Kì bắt đầu</th>
                     <th>Kì kết thúc</th>
                     <th>Kì phân ngành</th>
+                    <th>Nhóm</th>
+                    <th>Thêm nhóm</th>
                     <th>Sửa</th>
                     <th>Xóa</th>
                 </tr>
@@ -70,6 +79,8 @@ class TSMD_AllKhoaKhoaHocs extends Component {
                     <th>Kì bắt đầu</th>
                     <th>Kì kết thúc</th>
                     <th>Kì phân ngành</th>
+                    <th>Nhóm</th>
+                    <th>Thêm nhóm</th>
                     <th>Sửa</th>
                     <th>Xóa</th>
                 </tr>
@@ -87,12 +98,17 @@ class TSMD_AllKhoaKhoaHocs extends Component {
 
         const _triggerModal = (id) => this.props._triggerModal(id);
         const _deleteKhoaKhoaHoc = (id) => this.props._deleteKhoaKhoaHoc(id);
+        const _chooseAddingGroupKhoaKhoaHoc = (id) => this.props._chooseAddingGroupKhoaKhoaHoc(id);
         $('#myTable tbody').on('click', 'i[name="delete"]', function () {
             _deleteKhoaKhoaHoc($(this).attr("data-id"));
         })
 
         $('#myTable tbody').on('click', 'i[name="edit"]', function () {
             _triggerModal($(this).attr("data-id"));
+        })
+
+        $('#myTable tbody').on('click', 'i[name="add"]', function () {
+            _chooseAddingGroupKhoaKhoaHoc($(this).attr("data-id"));
         })
     }
 

@@ -45,12 +45,7 @@ class Student_Time extends Component {
                 var mins = Math.floor(seconds / 60);
                 seconds = Math.floor(seconds % 60);
 
-                this.setState({
-                    daysLeft: days,
-                    hoursLeft: hours,
-                    minsLeft: mins,
-                    secondsLeft: seconds
-                })
+
                 this.setState({
                     canRegister: canRegister,
                     registerTime: registerTime,

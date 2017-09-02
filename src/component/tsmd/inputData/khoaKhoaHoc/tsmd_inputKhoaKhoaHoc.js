@@ -7,6 +7,7 @@ import * as API from '../../../../apiUtility/inputDataApi'
 //import components
 import TSMD_AllKhoaKhoaHocs from './tsmd_allKhoaKhoaHocs'
 import TSMD_EditKhoaKhoaHoc from './tsmd_editKhoaKhoaHoc'
+import TSMD_KhoaKhoaHocAddGroup from './tsmd_khoaKhoaHocAddGroup'
 
 class TSMD_InputKhoaKhoaHoc extends Component {
     constructor(props) {
@@ -78,7 +79,8 @@ class TSMD_InputKhoaKhoaHoc extends Component {
                     ngayBatDau: "",
                     ngayKetThuc: ""
                 }
-            }
+            },
+            addingGroupKhoaKhoaHocId: 0
         }
 
         this._triggerModal = this._triggerModal.bind(this);
@@ -86,15 +88,55 @@ class TSMD_InputKhoaKhoaHoc extends Component {
         this._deleteKhoaKhoaHoc = this._deleteKhoaKhoaHoc.bind(this);
         this._editKhoaKhoaHoc = this._editKhoaKhoaHoc.bind(this);
 
-
         this._onKhoaChange = this._onKhoaChange.bind(this);
         this._onKhoaHocChange = this._onKhoaHocChange.bind(this);
         this._onKiBatDauChange = this._onKiBatDauChange.bind(this);
         this._onKiKetThucChange = this._onKiKetThucChange.bind(this);
         this._onKiPhanNganhChange = this._onKiPhanNganhChange.bind(this);
+        this._onReload = this._onReload.bind(this);
+        this._chooseAddingGroupKhoaKhoaHoc = this._chooseAddingGroupKhoaKhoaHoc.bind(this);
     }
 
     componentWillMount() {
+        API.getAllFaculties((khoas) => {
+            API.getAllTerms((khoaHocs) => {
+                API.getAllTermYears((termYears) => {
+                    API.getAllKhoaKhoaHocs((khoaKhoaHocs) => {
+                        this.setState({
+                            khoas: khoas,
+                            khoaId: khoas[0].id,
+                            khoaHocs: khoaHocs,
+                            khoaHocId: khoaHocs[0].id,
+                            termYears: termYears,
+                            kiBatDauId: termYears[0].id,
+                            kiKetThucId: termYears[0].id,
+                            kiPhanNganhId: termYears[0].id,
+                            khoaKhoaHocs: khoaKhoaHocs,
+
+                        })
+                    }, (error) => {
+                        console.log(error);
+                    })
+                }, (error) => {
+                    console.log(error);
+                })
+            }, (error) => {
+                console.log(error);
+            })
+        }, (error) => {
+            console.log(error);
+        })
+    }
+
+    _chooseAddingGroupKhoaKhoaHoc(khoaKhoaHocId) {
+        this.setState({
+            addingGroupKhoaKhoaHocId: khoaKhoaHocId
+        })
+        var modal = $("#myModal1");
+        modal[0].style.display = "block";
+    }
+
+    _onReload() {
         API.getAllFaculties((khoas) => {
             API.getAllTerms((khoaHocs) => {
                 API.getAllTermYears((termYears) => {
@@ -233,7 +275,6 @@ class TSMD_InputKhoaKhoaHoc extends Component {
         })
     }
 
-
     render() {
 
         return (
@@ -291,10 +332,18 @@ class TSMD_InputKhoaKhoaHoc extends Component {
                     <div className="margin-left-20">
                         <TSMD_AllKhoaKhoaHocs _deleteKhoaKhoaHoc={this._deleteKhoaKhoaHoc}
                                               _triggerModal={this._triggerModal}
-                                              khoaKhoaHocs={this.state.khoaKhoaHocs}/>
+                                              khoaKhoaHocs={this.state.khoaKhoaHocs}
+                                              _chooseAddingGroupKhoaKhoaHoc={this._chooseAddingGroupKhoaKhoaHoc}
+                        />
                     </div>
-                    <TSMD_EditKhoaKhoaHoc _editKhoaKhoaHoc={this._editKhoaKhoaHoc} khoaKhoaHoc={this.state.editingKhoaKhoaHoc} khoas={this.state.khoas}
+                    <TSMD_EditKhoaKhoaHoc _editKhoaKhoaHoc={this._editKhoaKhoaHoc}
+                                          khoaKhoaHoc={this.state.editingKhoaKhoaHoc} khoas={this.state.khoas}
                                           khoaHocs={this.state.khoaHocs} termYears={this.state.termYears}/>
+
+                    <TSMD_KhoaKhoaHocAddGroup
+                        addingGroupKhoaKhoaHocId={this.state.addingGroupKhoaKhoaHocId}
+                        _onReload={this._onReload}
+                    />
                 </div>
             </div>)
     }
