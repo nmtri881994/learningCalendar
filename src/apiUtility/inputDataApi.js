@@ -696,8 +696,8 @@ export const khoaKhoaHocAddNhom = (khoaKhoaHocId, groupNumber, cb, fcb) => {
         })
 };
 
-export const khoaKhoaHocNganhAddNhom = (khoaKhoaHocId, groupNumber, cb, fcb) => {
-    axios(BASE_URL + "/khoa-khoa-hoc-nganh/add-group/" + khoaKhoaHocId + "/" + groupNumber, {headers: {Authorization: localStorage.getItem('token')}})
+export const khoaKhoaHocNganhAddNhom = (khoaKhoaHocNganhId, groupNumber, cb, fcb) => {
+    axios(BASE_URL + "/khoa-khoa-hoc-nganh/add-group/" + khoaKhoaHocNganhId + "/" + groupNumber, {headers: {Authorization: localStorage.getItem('token')}})
         .then(function (response) {
             cb(response.data);
         })

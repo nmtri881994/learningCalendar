@@ -33,7 +33,6 @@ class TSMD_AllKhoaKhoaHocs extends Component {
             var index = 1;
             khoaKhoaHocs.map(khoaKhoaHoc => {
                 let nhom = "";
-                console.log(khoaKhoaHoc);
                 khoaKhoaHoc.tkb_khoa_khoaHoc_nganh_nhoms.map(group=>{
                     nhom+= group.nhom+" ";
                 })

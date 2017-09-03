@@ -6,13 +6,13 @@ import React, {Component} from 'react'
 //import APIs
 import * as API from '../../../../apiUtility/inputDataApi'
 
-class TSMD_KhoaKhoaHocAddGroup extends Component {
+class TSMD_KhoaKhoaHocNganhAddGroup extends Component {
     constructor(props) {
         super(props);
         this.state = {
             groups: [],
             groupNumber: 0,
-            addingGroupKhoaKhoaHocId: 0,
+            addingGroupKhoaKhoaHocNganhId: 0,
             mess: ""
         }
 
@@ -28,16 +28,16 @@ class TSMD_KhoaKhoaHocAddGroup extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.addingGroupKhoaKhoaHocId != 0) {
-            API.getNhomOfKhoaKhoaHoc(nextProps.addingGroupKhoaKhoaHocId, (groups) => {
+        if (nextProps.addingGroupKhoaKhoaHocNganhId != 0) {
+            API.getNhomOfKhoaKhoaHocNganh(nextProps.addingGroupKhoaKhoaHocNganhId, (groups) => {
                 if (groups != "") {
                     this.setState({
-                        addingGroupKhoaKhoaHocId: nextProps.addingGroupKhoaKhoaHocId,
+                        addingGroupKhoaKhoaHocNganhId: nextProps.addingGroupKhoaKhoaHocNganhId,
                         groups: groups
                     })
                 } else {
                     this.setState({
-                        addingGroupKhoaKhoaHocId: nextProps.addingGroupKhoaKhoaHocId
+                        addingGroupKhoaKhoaHocNganhId: nextProps.addingGroupKhoaKhoaHocNganhId
                     })
                 }
             }, (error) => {
@@ -78,7 +78,7 @@ class TSMD_KhoaKhoaHocAddGroup extends Component {
                 mess: "Nhóm "+this.state.groupNumber+" đã bị trùng"
             })
         } else {
-            API.khoaKhoaHocAddNhom(this.state.addingGroupKhoaKhoaHocId, this.state.groupNumber, (groups) => {
+            API.khoaKhoaHocNganhAddNhom(this.state.addingGroupKhoaKhoaHocNganhId, this.state.groupNumber, (groups) => {
                 this.setState({
                     groups: groups
                 })
@@ -90,7 +90,7 @@ class TSMD_KhoaKhoaHocAddGroup extends Component {
     }
 
     _onDelete(groupId) {
-        API.deleteNhom(this.state.addingGroupKhoaKhoaHocId, 0, groupId, (groups) => {
+        API.deleteNhom(0, this.state.addingGroupKhoaKhoaHocNganhId, groupId, (groups) => {
             if (groups != "") {
                 this.setState({
                     groups: groups
@@ -113,7 +113,7 @@ class TSMD_KhoaKhoaHocAddGroup extends Component {
             <div className="modal-content modal-small">
                 <div className="modal-header text-center">
                     <span className="close" onClick={this.close}>&times;</span>
-                    <h3>Nhóm của khoa - khóa học</h3>
+                    <h3>Nhóm của khoa - khóa học - ngành</h3>
                 </div>
                 <div className="modal-body">
                     {groups.map(group =>
@@ -156,4 +156,4 @@ class TSMD_KhoaKhoaHocAddGroup extends Component {
     }
 }
 
-export default TSMD_KhoaKhoaHocAddGroup
+export default TSMD_KhoaKhoaHocNganhAddGroup

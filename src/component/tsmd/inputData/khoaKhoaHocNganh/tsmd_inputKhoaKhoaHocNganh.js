@@ -6,6 +6,7 @@ import * as API from '../../../../apiUtility/inputDataApi'
 
 //import components
 import TSMD_AllKhoaKhoaHocNganhs from './tsmd_allKhoaKhoaHocNganhs'
+import TSMD_KhoaKhoaHocNganhAddGroup from './tsmd_khoaKhoaHocNganhAddGroup'
 
 class TSMD_InputKhoaKhoaHocNganh extends Component {
     constructor(props) {
@@ -24,7 +25,8 @@ class TSMD_InputKhoaKhoaHocNganh extends Component {
                 dmNganh:{
                     id: 0
                 }
-            }
+            },
+            addingGroupKhoaKhoaHocNganhId: 0
         }
 
         this._handleSubmit = this._handleSubmit.bind(this);
@@ -32,8 +34,8 @@ class TSMD_InputKhoaKhoaHocNganh extends Component {
 
         this._onKhoaKhoaHocChange = this._onKhoaKhoaHocChange.bind(this);
         this._onNganhChange = this._onNganhChange.bind(this);
-
-
+        this._onReload = this._onReload.bind(this);
+        this._chooseAddingGroupKhoaKhoaHocNganh = this._chooseAddingGroupKhoaKhoaHocNganh.bind(this);
     }
 
     componentWillMount() {
@@ -62,6 +64,38 @@ class TSMD_InputKhoaKhoaHocNganh extends Component {
 
     componentWillReceiveProps(nextProps) {
 
+    }
+
+    _chooseAddingGroupKhoaKhoaHocNganh(khoaKhoaHocNganhId) {
+        this.setState({
+            addingGroupKhoaKhoaHocNganhId: khoaKhoaHocNganhId
+        })
+        var modal = $("#myModal1");
+        modal[0].style.display = "block";
+    }
+
+    _onReload() {
+        API.getAllKhoaKhoaHocs((khoaKhoaHocs)=>{
+            API.getAllNganhs((nganhs)=>{
+                API.getAllKhoaKhoaHocNganhs((khoaKhoaHocNganhs)=>{
+                    let khoaKhoaHocNganh = this.state.khoaKhoaHocNganh;
+                    khoaKhoaHocNganh.khoaKhoaHoc.id = khoaKhoaHocs[0].id;
+                    khoaKhoaHocNganh.dmNganh.id = nganhs[0].id;
+                    this.setState({
+                        khoaKhoaHocs: khoaKhoaHocs,
+                        nganhs: nganhs,
+                        khoaKhoaHocNganhs: khoaKhoaHocNganhs,
+                        khoaKhoaHocNganh: khoaKhoaHocNganh
+                    })
+                }, (error)=>{
+                    console.log(error);
+                })
+            }, (error)=>{
+                console.log(error);
+            })
+        }, (error)=>{
+            console.log(error);
+        })
     }
 
     _handleSubmit() {
@@ -149,8 +183,16 @@ class TSMD_InputKhoaKhoaHocNganh extends Component {
                     <div className="section-title margin-left-20">Danh sách khoa - khóa học - ngành</div>
                     <div className="error-message margin-left-20">{this.state.errorMess}</div>
                     <div className="margin-left-20">
-                        <TSMD_AllKhoaKhoaHocNganhs _onDeleteKhoaKhoaHocNganh={this._onDeleteKhoaKhoaHocNganh} khoaKhoaHocNganhs={this.state.khoaKhoaHocNganhs}/>
+                        <TSMD_AllKhoaKhoaHocNganhs
+                            _onDeleteKhoaKhoaHocNganh={this._onDeleteKhoaKhoaHocNganh}
+                            khoaKhoaHocNganhs={this.state.khoaKhoaHocNganhs}
+                            _chooseAddingGroupKhoaKhoaHocNganh = {this._chooseAddingGroupKhoaKhoaHocNganh}
+                        />
                     </div>
+                    <TSMD_KhoaKhoaHocNganhAddGroup
+                        addingGroupKhoaKhoaHocNganhId={this.state.addingGroupKhoaKhoaHocNganhId}
+                        _onReload={this._onReload}
+                    />
                 </div>
             </div>)
     }
