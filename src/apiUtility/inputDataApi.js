@@ -735,3 +735,13 @@ export const getNhomOfKhoaKhoaHocNganh = (khoaKhoaHocNganhId, cb, fcb) => {
             fcb(error);
         })
 };
+
+export const getNhomOfKhoaKhoaHocNganh2 = (khoaId, khoaHocId, nganhId, cb, fcb) => {
+    axios(BASE_URL + "/nhom/get-nhom-cua-khoa-khoa-hoc-nganh2/"+khoaId+"/"+khoaHocId+"/"+nganhId, {headers: {Authorization: localStorage.getItem('token')}})
+        .then(function (response) {
+            cb(response.data);
+        })
+        .catch(function (error) {
+            fcb(error);
+        })
+};

@@ -34,6 +34,7 @@ class TSMD_AllLopMonHocs extends Component {
             lopMonHocs.map(cl => {
                 myTable.fnAddData([
                     index,
+                    cl.tkb_khoa_khoaHoc_nganh_nhom?cl.tkb_khoa_khoaHoc_nganh_nhom.nhom:"",
                     cl.dmMonHoc.maMonHoc + " " + cl.dmMonHoc.ten,
                     cl.dmNhanVien.maNhanVien + " " + cl.dmNhanVien.hoDem + " " + cl.dmNhanVien.ten,
                     cl.soTietLyThuyet,
@@ -55,6 +56,7 @@ class TSMD_AllLopMonHocs extends Component {
                 <thead>
                 <tr>
                     <th>STT</th>
+                    <th>Nhóm</th>
                     <th>Môn học</th>
                     <th>Giảng viên</th>
                     <th>Số tiết lý thuyết</th>
@@ -69,6 +71,7 @@ class TSMD_AllLopMonHocs extends Component {
                 <tfoot>
                 <tr>
                     <th>STT</th>
+                    <th>Nhóm</th>
                     <th>Môn học</th>
                     <th>Giảng viên</th>
                     <th>Số tiết lý thuyết</th>

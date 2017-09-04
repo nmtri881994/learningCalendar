@@ -37,6 +37,7 @@ class TSMD_KhoaKhoaHocNganhAddGroup extends Component {
                     })
                 } else {
                     this.setState({
+                        groups: [],
                         addingGroupKhoaKhoaHocNganhId: nextProps.addingGroupKhoaKhoaHocNganhId
                     })
                 }

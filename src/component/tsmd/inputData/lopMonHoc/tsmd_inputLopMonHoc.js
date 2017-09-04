@@ -26,6 +26,8 @@ class TSMD_InputLopMonHoc extends Component {
             majors: [],
             chosenMajorId: 0,
             lopMonHocs: [],
+            groups: [],
+            chosenGroup: {id: 0, nhom: 0},
 
             lopMonHoc: {
                 id: 0,
@@ -58,9 +60,12 @@ class TSMD_InputLopMonHoc extends Component {
                 soTietThucHanh: 0,
                 soLuongToiDa: 0,
                 gioiHanTuanBatDau: 0,
-                gioiHanTuanKetThuc: 0
+                gioiHanTuanKetThuc: 0,
+                tkb_khoa_khoaHoc_nganh_nhom:{
+                    id: 0
+                }
             },
-            editingLopMonHoc:{
+            editingLopMonHoc: {
                 id: 0,
                 dmMonHoc: {
                     id: 0,
@@ -103,7 +108,10 @@ class TSMD_InputLopMonHoc extends Component {
                 soTietThucHanh: 0,
                 soLuongToiDa: 0,
                 gioiHanTuanBatDau: 0,
-                gioiHanTuanKetThuc: 0
+                gioiHanTuanKetThuc: 0,
+                tkb_khoa_khoaHoc_nganh_nhom: {
+                    id: 0
+                }
             },
             monHocs: [],
             nhanViens: [],
@@ -194,28 +202,40 @@ class TSMD_InputLopMonHoc extends Component {
             this.setState({
                 lopMonHocs: classes
             });
-            API3.getAllMonHocs((monHocs) => {
-                API3.getAllNhanViens((nhanViens) => {
-                    API2.getTermWeekTime(this.state.chosenTermId, this.state.chosenYearId, (weekTime) => {
-                        nhanViens = nhanViens.filter(nhanVien => nhanVien.maNhanVien != null);
-                        let lopMonHoc = this.state.lopMonHoc;
-                        lopMonHoc.dmMonHoc.id = monHocs.length != 0 ? monHocs[0].id : 0;
-                        lopMonHoc.dmNhanVien.id = nhanViens.length != 0 ? nhanViens[0].id : 0;
-                        let tuans = [];
-                        for (var i = weekTime.startWeek; i <= weekTime.endWeek; i++) {
-                            tuans.push(i);
-                        }
-                        lopMonHoc.gioiHanTuanBatDau = tuans.length != 0 ? tuans[0] : 0;
-                        lopMonHoc.gioiHanTuanKetThuc = tuans.length != 0 ? tuans[0] : 0;
-                        this.setState({
-                            monHocs: monHocs,
-                            nhanViens: nhanViens,
-                            lopMonHoc: lopMonHoc,
-                            tuans: tuans,
-                            tuanKetThucs: tuans
+            API3.getNhomOfKhoaKhoaHocNganh2(state.chosenFacultyId, state.chosenYearOfAdmissionId, state.chosenMajorId, (groups) => {
+                let groups1 = [];
+                let chosenGroup: 0;
+                if (groups != "") {
+                    groups1 = groups;
+                    chosenGroup = groups[0];
+                }
+                API3.getAllMonHocs((monHocs) => {
+                    API3.getAllNhanViens((nhanViens) => {
+                        API2.getTermWeekTime(this.state.chosenTermId, this.state.chosenYearId, (weekTime) => {
+                            nhanViens = nhanViens.filter(nhanVien => nhanVien.maNhanVien != null);
+                            let lopMonHoc = this.state.lopMonHoc;
+                            lopMonHoc.dmMonHoc.id = monHocs.length != 0 ? monHocs[0].id : 0;
+                            lopMonHoc.dmNhanVien.id = nhanViens.length != 0 ? nhanViens[0].id : 0;
+                            let tuans = [];
+                            for (var i = weekTime.startWeek; i <= weekTime.endWeek; i++) {
+                                tuans.push(i);
+                            }
+                            lopMonHoc.gioiHanTuanBatDau = tuans.length != 0 ? tuans[0] : 0;
+                            lopMonHoc.gioiHanTuanKetThuc = tuans.length != 0 ? tuans[0] : 0;
+                            this.setState({
+                                monHocs: monHocs,
+                                nhanViens: nhanViens,
+                                lopMonHoc: lopMonHoc,
+                                tuans: tuans,
+                                tuanKetThucs: tuans,
+                                groups: groups1,
+                                chosenGroup: chosenGroup
+                            })
+                        }, (error) => {
+                            console.log(error)
                         })
                     }, (error) => {
-                        console.log(error)
+                        console.log(error);
                     })
                 }, (error) => {
                     console.log(error);
@@ -223,6 +243,7 @@ class TSMD_InputLopMonHoc extends Component {
             }, (error) => {
                 console.log(error);
             })
+
         }, (error) => {
             console.log(error);
         });
@@ -235,6 +256,7 @@ class TSMD_InputLopMonHoc extends Component {
         lopMonHoc.tkb_khoa_khoaHoc.khoa.id = this.state.chosenFacultyId;
         lopMonHoc.tkb_khoa_khoaHoc.tkb_khoaHoc.id = this.state.chosenYearOfAdmissionId;
         lopMonHoc.dmNganh.id = this.state.chosenMajorId;
+        lopMonHoc.tkb_khoa_khoaHoc_nganh_nhom = this.state.chosenGroup;
 
         console.log(lopMonHoc);
 
@@ -264,13 +286,13 @@ class TSMD_InputLopMonHoc extends Component {
         modal[0].style.display = "block";
     }
 
-    _onDeleteLopMonHoc(id){
-        API3.deleteLopMonHoc(id, (lopMonHocs)=>{
-            if(lopMonHocs.status == 422){
+    _onDeleteLopMonHoc(id) {
+        API3.deleteLopMonHoc(id, (lopMonHocs) => {
+            if (lopMonHocs.status == 422) {
                 this.setState({
                     errorMess: "Không thể xóa lớp môn học này vì đã tồn tại sinh viên hoặc lịch học"
                 })
-            }else{
+            } else {
                 this.setState({
                     lopMonHocs: lopMonHocs,
                     errorMess: ""
@@ -279,13 +301,13 @@ class TSMD_InputLopMonHoc extends Component {
         })
     }
 
-    _onEditLopMonHoc(lopMonHoc){
-        API3.editLopMonHoc(lopMonHoc, (lopMonHocs)=>{
+    _onEditLopMonHoc(lopMonHoc) {
+        API3.editLopMonHoc(lopMonHoc, (lopMonHocs) => {
             this.setState({
                 errorMess: "",
                 lopMonHocs: lopMonHocs
             })
-        }, (error)=>{
+        }, (error) => {
             console.log(error);
         })
     }
@@ -512,6 +534,12 @@ class TSMD_InputLopMonHoc extends Component {
         })
     }
 
+    _onChooseGroup(group) {
+        this.setState({
+            chosenGroup: group
+        })
+    }
+
     render() {
 
         const years = this.state.years;
@@ -581,6 +609,14 @@ class TSMD_InputLopMonHoc extends Component {
                 </div>
                 <hr/>
                 <div className="section-title margin-left-20">Thêm lớp môn học</div>
+                <div className="margin-left-20">
+                    {this.state.groups.map(group => <div key={group.id}
+                                                         className={group.id == this.state.chosenGroup.id ? "chosenGroup" : "group"}
+                                                         onClick={()=>{this._onChooseGroup(group)}}
+                    >
+                        Nhóm {group.nhom}
+                    </div>)}
+                </div>
                 <div className="choose-condition-item">
                     <span className="edit-title">
                         Môn học
@@ -641,11 +677,15 @@ class TSMD_InputLopMonHoc extends Component {
                     <div className="section-title margin-left-20">Danh sách lớp môn học</div>
                     <div className="error-message margin-left-20">{this.state.errorMess}</div>
                     <div className="margin-left-20">
-                        <TSMD_AllLopMonHocs _onDeleteLopMonHoc={this._onDeleteLopMonHoc} _triggerModal={this._triggerModal}
+                        <TSMD_AllLopMonHocs _onDeleteLopMonHoc={this._onDeleteLopMonHoc}
+                                            _triggerModal={this._triggerModal}
                                             lopMonHocs={this.state.lopMonHocs}/>
                     </div>
-                    <TSMD_EditLopMonHoc _onEditLopMonHoc={this._onEditLopMonHoc} monHocs={this.state.monHocs} nhanViens={this.state.nhanViens}
-                                        tuans={this.state.tuans} lopMonHoc={this.state.editingLopMonHoc}/>
+                    <TSMD_EditLopMonHoc _onEditLopMonHoc={this._onEditLopMonHoc} monHocs={this.state.monHocs}
+                                        nhanViens={this.state.nhanViens}
+                                        tuans={this.state.tuans} lopMonHoc={this.state.editingLopMonHoc}
+                                        groups={this.state.groups}
+                    />
                 </div>
             </div>)
     }

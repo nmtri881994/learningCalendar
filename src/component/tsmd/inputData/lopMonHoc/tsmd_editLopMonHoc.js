@@ -51,11 +51,15 @@ class TSMD_EditLopMonHoc extends Component {
                 soLuongToiDa: 0,
                 gioiHanTuanBatDau: 0,
                 gioiHanTuanKetThuc: 0,
+                tkb_khoa_khoaHoc_nganh_nhom: {
+                    id: 0
+                }
             },
             monHocs: [],
             nhanViens: [],
             tuans: [],
-            tuanKetThucs: []
+            tuanKetThucs: [],
+            groups: []
         }
 
         this._handleSubmit = this._handleSubmit.bind(this);
@@ -76,11 +80,11 @@ class TSMD_EditLopMonHoc extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const tuans =nextProps.tuans;
+        const tuans = nextProps.tuans;
         const tuanBatDau = nextProps.lopMonHoc.gioiHanTuanBatDau;
-        const tuanCuoiCung = tuans[tuans.length-1];
-        let tuanKetThucs= [];
-        for (let i = tuanBatDau; i<= tuanCuoiCung;i++){
+        const tuanCuoiCung = tuans[tuans.length - 1];
+        let tuanKetThucs = [];
+        for (let i = tuanBatDau; i <= tuanCuoiCung; i++) {
             tuanKetThucs.push(i);
         }
         this.setState({
@@ -88,7 +92,8 @@ class TSMD_EditLopMonHoc extends Component {
             monHocs: nextProps.monHocs,
             nhanViens: nextProps.nhanViens,
             tuans: tuans,
-            tuanKetThucs: tuanKetThucs
+            tuanKetThucs: tuanKetThucs,
+            groups: nextProps.groups
         })
     }
 
@@ -100,7 +105,7 @@ class TSMD_EditLopMonHoc extends Component {
 
     _handleSubmit() {
         let lopMonHoc = this.state.lopMonHoc;
-        if(lopMonHoc.dmNganh == null){
+        if (lopMonHoc.dmNganh == null) {
             lopMonHoc.dmNganh = {
                 id: 0
             }
@@ -190,6 +195,14 @@ class TSMD_EditLopMonHoc extends Component {
         })
     }
 
+    _onChooseGroup(group) {
+        let lopMonHoc = this.state.lopMonHoc;
+        lopMonHoc.tkb_khoa_khoaHoc_nganh_nhom = group;
+        this.setState({
+            lopMonHoc: lopMonHoc
+        })
+    }
+
     render() {
         return (<div id="myModal" className="modal">
 
@@ -201,6 +214,14 @@ class TSMD_EditLopMonHoc extends Component {
                 </div>
                 <div className="modal-body">
                     <div className="section">
+                        <div className="margin-left-20">
+                            {this.state.groups.map(group => <div key={group.id}
+                                                                 className={group.id == this.state.lopMonHoc.tkb_khoa_khoaHoc_nganh_nhom.id ? "chosenGroup" : "group"}
+                                                                 onClick={()=>{this._onChooseGroup(group)}}
+                            >
+                                Nhóm {group.nhom}
+                            </div>)}
+                        </div>
                         <div className="choose-condition-item">
                     <span className="edit-title">
                         Môn học
@@ -260,7 +281,6 @@ class TSMD_EditLopMonHoc extends Component {
                     <button className="ok-button button-mini" onClick={this._handleSubmit}>Lưu</button>
                 </div>
             </div>
-            h
 
         </div>)
     }

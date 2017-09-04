@@ -1,68 +1,91 @@
-.choose-condition{
+.choose-condition {
 
 }
 
-.choose-condition-item{
+.choose-condition-item {
     margin: 0 20px;
     display: inline-block;
     height: 30px;
 }
 
-.year-select-long{
+.year-select-long {
     width: 200px;
 }
 
-.year-select-short{
+.year-select-short {
     width: 100px;
 }
 
-#classes-table{
+#classes-table {
     margin: 20px;
 }
 
-.data-table{
+.data-table {
     text-align: center;
 }
 
-.data-table-align{
+.data-table-align {
     margin: 10px 0;
 }
 
-.arrange-class-icon{
+.arrange-class-icon {
     font-size: 20px;
 }
 
-.class-week-calendar-time{
+.class-week-calendar-time {
     margin: 5px 0;
 }
 
-.week-calendar-time-summary{
+.week-calendar-time-summary {
     padding: 0 4px;
     background-color: #7986CB;
     cursor: pointer;
     color: white;
 }
 
-.week-calendar-time-summary:hover{
+.week-calendar-time-summary:hover {
     background-color: #3F51B5;
 }
 
-.week-calendar-time-detail{
+.week-calendar-time-detail {
     background-color: white;
     border: 1px solid #ccc;
     border-top: none;
     padding: 0 10px 10px 10px;
 }
 
-.hide{
+.hide {
     display: none;
 }
 
-.action-corner{
+.action-corner {
     text-align: center;
     margin-top: 10px;
 }
 
-.tsmd-class-calendar{
+.tsmd-class-calendar {
 
+}
+
+.group {
+    display: inline-block;
+    border-radius: 5px;
+    border: 2px dashed #B2EBF2;
+    padding: 5px 0;
+    width: 100px;
+    margin: 5px 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.chosenGroup {
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #B2EBF2;
+    border: 2px solid #B2EBF2;
+    padding: 5px 0;
+    width: 100px;
+    margin: 5px 5px;
+    text-align: center;
+    cursor: pointer;
 }
