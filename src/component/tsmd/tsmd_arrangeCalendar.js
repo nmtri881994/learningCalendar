@@ -11,6 +11,7 @@ import {getYearsNotEnd, getSemestersNotEndOfYear} from '../../action/tsmdAction'
 //import APIs
 import * as API from '../../apiUtility/tsmdApi'
 import * as API2 from '../../apiUtility/calendarApi'
+import * as API3 from '../../apiUtility/inputDataApi'
 
 //import components
 import TSMD_ShowAllClassesComponent from './tsmd_showAllClassesComponent'
@@ -37,10 +38,13 @@ class TSMD_ArrangeCalendar extends Component {
             haveMajor: false,
             majors: [],
             chosenMajorId: 0,
+            allClasses: [],
             classes: [],
             classes1: [],
             editingClassId: 0,
-            editingClassName: ""
+            editingClassName: "",
+            groups: [],
+            chosenGroup: {id: 0}
         }
 
         this.handleYearChange = this.handleYearChange.bind(this);
@@ -225,6 +229,7 @@ class TSMD_ArrangeCalendar extends Component {
             chosenYearOfAdmissionId: e.target.value
         });
         API2.getAvailableMajors(this.state.chosenYearId, this.state.chosenTermId, this.state.chosenFacultyId, e.target.value, (majors) => {
+
             this.setState({
                     haveMajor: true,
                     majors: majors,
@@ -250,16 +255,25 @@ class TSMD_ArrangeCalendar extends Component {
     handleSubmit() {
         var state = this.state;
         API2.getClasses(state.chosenYearId, state.chosenTermId, state.chosenFacultyId, state.chosenYearOfAdmissionId, state.chosenMajorId, (classes) => {
-            let classes1 = [];
-            classes.map(cl => {
-                classes1.push({
-                    class: cl
+            API3.getNhomOfKhoaKhoaHocNganh2(state.chosenFacultyId, state.chosenYearOfAdmissionId, state.chosenMajorId, (groups)=>{
+                let classesTemp = classes.filter(cl=>cl.tkb_khoa_khoaHoc_nganh_nhom.id == groups[0].id);
+                let classes1 = [];
+                classesTemp.map(cl => {
+                    classes1.push({
+                        class: cl
+                    })
                 })
+                this.setState({
+                    allClasses: classes,
+                    classes: classesTemp,
+                    classes1: classes1,
+                    groups: groups,
+                    chosenGroup: groups[0]
+                });
+            }, (error)=>{
+                console.log(error);
             })
-            this.setState({
-                classes: classes,
-                classes1: classes1
-            });
+
         }, (error) => {
             console.log(error);
         });
@@ -272,6 +286,21 @@ class TSMD_ArrangeCalendar extends Component {
         })
         var modal = $("#myModal");
         modal[0].style.display = "block";
+    }
+
+    _onChooseGroup(group) {
+        let classesTemp = this.state.allClasses.filter(cl=>cl.tkb_khoa_khoaHoc_nganh_nhom.id == group.id);
+        let classes1 = [];
+        classesTemp.map(cl => {
+            classes1.push({
+                class: cl
+            })
+        })
+        this.setState({
+            classes: classesTemp,
+            classes1: classes1,
+            chosenGroup: group
+        });
     }
 
     render() {
@@ -351,6 +380,14 @@ class TSMD_ArrangeCalendar extends Component {
                     <button className="ok-button button-mini" onClick={this.handleSubmit}>OK</button>
                 </div>
             </div>
+            <div className="margin-left-20">
+                {this.state.groups.map(group => <div key={group.id}
+                                                     className={group.id == this.state.chosenGroup.id ? "chosenGroup" : "group"}
+                                                     onClick={()=>{this._onChooseGroup(group)}}
+                >
+                    Nhóm {group.nhom}
+                </div>)}
+            </div>
             <div id="classes-table">
                 <TSMD_ShowAllClassesComponent khoa={chosenKhoa}
                                               khoaHoc={chosenYearOfAdmission}
@@ -380,16 +417,20 @@ class TSMD_ArrangeCalendar extends Component {
         if (shoudldRefresh) {
             var state = this.state;
             API2.getClasses(state.chosenYearId, state.chosenTermId, state.chosenFacultyId, state.chosenYearOfAdmissionId, state.chosenMajorId, (classes) => {
+                let classesTemp = classes.filter(cl=>cl.tkb_khoa_khoaHoc_nganh_nhom.id == this.state.chosenGroup.id);
                 let classes1 = [];
-                classes.map(cl=>{
+                classesTemp.map(cl => {
                     classes1.push({
                         class: cl
                     })
-                })
-                this.setState({
-                    classes: classes,
-                    classes1: classes1
                 });
+                console.log("refresh", classesTemp);
+                this.setState({
+                    allClasses: classes,
+                    classes: classesTemp,
+                    classes1: classes1,
+                });
+
             }, (error) => {
                 console.log(error);
             });

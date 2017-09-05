@@ -43,7 +43,7 @@ class TSMD_AutoArrangeCalendar extends Component {
             message: "",
             resetMessage: "",
 
-            generations: [],
+            khoaKhoaHocNganhNhoms: [],
             canRun: true,
         }
 
@@ -58,6 +58,8 @@ class TSMD_AutoArrangeCalendar extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDeleteCalendar = this.handleDeleteCalendar.bind(this);
+
+        this.praseMess = this.praseMess.bind(this);
     }
 
     setCondition(id, status) {
@@ -197,7 +199,7 @@ class TSMD_AutoArrangeCalendar extends Component {
             generations: []
         })
 
-        if(this.state.canRun){
+        if (this.state.canRun) {
             var setting = {
                 namHocId: this.state.chosenYearId,
                 kyHocId: this.state.chosenTermId,
@@ -209,7 +211,7 @@ class TSMD_AutoArrangeCalendar extends Component {
             }
 
             API.autoCalendar(setting, (response) => {
-                if(response.constructor === Array){
+                if (response.constructor === Array) {
                     const lopMonHocViPhams = response;
                     console.log(response);
 
@@ -220,26 +222,26 @@ class TSMD_AutoArrangeCalendar extends Component {
                     lopMonHocViPhams.map(lopMonHocViPham => {
 
                         let lichHoc = "";
-                        lopMonHocViPham.tkb_lichHocTheoTuans.map(lich=>{
-                            lichHoc+=lich.dmGiangDuong.maGiangDuong+" "+lich.tkb_thu.ten+" "+lich.tkb_tietDauTien.ten+"-"+
-                                lich.tkb_tietCuoiCung.ten+", "
+                        lopMonHocViPham.tkb_lichHocTheoTuans.map(lich => {
+                            lichHoc += lich.dmGiangDuong.maGiangDuong + " " + lich.tkb_thu.ten + " " + lich.tkb_tietDauTien.ten + "-" +
+                                lich.tkb_tietCuoiCung.ten + ", "
                         })
 
                         let viPhamString = "";
-                        lopMonHocViPham.viPhams.map(viPham=>{
-                            viPhamString+="ĐK "+viPham.dkNumber+"-"+viPham.diem+", ";
+                        lopMonHocViPham.viPhams.map(viPham => {
+                            viPhamString += "ĐK " + viPham.dkNumber + "-" + viPham.diem + ", ";
                         })
                         myTable.fnAddData([
                             lopMonHocViPham.lopMonHoc.id,
-                            lopMonHocViPham.lopMonHoc.dmMonHoc.maMonHoc+" "+lopMonHocViPham.lopMonHoc.dmMonHoc.ten,
-                            lopMonHocViPham.lopMonHoc.tkb_khoa_khoaHoc.khoa.ten +"-"+lopMonHocViPham.lopMonHoc.tkb_khoa_khoaHoc.tkb_khoaHoc.nam+"-"+lopMonHocViPham.lopMonHoc.dmNganh.ten,
-                            lopMonHocViPham.lopMonHoc.dmNhanVien.maNhanVien+" "+lopMonHocViPham.lopMonHoc.dmNhanVien.hoDem+" "+lopMonHocViPham.lopMonHoc.dmNhanVien.ten,
+                            lopMonHocViPham.lopMonHoc.dmMonHoc.maMonHoc + " " + lopMonHocViPham.lopMonHoc.dmMonHoc.ten,
+                            lopMonHocViPham.lopMonHoc.tkb_khoa_khoaHoc.khoa.ten + "-" + lopMonHocViPham.lopMonHoc.tkb_khoa_khoaHoc.tkb_khoaHoc.nam + "-" + lopMonHocViPham.lopMonHoc.dmNganh.ten,
+                            lopMonHocViPham.lopMonHoc.dmNhanVien.maNhanVien + " " + lopMonHocViPham.lopMonHoc.dmNhanVien.hoDem + " " + lopMonHocViPham.lopMonHoc.dmNhanVien.ten,
                             lichHoc,
                             viPhamString
                         ]);
                         index++;
                     })
-                }else{
+                } else {
                     this.setState({
                         message: response
                     })
@@ -247,7 +249,7 @@ class TSMD_AutoArrangeCalendar extends Component {
             }, (error) => {
                 console.log(error);
             })
-        }else{
+        } else {
             this.setState({
                 message: "Giá trị của ít nhất 1 điều kiện chưa thỏa mãn"
             })
@@ -289,7 +291,7 @@ class TSMD_AutoArrangeCalendar extends Component {
         })
 
 
-        var generations = this.state.generations;
+        var khoaKhoaHocNganhNhoms = this.state.khoaKhoaHocNganhNhoms;
 
         return (<div>
                 <div className="choose-condition">
@@ -316,7 +318,9 @@ class TSMD_AutoArrangeCalendar extends Component {
                     </div>
 
                     <div className="choose-condition-item">
-                        <button className="warning-button button-medium" onClick={this.handleDeleteCalendar}>Xóa tất cả lịch học</button>
+                        <button className="warning-button button-medium" onClick={this.handleDeleteCalendar}>Xóa tất cả
+                            lịch học
+                        </button>
                     </div>
                     <div className=" margin-left-20 info-message">{this.state.resetMessage}</div>
 
@@ -346,33 +350,6 @@ class TSMD_AutoArrangeCalendar extends Component {
                             </div>
                         </div>
                     </div>
-                    {/*<div className="section">*/}
-                    {/*<div className="section-title margin-left-20">Lai hóa</div>*/}
-                    {/*<div className="margin-left-20">*/}
-                    {/*<input type="radio" name="lai-hoa" value="1" disabled="disabled"/> Lai hóa 1 điểm<br/>*/}
-                    {/*<input type="radio" name="lai-hoa" value="2" disabled="disabled"/> Lai hóa 2 điểm*/}
-                    {/*</div>*/}
-                    {/*</div>*/}
-                    {/*<div className="section">*/}
-                    {/*<div className="section-title margin-left-20">Đột biến</div>*/}
-                    {/*<div className="margin-left-20">*/}
-                    {/*<span>% gen đột biến của 1 cá thể</span>*/}
-                    {/*<input className="width-50 margin-left-5" type="number" disabled="disabled"/>*/}
-                    {/*</div>*/}
-                    {/*</div>*/}
-                    {/*<div className="section">*/}
-                    {/*<div className="section-title margin-left-20">Điều kiện quần thể</div>*/}
-                    {/*<div className="margin-left-20">*/}
-                    {/*<span>% cá thế bố mẹ</span>*/}
-                    {/*<input className="width-50 margin-right-20 margin-left-5" type="number"*/}
-                    {/*disabled="disabled"/>*/}
-                    {/*<span>% cá thể lai hóa</span>*/}
-                    {/*<input className="width-50 margin-right-20 margin-left-5" type="number"*/}
-                    {/*disabled="disabled"/>*/}
-                    {/*<span>% cá thể đột biến</span>*/}
-                    {/*<input className="width-50 margin-left-5" type="number" disabled="disabled"/>*/}
-                    {/*</div>*/}
-                    {/*</div>*/}
                     <div className="section">
                         <div className="section-title margin-left-20">Chạy chương trình</div>
                         <div className="margin-left-20">
@@ -387,7 +364,9 @@ class TSMD_AutoArrangeCalendar extends Component {
                         </div>
                     </div>
                     <div className="choose-condition-item">
-                        <button className="ok-button button-medium" onClick={this.handleSubmit} disabled={disableRun}>Bắt đầu</button>
+                        <button className="ok-button button-medium" onClick={this.handleSubmit} disabled={disableRun}>
+                            Bắt đầu
+                        </button>
                     </div>
 
                     <div className="error-message margin-left-20">
@@ -400,20 +379,20 @@ class TSMD_AutoArrangeCalendar extends Component {
                             <table className="flat-table">
                                 <thead>
                                 <tr>
-                                    <th>Thế hệ</th>
-                                    <th>Điểm thích nghi</th>
+                                    <th>Khoa-Khóa học-Ngành-Nhóm</th>
+                                    <th>Thế hệ-Điểm thích nghi</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>Thế hệ</th>
-                                    <th>Điểm thích nghi</th>
+                                    <th>Khoa-Khóa học-Ngành-Nhóm</th>
+                                    <th>Thế hệ-Điểm thích nghi</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                {generations.map(gen => <tr key={gen.theHe}>
-                                    <td>{gen.theHe}</td>
-                                    <td>{gen.diemThichNghi}</td>
+                                {khoaKhoaHocNganhNhoms.map(khoaKhoaHocNganhNhom => <tr key={khoaKhoaHocNganhNhom.ten}>
+                                    <td>{khoaKhoaHocNganhNhom.ten}</td>
+                                    <td>{khoaKhoaHocNganhNhom.theHe}-{khoaKhoaHocNganhNhom.diemThichNghi}</td>
                                 </tr>)}
                                 </tbody>
                             </table>
@@ -455,15 +434,26 @@ class TSMD_AutoArrangeCalendar extends Component {
         )
     }
 
-    addGeneration(gen) {
-        if (gen.kyHocId == this.state.chosenTermId && gen.namHocId == this.state.chosenYearId) {
-            var generations = this.state.generations;
-            generations.push(gen);
-
+    praseMess(mess) {
+        let khoaKhoaHocNganhNhoms = this.state.khoaKhoaHocNganhNhoms;
+        if (khoaKhoaHocNganhNhoms.length == 0 || khoaKhoaHocNganhNhoms[khoaKhoaHocNganhNhoms.length - 1].nhomId != mess.nhomId) {
+            khoaKhoaHocNganhNhoms.push({
+                nhomId: mess.nhomId,
+                ten: mess.nhomName,
+                theHe: mess.theHe,
+                diemThichNghi: mess.diemThichNghi
+            })
             this.setState({
-                generations: generations
+                khoaKhoaHocNganhNhoms: khoaKhoaHocNganhNhoms
+            })
+        } else {
+            khoaKhoaHocNganhNhoms[khoaKhoaHocNganhNhoms.length - 1].theHe = mess.theHe;
+            khoaKhoaHocNganhNhoms[khoaKhoaHocNganhNhoms.length - 1].diemThichNghi = mess.diemThichNghi;
+            this.setState({
+                khoaKhoaHocNganhNhoms: khoaKhoaHocNganhNhoms
             })
         }
+
     }
 
     componentDidMount() {
@@ -475,11 +465,11 @@ class TSMD_AutoArrangeCalendar extends Component {
         var socket = SockJS(APP_URL + "/calendar/auto-generate");
         var stompClient = Stomp.over(socket);
 
-        var addGen = (gen) => this.addGeneration(gen);
+        var praseMess = (mess) => this.praseMess(mess);
 
         stompClient.connect({}, function (frame) {
             stompClient.subscribe("/socket/calendar/auto-generate", function (message) {
-                addGen(JSON.parse(message.body));
+                praseMess(JSON.parse(message.body));
             });
         });
         this.setState({
