@@ -46,11 +46,10 @@ class Week_Weekday extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.lopHocs) {
             var lopHocs = nextProps.lopHocs;
-
             var notFreeLessons = [];
             var freeLessons = [];
             for (var i = 0; i < lopHocs.length; i++) {
-                var lopHoc = nextProps.lopHocs[i];
+                var lopHoc = lopHocs[i];
                 var startLesson = this.getTietByTenTiet(lopHoc.tkb.tkb_tietDauTien.ten);
                 var endLesson = this.getTietByTenTiet(lopHoc.tkb.tkb_tietCuoiCung.ten);
                 for (var j = startLesson; j <= endLesson; j++) {
@@ -66,6 +65,7 @@ class Week_Weekday extends Component {
             var lessons = [];
             var haveClass = false;
             var morning = false;
+
             if (lopHocs) {
                 for (var i = 1; i <= 10; i++) {
                     if (freeLessons.indexOf(i) != -1) {
@@ -96,7 +96,7 @@ class Week_Weekday extends Component {
                                         var endLessonOfContainer = lopHoc1.tkb.tkb_tietCuoiCung.thuTu;
 
                                         for (var m = 0; m < lopHocs.length; m++) {
-                                            if (lopHoc1 != lopHocs[m]) {
+                                            if (lopHocs[m] && lopHoc1 != lopHocs[m]) {
                                                 var condition1 = lopHocs[m].tkb.tkb_tietCuoiCung.thuTu < startLesson1;
                                                 var condition2 = lopHocs[m].tkb.tkb_tietDauTien.thuTu > endLessonOfContainer;
 

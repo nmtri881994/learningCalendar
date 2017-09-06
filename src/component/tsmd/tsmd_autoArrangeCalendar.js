@@ -196,7 +196,7 @@ class TSMD_AutoArrangeCalendar extends Component {
         this.setState({
             message: "",
             resetMessage: "",
-            generations: []
+            khoaKhoaHocNganhNhoms: []
         })
 
         if (this.state.canRun) {
@@ -223,8 +223,8 @@ class TSMD_AutoArrangeCalendar extends Component {
 
                         let lichHoc = "";
                         lopMonHocViPham.tkb_lichHocTheoTuans.map(lich => {
-                            lichHoc += lich.dmGiangDuong.maGiangDuong + " " + lich.tkb_thu.ten + " " + lich.tkb_tietDauTien.ten + "-" +
-                                lich.tkb_tietCuoiCung.ten + ", "
+                            lichHoc += "Tuần "+lich.tuanBatDau+"-"+lich.tuanKetThuc+" "+lich.dmGiangDuong.maGiangDuong + " " + lich.tkb_thu.ten + " " + lich.tkb_tietDauTien.ten + "-" +
+                                lich.tkb_tietCuoiCung.ten + `</br>`
                         })
 
                         let viPhamString = "";
