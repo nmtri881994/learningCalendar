@@ -1,4 +1,4 @@
-# LEARNING CALENDAR APPLICATION BACK-END
+# LEARNING CALENDAR APPLICATION FRONT-END
 > A university learning calendar management web application front-end
 
 ## Table of contents
