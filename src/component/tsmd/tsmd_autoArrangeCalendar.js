@@ -240,7 +240,8 @@ class TSMD_AutoArrangeCalendar extends Component {
                             viPhamString
                         ]);
                         index++;
-                    })
+                    });
+                    this.handleSubmit();
                 } else {
                     this.setState({
                         message: response
