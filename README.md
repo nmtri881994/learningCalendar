@@ -14,11 +14,11 @@ This project are programmed by ReactJS and Redux based on the API provided []()
 2. Import the /database/lastedDB.sql into the database 'danavtc' just created.
 3. Edit the file /src/main/resources/local.properties, change the datasource url, name, password to your environment value.
 4. Open command line under project folder and type `maven package`.
-5. Deploy the war file /target/learning_calendar_backend-0.0.1-SNAPSHOT.war on Tomcat Server version 8 or later, set HTTP port: 8080.
+5. Deploy the war file /target/learning_calendar_backend-0.0.1-SNAPSHOT.war on Tomcat Server version 8 or later, set HTTP port: 8080(recommended).
 
 **If you want to edit, research or reuse the code, you can open project by IntelliJ IDEA version 2016.3 or above. Configure Tomcat server, 
 
-Now you can look over the application's APIs through Swagger UI at http://localhost:8080/swagger-ui.html
+Now you can look over the application's APIs through Swagger UI at http://localhost:tomcatHTTPPort/swagger-ui.html
 
 ## Note
 This is my graduate project at university and according to the real requirements of Danang Vocational Training College,
