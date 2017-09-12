@@ -2,9 +2,9 @@
 > A university learning calendar management web application front-end
 
 ## Table of contents
-*[Description](#description)  
-*[Deployment](#deployment)  
-*[Note](#note)
+* [Description](#description)  
+* [Deployment](#deployment)  
+* [Note](#note)
 
 ## Description
 This project are programmed by ReactJS, Redux and little JQuery based on the APIs provided by [learningCalendarBackend](https://github.com/nmtri881994/learningCalendar).
