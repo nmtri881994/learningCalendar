@@ -297,10 +297,10 @@ class TSMD_AutoArrangeCalendar extends Component {
         return (<div>
                 <div className="choose-condition">
                     <div className="section">
-                        <div className="section-title margin-left-20">Kỳ học</div>
+                        <div className="section-title margin-left-20">Choose term</div>
                         <div className="choose-condition-item">
                     <span className="edit-title">
-                        Năm học
+                        School year
                     </span>
                             <select className="year-select-short" onChange={this.handleYearChange}
                                     value={this.state.chosenYearId}>
@@ -309,7 +309,7 @@ class TSMD_AutoArrangeCalendar extends Component {
                         </div>
                         <div className="choose-condition-item">
                     <span className="edit-title">
-                        Kỳ học
+                        Term
                     </span>
                             <select className="year-select-short" onChange={this.handleTermChange}
                                     value={this.state.chosenTermId}>
@@ -319,15 +319,15 @@ class TSMD_AutoArrangeCalendar extends Component {
                     </div>
 
                     <div className="choose-condition-item">
-                        <button className="warning-button button-medium" onClick={this.handleDeleteCalendar}>Xóa tất cả
-                            lịch học
+                        <button className="warning-button button-medium" onClick={this.handleDeleteCalendar}>
+                            Delete all class lessons
                         </button>
                     </div>
                     <div className=" margin-left-20 info-message">{this.state.resetMessage}</div>
 
                     <div className="section">
 
-                        <div className="section-title margin-left-20">Điều kiện thích nghi</div>
+                        <div className="section-title margin-left-20">Adaptation conditions</div>
                         {conditions.length == 0 && this.state.years.length != 0 ?
                             <div className="error-message margin-left-20">
                                 Thuật toán không thể chạy nếu chưa có điều kiện
@@ -352,13 +352,13 @@ class TSMD_AutoArrangeCalendar extends Component {
                         </div>
                     </div>
                     <div className="section">
-                        <div className="section-title margin-left-20">Chạy chương trình</div>
+                        <div className="section-title margin-left-20">Run algorithm conditions</div>
                         <div className="margin-left-20">
-                            <span>Số thế hệ tối đa</span>
+                            <span>Maximum generation</span>
                             <input className="width-50 margin-right-20 margin-left-5" type="number"
                                    value={this.state.numberOfGenerations}
                                    onChange={this.handleNumberOfGenerationsChange}/>
-                            <span>Điểm thích nghi tối ưu</span>
+                            <span>Optimal adaptation point</span>
                             <input className="width-50 margin-left-5" type="number"
                                    value={this.state.perfectAdaptationPoints}
                                    onChange={this.handlePerfectAdaptationPointsChange}/>
@@ -366,7 +366,7 @@ class TSMD_AutoArrangeCalendar extends Component {
                     </div>
                     <div className="choose-condition-item">
                         <button className="ok-button button-medium" onClick={this.handleSubmit} disabled={disableRun}>
-                            Bắt đầu
+                            Start
                         </button>
                     </div>
 
@@ -375,19 +375,19 @@ class TSMD_AutoArrangeCalendar extends Component {
                     </div>
 
                     <div className="section">
-                        <div className="section-title margin-left-20">Bảng thế hệ</div>
+                        <div className="section-title margin-left-20">Generation table</div>
                         <div className="margin-left-20">
                             <table className="flat-table">
                                 <thead>
                                 <tr>
-                                    <th>Khoa-Khóa học-Ngành-Nhóm</th>
-                                    <th>Thế hệ-Điểm thích nghi</th>
+                                    <th>Faculty-Course-Major-Group</th>
+                                    <th>Generation-Adaptation point</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>Khoa-Khóa học-Ngành-Nhóm</th>
-                                    <th>Thế hệ-Điểm thích nghi</th>
+                                    <th>Faculty-Course-Major-Group</th>
+                                    <th>Generation-Adaptation point</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
@@ -401,27 +401,27 @@ class TSMD_AutoArrangeCalendar extends Component {
                     </div>
 
                     <div className="section">
-                        <div className="section-title margin-left-20">Bảng vi phạm</div>
+                        <div className="section-title margin-left-20">Violation table</div>
                         <div className="data-table margin-left-20">
                             <table id="myTable" className="display" cellSpacing="0">
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Lớp môn học</th>
-                                    <th>Khoa - Khóa học - Ngành</th>
-                                    <th>Giảng viên</th>
-                                    <th>Lịch học</th>
-                                    <th>Vi phạm</th>
+                                    <th>Class</th>
+                                    <th>Faculty-Course-Major-Group</th>
+                                    <th>Teacher</th>
+                                    <th>Lessons calendar</th>
+                                    <th>Violations</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Lớp môn học</th>
-                                    <th>Khoa - Khóa học - Ngành</th>
-                                    <th>Giảng viên</th>
-                                    <th>Lịch học</th>
-                                    <th>Vi phạm</th>
+                                    <th>Class</th>
+                                    <th>Faculty-Course-Major-Group</th>
+                                    <th>Teacher</th>
+                                    <th>Lessons calendar</th>
+                                    <th>Violations</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>

@@ -99,13 +99,13 @@ class Week_Calendar extends Component {
         return (
             <div className="calendar-panel">
                 <div className="calendar">
-                    <Week_Weekday name="Thứ 2" lopHocs={this.state.lopHocThu2s}/>
-                    <Week_Weekday name="Thứ 3" lopHocs={this.state.lopHocThu3s}/>
-                    <Week_Weekday name="Thứ 4" lopHocs={this.state.lopHocThu4s}/>
-                    <Week_Weekday name="Thứ 5" lopHocs={this.state.lopHocThu5s}/>
-                    <Week_Weekday name="Thứ 6" lopHocs={this.state.lopHocThu6s}/>
-                    <Week_Weekday name="Thứ 7" lopHocs={this.state.lopHocThu7s}/>
-                    <Week_Weekday name="Chủ nhật" lopHocs={this.state.lopHocCNs}/>
+                    <Week_Weekday name="Monday" lopHocs={this.state.lopHocThu2s}/>
+                    <Week_Weekday name="Tuesday" lopHocs={this.state.lopHocThu3s}/>
+                    <Week_Weekday name="Wednesday" lopHocs={this.state.lopHocThu4s}/>
+                    <Week_Weekday name="Thursday" lopHocs={this.state.lopHocThu5s}/>
+                    <Week_Weekday name="Friday" lopHocs={this.state.lopHocThu6s}/>
+                    <Week_Weekday name="Saturday" lopHocs={this.state.lopHocThu7s}/>
+                    <Week_Weekday name="Sunday" lopHocs={this.state.lopHocCNs}/>
                 </div>
             </div>
 

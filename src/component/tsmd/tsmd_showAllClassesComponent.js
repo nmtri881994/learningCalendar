@@ -51,25 +51,25 @@ class TSMD_ShowAllClassesComponent extends Component {
                     <thead>
                     <tr>
                         <th>STT</th>
-                        <th>Mã lớp</th>
-                        <th>Môn học</th>
-                        <th>Giáo viên</th>
-                        <th>Số lượng tối đa</th>
-                        <th>Số tiết LT</th>
-                        <th>Số tiết TH</th>
-                        <th>Xếp lịch</th>
+                        <th>Class code</th>
+                        <th>Subject</th>
+                        <th>Teacher</th>
+                        <th>Maximum student quantity</th>
+                        <th>Philosophy lesson quantity</th>
+                        <th>Practice lesson quantity</th>
+                        <th>Arrange calendar</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th>STT</th>
-                        <th>Mã lớp</th>
-                        <th>Môn học</th>
-                        <th>Giáo viên</th>
-                        <th>Số lượng tối đa</th>
-                        <th>Số tiết LT</th>
-                        <th>Số tiết TH</th>
-                        <th>Xếp lịch</th>
+                        <th>Class code</th>
+                        <th>Subject</th>
+                        <th>Teacher</th>
+                        <th>Maximum student quantity</th>
+                        <th>Philosophy lesson quantity</th>
+                        <th>Practice lesson quantity</th>
+                        <th>Arrange calendar</th>
                     </tr>
                     </tfoot>
                     <tbody>

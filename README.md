@@ -7,7 +7,10 @@
 * [Note](#note)
 
 ## Description
-This project are programmed by ReactJS, Redux and little JQuery based on the APIs provided by [learningCalendarBackend](https://github.com/nmtri881994/learningCalendar).
+This project are programmed by ReactJS, Redux and little JQuery based on the APIs and Websockets provided by [learningCalendarBackend](https://github.com/nmtri881994/learningCalendar).
+
+The most special function of this application is automatically generating learing calendar for university/college using Genetic Algorithm.
+You can find the fully explanation and result of the way I apply Genetic Algorithm at [here](https://github.com/nmtri881994/Genetic-Algorithm-apply-on-generating-learning-calendar).
 
 ## Deployment
 1. Open the command line under project folder and type `npm start`.

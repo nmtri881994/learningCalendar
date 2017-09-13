@@ -74,8 +74,8 @@ class Week_SubLesson extends Component {
                     {lesson.maLopHoc}
                 </div>
                 <div className="subject-detail">
-                    {lesson.dmGiangDuong.maGiangDuong}<br/>
-                    Tuần: {lesson.tkb.tuanBatDau}-{lesson.tkb.tuanKetThuc}
+                    Room: {lesson.dmGiangDuong.maGiangDuong}<br/>
+                    Week: {lesson.tkb.tuanBatDau}-{lesson.tkb.tuanKetThuc}
                 </div>
             </div> : ""}
         </div>)

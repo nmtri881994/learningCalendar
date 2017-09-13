@@ -94,8 +94,8 @@ class Week_Lesson extends Component {
                 {subjectName}
             </div>
             <div className="subject-detail">
-                {room}<br/>
-                Tuần: {startWeek} - {endWeek}
+                Room: {room}<br/>
+                Week: {startWeek} - {endWeek}
             </div>
 
         </div>

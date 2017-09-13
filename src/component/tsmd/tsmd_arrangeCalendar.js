@@ -331,7 +331,7 @@ class TSMD_ArrangeCalendar extends Component {
             <div className="choose-condition">
                 <div className="choose-condition-item">
                     <span className="edit-title">
-                        Năm học
+                        School year
                     </span>
                     <select className="year-select-short" onChange={this.handleYearChange}
                             value={this.state.chosenYearId}>
@@ -340,7 +340,7 @@ class TSMD_ArrangeCalendar extends Component {
                 </div>
                 <div className="choose-condition-item">
                     <span className="edit-title">
-                        Kỳ học
+                        Term
                     </span>
                     <select className="year-select-short" onChange={this.handleTermChange}
                             value={this.state.chosenTermId}>
@@ -349,7 +349,7 @@ class TSMD_ArrangeCalendar extends Component {
                 </div>
                 <div className="choose-condition-item">
                     <span className="edit-title">
-                        Khoa
+                        Faculty
                     </span>
                     <select className="year-select-long" onChange={this.handleFacultyChange}
                             value={this.state.chosenFacultyId}>
@@ -358,7 +358,7 @@ class TSMD_ArrangeCalendar extends Component {
                 </div>
                 <div className="choose-condition-item">
                     <span className="edit-title">
-                        Khóa
+                        Course
                     </span>
                     <select className="year-select-short" onChange={this.handleYearOfAdmissionChange}
                             value={this.state.chosenYearOfAdmissionId}>
@@ -369,7 +369,7 @@ class TSMD_ArrangeCalendar extends Component {
                 </div>
                 {haveMajor ? <div className="choose-condition-item">
                     <span className="edit-title">
-                        Ngành
+                        Major
                     </span>
                         <select className="year-select-long" onChange={this.handleMajorChange}
                                 value={this.state.chosenMajorId}>
@@ -385,7 +385,7 @@ class TSMD_ArrangeCalendar extends Component {
                                                      className={group.id == this.state.chosenGroup.id ? "chosenGroup" : "group"}
                                                      onClick={()=>{this._onChooseGroup(group)}}
                 >
-                    Nhóm {group.nhom}
+                    Group {group.nhom}
                 </div>)}
             </div>
             <div id="classes-table">
